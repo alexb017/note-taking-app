@@ -1,6 +1,5 @@
 .nav {
     grid-column-start: 2;
-    background-color: var(--white);
 }
 
 .navContent {
@@ -14,6 +13,13 @@
 .navTitle {
     font-size: 24px;
     font-weight: 700;
+    display: flex;
+    align-items: center;
+    padding: 0 24px;
+}
+
+.navTitle svg {
+    margin-right: 8px;
 }
 
 .navUl {
@@ -24,14 +30,12 @@
 .navLi a {
     display: flex;
     align-items: center;
-    font-weight: 600;
-    padding: 8px 24px;
+    padding: 12px 24px;
     border-radius: 4px;
-    margin: 6px 0;
 }
 
 .navLi a svg {
-    margin-right: 6px;
+    margin-right: 24px;
 }
 
 .active {
