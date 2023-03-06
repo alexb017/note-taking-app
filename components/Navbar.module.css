@@ -1,0 +1,39 @@
+.nav {
+    grid-column-start: 2;
+    background-color: var(--white);
+}
+
+.navContent {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    padding: 20px 0;
+}
+
+.navTitle {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.navUl {
+    list-style-type: none;
+    margin-top: 20px;
+}
+
+.navLi a {
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+    padding: 8px 24px;
+    border-radius: 4px;
+    margin: 6px 0;
+}
+
+.navLi a svg {
+    margin-right: 6px;
+}
+
+.active {
+    background-color: var(--primary);
+}
