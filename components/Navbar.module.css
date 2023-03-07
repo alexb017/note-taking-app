@@ -31,7 +31,13 @@
     display: flex;
     align-items: center;
     padding: 12px 24px;
-    border-radius: 4px;
+    border-radius: 100px;
+    font-weight: 500;
+    transition: 100ms ease-in;
+}
+
+.navLi a:hover:not(.active) {
+    background-color: var(--secondary-2);
 }
 
 .navLi a svg {
