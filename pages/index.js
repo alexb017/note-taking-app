@@ -2,8 +2,9 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styles from '@/styles/Notes.module.css'
 import Link from 'next/link'
+import database from "../components/firebase";
 
-export default function Notes() {
+export default function Notes({ data }) {
   return (
     <>
       <Head>
@@ -16,8 +17,13 @@ export default function Notes() {
         <div className={styles.notesContent}>
           <h1>Notes</h1>
           <p>Notes you add appear here</p>
+          {JSON.stringify(data, null)}
         </div>
       </div>
     </>
   )
+}
+
+export async function getServerSideProps(context) {
+
 }
