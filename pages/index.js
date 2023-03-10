@@ -2,7 +2,8 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styles from '@/styles/Notes.module.css'
 import Link from 'next/link'
-import database from "../components/firebase";
+import db from "../components/firebase";
+import { collection, getDocs } from "firebase/firestore";
 
 export default function Notes({ data }) {
   return (
@@ -17,13 +18,23 @@ export default function Notes({ data }) {
         <div className={styles.notesContent}>
           <h1>Notes</h1>
           <p>Notes you add appear here</p>
-          {JSON.stringify(data, null)}
+          {data.map(note => {
+            return <div key={note.id}>
+              <h2>{note.title}</h2>
+              <p>{note.content}</p>
+            </div>
+          })}
         </div>
       </div>
     </>
   )
 }
 
-export async function getServerSideProps(context) {
+export async function getServerSideProps() {
+  const querySnapshot = await getDocs(collection(db, "notes"));
+  const data = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
 
+  return {
+    props: { data }
+  }
 }
