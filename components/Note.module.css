@@ -1,0 +1,17 @@
+.noteContents {
+    background-color: var(--white);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 2px rgb(0 0 0 / 30%);
+    margin-right: 20px;
+    transition: 100ms ease-in;
+    width: 240px;
+}
+
+.noteContents:hover {
+    box-shadow: 0 0 2px rgb(0 0 0 / 50%);
+}
+
+.noteTitle {
+    font-size: 24px;
+}

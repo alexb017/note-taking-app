@@ -1,0 +1,50 @@
+.form {
+    background-color: var(--white);
+    padding: 20px 0 12px;
+    border-radius: 8px;
+    box-shadow: 0 0 2px rgb(0 0 0 / 30%);
+    width: 440px;
+}
+
+.formContent {
+    display: flex;
+    flex-direction: column;
+}
+
+.formContent input {
+    padding: 0 20px 10px;
+}
+
+.formOptions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 12px 0;
+}
+
+.formOptionsLeft {
+    display: flex;
+    align-items: center;
+}
+
+.btn {
+    cursor: pointer;
+    display: flex;
+    padding: 8px;
+    background-color: transparent;
+    transition: 100ms ease-in;
+    border-radius: 50%;
+}
+
+.btn:hover {
+    background-color: var(--secondary-2);
+}
+
+.btnSubmit {
+    cursor: pointer;
+    display: flex;
+    padding: 8px 16px;
+    background-color: var(--secondary-4);
+    border-radius: 100px;
+    color: var(--primary-3);
+}

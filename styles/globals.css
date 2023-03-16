@@ -1,21 +1,20 @@
 :root {
   --white: #ffffff;
-  --black: #1a1a1a;
+  --black: #000000;
 
   --primary: #def8d5;
   --primary-1: #d4e3f7;
+  --primary-2: #f5ff80;
+  --primary-3: #31643f;
 
   --secondary: #999999;
   --secondary-1: #dbdbdb;
   --secondary-2: #eeeeee;
   --secondary-3: #616161;
+  --secondary-4: #d8e4e4;
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
-
-html {
-  height: -webkit-fill-available;
-}
 
 body {
   font-family: 'Inter', sans-serif;
@@ -70,6 +69,11 @@ hr {
 p svg {
   display: inline-block;
   vertical-align: text-bottom;
+}
+
+input,
+textarea {
+  all: unset;
 }
 
 .container {
