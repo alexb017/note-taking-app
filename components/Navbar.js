@@ -47,7 +47,8 @@ export default function Navbar() {
                     </ul>
                 </div>
                 <div className={styles.navBottom}>
-                    <button type="button">Dark Mode</button>
+                    <p>&copy; 2023. Note Taking App.</p>
+                    {/* <button type="button">Dark Mode</button> */}
                 </div>
             </div>
         </nav>

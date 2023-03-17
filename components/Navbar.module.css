@@ -47,3 +47,7 @@
 .active {
     background-color: var(--primary-2);
 }
+
+.navBottom p {
+    font-size: 14px;
+}

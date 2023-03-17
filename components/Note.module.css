@@ -3,15 +3,31 @@
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 2px rgb(0 0 0 / 30%);
-    margin-right: 20px;
+    margin: 8px;
     transition: 100ms ease-in;
-    width: 240px;
+    width: calc(25% - 16px);
+}
+
+.noteContents:nth-of-type(4n+1) {
+    order: 1;
+}
+
+.noteContents:nth-of-type(4n+2) {
+    order: 2;
+}
+
+.noteContents:nth-of-type(4n+3) {
+    order: 3;
+}
+
+.noteContents:nth-of-type(4n) {
+    order: 4;
 }
 
 .noteContents:hover {
-    box-shadow: 0 0 2px rgb(0 0 0 / 50%);
+    box-shadow: 0 0 2px rgb(0 0 0 / 30%), 0 0 10px rgb(0 0 0 / 10%)
 }
 
 .noteTitle {
-    font-size: 24px;
+    font-size: 20px;
 }
