@@ -13,7 +13,7 @@ export default function CreateNote() {
     async function handleNoteSubmit(e) {
         e.preventDefault();
 
-        if (title && content) {
+        if (content) {
             await addDoc(collection(db, 'notes'), {
                 title,
                 content

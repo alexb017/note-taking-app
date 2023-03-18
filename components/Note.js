@@ -5,7 +5,7 @@ export default function Note(props) {
 
     return (
         <div className={styles.noteContents} style={{}}>
-            <div className={styles.noteTitle} aria-multiline="true" role="textbox" contentEditable="true" suppressContentEditableWarning="true">{details.title}</div>
+            {details.title && <div className={styles.noteTitle} aria-multiline="true" role="textbox" contentEditable="true" suppressContentEditableWarning="true">{details.title}</div>}
             <div className={styles.noteContent} aria-multiline="true" role="textbox" contentEditable="true" suppressContentEditableWarning="true">{details.content}</div>
         </div>
     )

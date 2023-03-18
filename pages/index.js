@@ -22,7 +22,7 @@ export default function Notes({ data }) {
     const divs = document.querySelectorAll('.Note_noteContents__N62xp');
     const divsArray = [...divs];
     const divsHeight = divsArray.reduce((total, current) => total + current.clientHeight, 0);
-    const divHeight = (Number.parseInt(divsHeight) / Number.parseInt(data.length)) * 3;
+    const divHeight = (Number.parseInt(divsHeight) / Number.parseInt(data.length)) * 4;
     setHeightDiv(divHeight);
   }, [heightDiv])
 
