@@ -1,4 +1,5 @@
 .noteContents {
+    position: relative;
     background-color: var(--white);
     padding: 20px;
     border-radius: 8px;
@@ -30,4 +31,55 @@
 
 .noteTitle {
     font-size: 20px;
+}
+
+.btnSettings {
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+    display: flex;
+    padding: 8px;
+    background-color: transparent;
+    transition: 100ms ease-in;
+    border-radius: 50%;
+    color: var(--secondary-3);
+    margin: 4px;
+}
+
+.btnSettings:hover {
+    background-color: var(--secondary-2);
+}
+
+.modalSettings {
+    position: absolute;
+    top: 48px;
+    right: -71px;
+    background-color: var(--white);
+    box-shadow: 0 10px 40px rgb(0 0 0 / 20%);
+    display: flex;
+    flex-direction: column;
+    z-index: 9;
+    border-radius: 8px;
+}
+
+.modalBtn {
+    padding: 4px 16px;
+    cursor: pointer;
+    background-color: transparent;
+    transition: 100ms ease-in;
+}
+
+.modalBtn:first-child {
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
+}
+
+.modalBtn:last-child {
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+
+.modalBtn:hover {
+    background-color: var(--secondary-2);
 }

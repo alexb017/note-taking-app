@@ -7,8 +7,10 @@ import { collection, getDocs, doc, deleteDoc, updateDoc } from "firebase/firesto
 import CreateNote from './CreateNote';
 import Note from "../components/Note";
 import { useEffect, useState } from 'react';
+import Loader from "../components/Loader"
 
 export default function Notes({ data }) {
+  const [loading, setLoading] = useState(true);
   const [heightDiv, setHeightDiv] = useState(0);
 
   async function updateNote(newNote) {
