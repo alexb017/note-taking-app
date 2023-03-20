@@ -61,6 +61,7 @@
     flex-direction: column;
     z-index: 9;
     border-radius: 8px;
+    padding: 8px 0;
 }
 
 .modalBtn {
@@ -68,16 +69,6 @@
     cursor: pointer;
     background-color: transparent;
     transition: 100ms ease-in;
-}
-
-.modalBtn:first-child {
-    border-top-right-radius: 8px;
-    border-top-left-radius: 8px;
-}
-
-.modalBtn:last-child {
-    border-bottom-right-radius: 8px;
-    border-bottom-left-radius: 8px;
 }
 
 .modalBtn:hover {

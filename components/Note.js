@@ -1,11 +1,26 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import styles from "./Note.module.css";
 import NoteModal from "./NoteModal";
 
 export default function Note(props) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isModalSettingsOpen, setIsModalSettingsOpen] = useState(false);
+    const modalRef = useRef();
     const { details } = props;
+
+    useEffect(() => {
+        function handleOutsideClick(e) {
+            if (modalRef.current && !modalRef.current.contains(e.target)) {
+                setIsModalSettingsOpen(false);
+            }
+        }
+
+        document.addEventListener('mousedown', handleOutsideClick);
+
+        return () => {
+            document.removeEventListener('mousedown', handleOutsideClick);
+        }
+    }, [modalRef, isModalSettingsOpen])
 
     function openModal() {
         setIsModalOpen(true);
@@ -21,7 +36,7 @@ export default function Note(props) {
 
     return (
         <div className={styles.noteContents}>
-            <div onClick={openModal}>
+            <div onClick={openModal} ref={modalRef}>
                 {details.title && <div className={styles.noteTitle} aria-multiline="true" role="textbox">{details.title}</div>}
                 <div className={styles.noteContent} aria-multiline="true" role="textbox">{details.content}</div>
             </div>
