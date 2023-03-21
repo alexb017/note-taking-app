@@ -42,6 +42,77 @@
     background-color: var(--secondary-2);
 }
 
+.bgColorsContent,
+.reminderContent {
+    position: relative;
+}
+
+.modalColors,
+.modalReminder {
+    position: absolute;
+    top: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--white);
+    border-radius: 8px;
+    padding: 8px 16px;
+    box-shadow: 0 10px 40px rgb(0 0 0 / 20%);
+    z-index: 99;
+}
+
+.modalReminder {
+    display: flex;
+    flex-direction: column;
+    padding: 8px 0;
+    width: 200px;
+}
+
+.reminder {
+    padding: 4px 16px;
+}
+
+button.reminder {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    color: var(--secondary-3);
+    background-color: transparent;
+    transition: 100ms ease-in;
+}
+
+button.reminder:hover {
+    background-color: var(--secondary-2);
+}
+
+.modalColors {
+    display: flex;
+    flex-direction: column;
+}
+
+.modalColors p {
+    padding-top: 4px;
+}
+
+.listColors {
+    display: flex;
+    flex-direction: row;
+    padding: 4px 0;
+}
+
+.color {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    margin: 4px;
+    border: 1px solid transparent;
+    transition: 100ms ease-in;
+}
+
+.color:hover {
+    border: 1px solid var(--secondary-3);
+}
+
 .btnSubmit {
     cursor: pointer;
     display: flex;
