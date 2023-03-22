@@ -22,9 +22,6 @@ body {
   line-height: 1.6;
   color: var(--black);
   font-weight: 400;
-  /* background-image: radial-gradient(var(--secondary-2) 2px, transparent 2px);
-  background-size: 32px 32px;
-  background-color: var(--white); */
 }
 
 * {
@@ -65,8 +62,6 @@ strong {
 
 hr {
   border: 1px solid var(--secondary-2);
-  margin-top: 48px;
-  margin-bottom: 48px;
 }
 
 p svg {
