@@ -13,7 +13,7 @@ export default function CreateNote() {
     const modalReminderRef = useRef(null);
     const btnColorsRef = useRef(null);
     const btnReminderRef = useRef(null);
-    const [backgroundColor, setBackgroundColor] = useState('#fff');
+    const [backgroundColor, setBackgroundColor] = useState('#ffffff');
 
     const router = useRouter();
 
@@ -80,13 +80,7 @@ export default function CreateNote() {
     }
 
     function addBackgroundColorClick(color) {
-        if (backgroundColor !== "#fff") {
-            setBackgroundColor('#fff');
-        } else {
-            setBackgroundColor(color);
-        }
-
-        //setBgForm(color);
+        setBackgroundColor(color);
     }
 
     return (
@@ -121,6 +115,7 @@ export default function CreateNote() {
                             {modalColors && <div className={styles.modalColors} ref={modalColorsRef}>
                                 <p>Background options</p>
                                 <div className={styles.listColors}>
+                                    <div className={styles.color} style={{ backgroundColor: '#ffffff' }} onClick={() => addBackgroundColorClick('#ffffff')}></div>
                                     <div className={styles.color} style={{ backgroundColor: '#fff475' }} onClick={() => addBackgroundColorClick('#fff475')}></div>
                                     <div className={styles.color} style={{ backgroundColor: '#c7ebb3' }} onClick={() => addBackgroundColorClick('#c7ebb3')}></div>
                                     <div className={styles.color} style={{ backgroundColor: '#f4dfcd' }} onClick={() => addBackgroundColorClick('#f4dfcd')}></div>
