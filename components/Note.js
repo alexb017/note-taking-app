@@ -36,7 +36,7 @@ export default function Note(props) {
     }
 
     return (
-        <div className={styles.noteContents}>
+        <div className={styles.noteContents} style={{ backgroundColor: details.backgroundColor }}>
 
             <div onClick={openModal}>
                 {details.title && <div className={styles.noteTitle} aria-multiline="true" role="textbox">{details.title}</div>}

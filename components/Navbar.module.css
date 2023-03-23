@@ -1,13 +1,9 @@
-.nav {
-    grid-column-start: 2;
-}
-
 .navContent {
     display: flex;
-    flex-direction: column;
+    align-items: center;
     justify-content: space-between;
-    height: 100%;
-    padding: 20px 0;
+    border-bottom: 1px solid var(--secondary-2);
+    padding: 20px;
 }
 
 .navTitle {
@@ -15,39 +11,58 @@
     font-weight: 700;
     display: flex;
     align-items: center;
-    padding: 0 24px;
 }
 
 .navTitle svg {
     margin-right: 8px;
 }
 
-.navUl {
-    list-style-type: none;
-    margin-top: 20px;
+.notesSettings {
+    position: relative;
 }
 
-.navLi a {
+.notesSettingsBtn {
     display: flex;
     align-items: center;
     padding: 12px 24px;
     border-radius: 100px;
     font-weight: 500;
+    cursor: pointer;
+    transition: 100ms ease-in;
+    background-color: var(--secondary-2);
+}
+
+.notesSettingsBtn svg {
+    margin-right: 8px;
+}
+
+.modalSettings {
+    position: absolute;
+    right: 0;
+    width: 206px;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--white);
+    border-radius: 8px;
+    padding: 8px 0;
+    box-shadow: 0 10px 40px rgb(0 0 0 / 20%);
+    z-index: 99;
+}
+
+.modalSettings p {
+    padding: 4px 16px;
+}
+
+.btnAppearance {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    padding: 4px 16px;
+    background-color: transparent;
     transition: 100ms ease-in;
 }
 
-.navLi a:hover:not(.active) {
-    background-color: var(--secondary-4);
-}
-
-.navLi a svg {
-    margin-right: 24px;
-}
-
-.active {
-    background-color: var(--primary-2);
-}
-
-.navBottom p {
-    font-size: 14px;
+.btnAppearance:hover {
+    background-color: var(--secondary-2);
 }

@@ -1,13 +1,17 @@
-import Navbar from '@/components/Navbar'
-import '@/styles/globals.css'
+import Nav from '@/components/Nav';
+import Navbar from '@/components/Navbar';
+import '@/styles/globals.css';
 
 export default function App({ Component, pageProps }) {
   return (
-    <div className='container'>
+    <>
       <Navbar />
-      <main className='main'>
-        <Component {...pageProps} />
-      </main>
-    </div>
+      <div className='container'>
+        <Nav />
+        <main className='main'>
+          <Component {...pageProps} />
+        </main>
+      </div>
+    </>
   )
 }

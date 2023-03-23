@@ -76,13 +76,44 @@ textarea {
 
 .container {
   display: grid;
-  grid-template-columns: 1fr minmax(auto, 240px) minmax(auto, 1280px) 1fr;
-  column-gap: 48px;
+  grid-template-columns: 300px 1fr;
   height: 100vh;
 }
 
 .main {
-  padding: 20px 0;
+  grid-column-start: 2;
+}
+
+.item:nth-of-type(6n+1) {
+  order: 1;
+}
+
+.item:nth-of-type(6n+2) {
+  order: 2;
+}
+
+.item:nth-of-type(6n+3) {
+  order: 3;
+}
+
+.item:nth-of-type(6n+4) {
+  order: 4;
+}
+
+.item:nth-of-type(6n+5) {
+  order: 5;
+}
+
+.item:nth-of-type(6n) {
+  order: 6;
+}
+
+.break {
+  flex-basis: 100%;
+  width: 0;
+  margin: 0;
+  content: "";
+  padding: 0;
 }
 
 /* Loader */

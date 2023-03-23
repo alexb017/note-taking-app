@@ -1,3 +1,7 @@
+.notes {
+    padding: 20px;
+}
+
 .noteContentAdd {
     display: flex;
     justify-content: space-between;
@@ -8,14 +12,6 @@
     display: flex;
     flex-flow: column wrap;
     align-content: space-between;
-}
-
-.notesContentFlex::before,
-.notesContentFlex::after {
-    content: "";
-    flex-basis: 100%;
-    width: 0;
-    order: 2;
 }
 
 .notesSettings {

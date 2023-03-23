@@ -17,6 +17,10 @@ export default function Notes({ data }) {
   const btnRef = useRef(null);
 
   useEffect(() => {
+    setLoading(false);
+  }, []);
+
+  useEffect(() => {
     function handleOutsideClick(e) {
       if (modalRef.current && !modalRef.current.contains(e.target) && !btnRef.current.contains(e.target)) {
         setShowModalSettings(false);
@@ -98,9 +102,16 @@ export default function Notes({ data }) {
           </div>
 
           <div className={styles.notesContentFlex} style={{ height: heightDiv }}>
+            {loading && <Loader />}
             {data.map(note => {
               return <Note key={note.id} details={note} onUpdateNote={updateNote} />
             })}
+
+            <span className="item break"></span>
+            <span className="item break"></span>
+            <span className="item break"></span>
+            <span className="item break"></span>
+            <span className="item break"></span>
           </div>
 
         </div>

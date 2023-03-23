@@ -3,7 +3,7 @@
     padding: 20px 0 12px;
     border-radius: 8px;
     box-shadow: 0 0 2px rgb(0 0 0 / 30%), 0 0 10px rgb(0 0 0 / 10%);
-    width: 440px;
+    width: 640px;
 }
 
 .formContent {
@@ -101,12 +101,13 @@ button.reminder:hover {
 }
 
 .color {
-    width: 24px;
-    height: 24px;
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
-    margin: 4px;
+    margin: 2px;
     border: 1px solid transparent;
     transition: 100ms ease-in;
+    cursor: pointer;
 }
 
 .color:hover {
@@ -116,8 +117,8 @@ button.reminder:hover {
 .btnSubmit {
     cursor: pointer;
     display: flex;
-    padding: 8px 24px;
-    background-color: var(--secondary-4);
+    padding: 8px 16px;
+    background-color: var(--secondary-2);
     border-radius: 100px;
-    color: var(--primary-3);
+    color: var(--secondary-3);
 }

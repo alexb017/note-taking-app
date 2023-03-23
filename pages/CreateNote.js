@@ -13,6 +13,7 @@ export default function CreateNote() {
     const modalReminderRef = useRef(null);
     const btnColorsRef = useRef(null);
     const btnReminderRef = useRef(null);
+    const [backgroundColor, setBackgroundColor] = useState('#fff');
 
     const router = useRouter();
 
@@ -51,7 +52,8 @@ export default function CreateNote() {
         if (content) {
             await addDoc(collection(db, 'notes'), {
                 title,
-                content
+                content,
+                backgroundColor
             });
 
             setTitle('');
@@ -77,11 +79,21 @@ export default function CreateNote() {
         }
     }
 
+    function addBackgroundColorClick(color) {
+        if (backgroundColor !== "#fff") {
+            setBackgroundColor('#fff');
+        } else {
+            setBackgroundColor(color);
+        }
+
+        //setBgForm(color);
+    }
+
     return (
-        <div className={styles.form}>
+        <div className={styles.form} style={{ backgroundColor: backgroundColor }}>
             <form className={styles.formContent} onSubmit={handleNoteSubmit}>
                 <input type="text" placeholder="Title" value={title} onChange={(e) => setTitle(e.target.value)} />
-                <textarea type="text" placeholder="Take a note..." value={content} onChange={(e) => setContent(e.target.value)} required />
+                <textarea type="text" rows="1" placeholder="Take a note..." value={content} onChange={(e) => setContent(e.target.value)} required />
                 <div className={styles.formOptions}>
                     <div className={styles.formOptionsLeft}>
 
@@ -109,11 +121,11 @@ export default function CreateNote() {
                             {modalColors && <div className={styles.modalColors} ref={modalColorsRef}>
                                 <p>Background options</p>
                                 <div className={styles.listColors}>
-                                    <div className={styles.color} style={{ backgroundColor: '#d3f8e2' }}></div>
-                                    <div className={styles.color} style={{ backgroundColor: '#e4c1f9' }}></div>
-                                    <div className={styles.color} style={{ backgroundColor: '#f694c1' }}></div>
-                                    <div className={styles.color} style={{ backgroundColor: '#ede7b1' }}></div>
-                                    <div className={styles.color} style={{ backgroundColor: '#a9def9' }}></div>
+                                    <div className={styles.color} style={{ backgroundColor: '#fff475' }} onClick={() => addBackgroundColorClick('#fff475')}></div>
+                                    <div className={styles.color} style={{ backgroundColor: '#c7ebb3' }} onClick={() => addBackgroundColorClick('#c7ebb3')}></div>
+                                    <div className={styles.color} style={{ backgroundColor: '#f4dfcd' }} onClick={() => addBackgroundColorClick('#f4dfcd')}></div>
+                                    <div className={styles.color} style={{ backgroundColor: '#ffd5f8' }} onClick={() => addBackgroundColorClick('#ffd5f8')}></div>
+                                    <div className={styles.color} style={{ backgroundColor: '#a9def9' }} onClick={() => addBackgroundColorClick('#a9def9')}></div>
                                 </div>
                             </div>}
                         </div>
