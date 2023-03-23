@@ -6,6 +6,7 @@
   --primary-1: #d4e3f7;
   --primary-2: #f5ff80;
   --primary-3: #31643f;
+  --primary-4: #fff475;
 
   --secondary: #999999;
   --secondary-1: #dbdbdb;
@@ -77,7 +78,6 @@ textarea {
 .container {
   display: grid;
   grid-template-columns: 300px 1fr;
-  height: 100vh;
 }
 
 .main {

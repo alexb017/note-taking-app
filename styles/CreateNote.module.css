@@ -82,7 +82,7 @@ button.reminder {
 }
 
 button.reminder:hover {
-    background-color: var(--secondary-2);
+    background-color: rgb(0 0 0 / 7.5%);
 }
 
 .modalColors {
