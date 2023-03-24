@@ -6,6 +6,7 @@ import db from "../components/firebase";
 import { collection, getDocs, doc, deleteDoc, updateDoc } from "firebase/firestore";
 import CreateNote from './CreateNote';
 import Note from "../components/Note";
+import NoteModal from '@/components/NoteModal';
 import { useEffect, useState, useRef } from 'react';
 import Loader from "../components/Loader";
 
@@ -15,9 +16,12 @@ export default function Notes({ data }) {
   const [showModalSettings, setShowModalSettings] = useState(false);
   const modalRef = useRef(null);
   const btnRef = useRef(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedNote, setSelectedNote] = useState(null);
 
   useEffect(() => {
     setLoading(false);
+    console.log(data)
   }, []);
 
   useEffect(() => {
@@ -55,6 +59,10 @@ export default function Notes({ data }) {
     } else {
       setShowModalSettings(true);
     }
+  }
+
+  function openModal() {
+    setIsModalOpen(true);
   }
 
   return (
@@ -104,7 +112,7 @@ export default function Notes({ data }) {
           <div className={styles.notesContentFlex} style={{ height: heightDiv }}>
             {loading && <Loader />}
             {data.map(note => {
-              return <Note key={note.id} details={note} onUpdateNote={updateNote} />
+              return <Note key={note.id} details={note} onUpdateNote={updateNote} data={data} />
             })}
 
             <span className="item break"></span>
@@ -122,9 +130,9 @@ export default function Notes({ data }) {
 
 export async function getServerSideProps() {
   const querySnapshot = await getDocs(collection(db, "notes"));
-  const data = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
+  const data = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 
   return {
     props: { data }
-  }
+  };
 }
