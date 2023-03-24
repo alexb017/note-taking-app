@@ -4,7 +4,7 @@
 
 .noteContentAdd {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     margin-bottom: 20px;
 }
 
@@ -12,54 +12,4 @@
     display: flex;
     flex-flow: column wrap;
     align-content: space-between;
-}
-
-.notesSettings {
-    position: relative;
-}
-
-.notesSettingsBtn {
-    display: flex;
-    align-items: center;
-    padding: 12px 24px;
-    border-radius: 100px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: 100ms ease-in;
-    background-color: var(--secondary-2);
-}
-
-.notesSettingsBtn svg {
-    margin-right: 8px;
-}
-
-.modalSettings {
-    position: absolute;
-    right: 0;
-    width: 206px;
-    display: flex;
-    flex-direction: column;
-    background-color: var(--white);
-    border-radius: 8px;
-    padding: 8px 0;
-    box-shadow: 0 10px 40px rgb(0 0 0 / 20%);
-    z-index: 99;
-}
-
-.modalSettings p {
-    padding: 4px 16px;
-}
-
-.btnAppearance {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    cursor: pointer;
-    padding: 4px 16px;
-    background-color: transparent;
-    transition: 100ms ease-in;
-}
-
-.btnAppearance:hover {
-    background-color: var(--secondary-2);
 }

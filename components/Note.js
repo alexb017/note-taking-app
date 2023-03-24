@@ -13,7 +13,6 @@ export default function Note(props) {
     const { details } = props;
     const router = useRouter();
     const [selectedNote, setSelectedNote] = useState(null);
-    console.log(selectedNote)
 
     useEffect(() => {
         function handleOutsideClick(e) {
@@ -42,8 +41,14 @@ export default function Note(props) {
     }
 
     const handleNoteClick = (noteId) => {
+        router.push(`/?id=${noteId}`);
         setSelectedNote(props.data.find(note => note.id === noteId));
     }
+
+    const handleModalClose = () => {
+        setSelectedNote(null)
+        router.replace('/', undefined, { shallow: true });
+    };
 
     return (
         <>
@@ -53,14 +58,14 @@ export default function Note(props) {
                     {details.title && <p className={styles.noteTitle}>{details.title}</p>}
                     <p className={styles.noteContent}>{details.content}</p>
                     {details.date || details.time ?
-                        <div className={styles.dateTimeContent}>
+                        <button type="button" className={styles.dateTimeBtn}>
                             <p className={styles.dateTime}>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 256 256"><path d="M128 24a104 104 0 1 0 104 104A104.11 104.11 0 0 0 128 24Zm0 192a88 88 0 1 1 88-88a88.1 88.1 0 0 1-88 88Zm64-88a8 8 0 0 1-8 8h-56a8 8 0 0 1-8-8V72a8 8 0 0 1 16 0v48h48a8 8 0 0 1 8 8Z" /></svg>
                                 {`${details.date} ${details.time}`}</p>
-                        </div> : ""}
+                        </button> : ""}
                 </div>
 
-                {selectedNote && <NoteModal details={selectedNote} onClose={() => setSelectedNote(null)} />}
+                {selectedNote && <NoteModal details={selectedNote} onClose={handleModalClose} />}
 
 
                 <button type="button" className={styles.btnSettings} onClick={toggleModalSettings} ref={btnRef}>

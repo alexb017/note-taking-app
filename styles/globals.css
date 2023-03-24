@@ -78,48 +78,12 @@ textarea {
 }
 
 .container {
-  display: grid;
-  grid-template-columns: 300px 1fr;
+  width: 1280px;
+  margin: 0 auto;
 }
 
-.main {
-  grid-column-start: 2;
-  position: sticky;
-  top: 0;
-  height: 100vh;
-}
+.main {}
 
-.item:nth-of-type(6n+1) {
-  order: 1;
-}
-
-.item:nth-of-type(6n+2) {
-  order: 2;
-}
-
-.item:nth-of-type(6n+3) {
-  order: 3;
-}
-
-.item:nth-of-type(6n+4) {
-  order: 4;
-}
-
-.item:nth-of-type(6n+5) {
-  order: 5;
-}
-
-.item:nth-of-type(6n) {
-  order: 6;
-}
-
-.break {
-  flex-basis: 100%;
-  width: 0;
-  margin: 0;
-  content: "";
-  padding: 0;
-}
 
 /* Loader */
 .loader {
