@@ -3,14 +3,14 @@
     background-color: var(--white);
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 0 2px rgb(0 0 0 / 30%);
+    box-shadow: 0 0 1px rgb(0 0 0 / 30%), 0 0 5px rgb(0 0 0 / 10%);
     margin: 8px;
     transition: 100ms ease-in;
     width: calc(25% - 16px);
 }
 
 .noteContents:hover {
-    box-shadow: 0 0 2px rgb(0 0 0 / 30%), 0 0 10px rgb(0 0 0 / 10%)
+    box-shadow: 0 0 1px rgb(0 0 0 / 30%), 0 0 10px rgb(0 0 0 / 10%)
 }
 
 .noteTitle {

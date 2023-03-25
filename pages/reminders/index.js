@@ -21,7 +21,7 @@ export default function Reminders({ data }) {
             <h1>Reminders</h1>
             <p>Notes with upcoming reminders appear here</p>
             <div className="notesContentFlex" style={{ height: heightDiv }}>
-                {data.filter(note => note.date !== '' || note.time !== '').map(note => {
+                {data.filter(note => note.dateTime !== '').map(note => {
                     return <Note key={note.id} details={note} />
                 })}
             </div>

@@ -14,6 +14,7 @@ export default function CreateNote() {
     const btnColorsRef = useRef(null);
     const btnReminderRef = useRef(null);
     const [backgroundColor, setBackgroundColor] = useState('#ffffff');
+    const [date, setDate] = useState('');
 
     const router = useRouter();
 
@@ -53,7 +54,8 @@ export default function CreateNote() {
             await addDoc(collection(db, 'notes'), {
                 title,
                 content,
-                backgroundColor
+                backgroundColor,
+                dateTime: date
             });
 
             setTitle('');
@@ -79,6 +81,11 @@ export default function CreateNote() {
         }
     }
 
+    function addReminderClick(reminder) {
+        setDate(reminder);
+        setModalReminder(false)
+    }
+
     function addBackgroundColorClick(color) {
         setBackgroundColor(color);
     }
@@ -88,6 +95,13 @@ export default function CreateNote() {
             <form className={styles.formContent} onSubmit={handleNoteSubmit}>
                 <input type="text" placeholder="Title" value={title} onChange={(e) => setTitle(e.target.value)} />
                 <textarea type="text" rows="1" placeholder="Take a note..." value={content} onChange={(e) => setContent(e.target.value)} required />
+                {date && (
+                    <button type="button" className={styles.dateTimeBtn}>
+                        <p className={styles.dateTime}>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 256 256"><path d="M128 24a104 104 0 1 0 104 104A104.11 104.11 0 0 0 128 24Zm0 192a88 88 0 1 1 88-88a88.1 88.1 0 0 1-88 88Zm64-88a8 8 0 0 1-8 8h-56a8 8 0 0 1-8-8V72a8 8 0 0 1 16 0v48h48a8 8 0 0 1 8 8Z" /></svg>
+                            {date}</p>
+                    </button>
+                )}
                 <div className={styles.formOptions}>
                     <div className={styles.formOptionsLeft}>
 
@@ -97,7 +111,7 @@ export default function CreateNote() {
                             </button>
                             {modalReminder && <div className={styles.modalReminder} ref={modalReminderRef}>
                                 <p className={styles.reminder}>Pick date & time</p>
-                                <button type="button" className={styles.reminder}>
+                                <button type="button" className={styles.reminder} onClick={() => addReminderClick('Mar 29, 2023 1:30 PM')}>
                                     <span>Mar 21, 2023</span>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 256 256"><path d="M197.66 69.66L83.31 184H168a8 8 0 0 1 0 16H64a8 8 0 0 1-8-8V88a8 8 0 0 1 16 0v84.69L186.34 58.34a8 8 0 0 1 11.32 11.32Z" /></svg>
                                 </button>

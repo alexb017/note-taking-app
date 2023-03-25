@@ -57,12 +57,12 @@ export default function Note(props) {
                 <div onClick={() => handleNoteClick(details.id)}>
                     {details.title && <p className={styles.noteTitle}>{details.title}</p>}
                     <p className={styles.noteContent}>{details.content}</p>
-                    {details.date || details.time ?
+                    {details.dateTime &&
                         <button type="button" className={styles.dateTimeBtn}>
                             <p className={styles.dateTime}>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 256 256"><path d="M128 24a104 104 0 1 0 104 104A104.11 104.11 0 0 0 128 24Zm0 192a88 88 0 1 1 88-88a88.1 88.1 0 0 1-88 88Zm64-88a8 8 0 0 1-8 8h-56a8 8 0 0 1-8-8V72a8 8 0 0 1 16 0v48h48a8 8 0 0 1 8 8Z" /></svg>
-                                {`${details.date} ${details.time}`}</p>
-                        </button> : ""}
+                                {details.dateTime}</p>
+                        </button>}
                 </div>
 
                 {selectedNote && <NoteModal details={selectedNote} onClose={handleModalClose} />}
@@ -74,7 +74,7 @@ export default function Note(props) {
 
                 {isModalSettingsOpen &&
                     (<div className={styles.modalSettings} ref={modalRef}>
-                        <button type="button" className={styles.modalBtn}>
+                        <button type="button" className={styles.modalBtn} onClick={() => props.onDeleteNote(details.id)}>
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 256 256"><path d="M216 48h-40v-8a24 24 0 0 0-24-24h-48a24 24 0 0 0-24 24v8H40a8 8 0 0 0 0 16h8v144a16 16 0 0 0 16 16h128a16 16 0 0 0 16-16V64h8a8 8 0 0 0 0-16ZM96 40a8 8 0 0 1 8-8h48a8 8 0 0 1 8 8v8H96Zm96 168H64V64h128Zm-80-104v64a8 8 0 0 1-16 0v-64a8 8 0 0 1 16 0Zm48 0v64a8 8 0 0 1-16 0v-64a8 8 0 0 1 16 0Z" /></svg>
                             Delete note</button>
                         <button type="button" className={styles.modalBtn}>

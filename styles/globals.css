@@ -85,7 +85,7 @@ textarea {
 .notesContentFlex {
   display: flex;
   flex-flow: column wrap;
-  align-content: space-between;
+  align-content: flex-start;
 }
 
 .noteContents:nth-of-type(4n+1) {
@@ -100,8 +100,16 @@ textarea {
   order: 3;
 }
 
-.noteContents:nth-of-type(4n+4) {
+.noteContents:nth-of-type(4n) {
   order: 4;
+}
+
+.break {
+  flex-basis: 100%;
+  width: 0;
+  margin: 0;
+  content: "";
+  padding: 0;
 }
 
 
