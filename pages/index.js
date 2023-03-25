@@ -55,7 +55,7 @@ export default function Notes({ data }) {
 
           </div>
 
-          <div className={styles.notesContentFlex} style={{ height: heightDiv }}>
+          <div className="notesContentFlex" style={{ height: heightDiv }}>
             {loading && <Loader />}
             {data.map(note => {
               return <Note key={note.id} details={note} onUpdateNote={updateNote} data={data} />

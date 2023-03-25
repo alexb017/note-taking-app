@@ -82,7 +82,27 @@ textarea {
   margin: 0 auto;
 }
 
-.main {}
+.notesContentFlex {
+  display: flex;
+  flex-flow: column wrap;
+  align-content: space-between;
+}
+
+.noteContents:nth-of-type(4n+1) {
+  order: 1;
+}
+
+.noteContents:nth-of-type(4n+2) {
+  order: 2;
+}
+
+.noteContents:nth-of-type(4n+3) {
+  order: 3;
+}
+
+.noteContents:nth-of-type(4n+4) {
+  order: 4;
+}
 
 
 /* Loader */

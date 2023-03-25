@@ -7,9 +7,3 @@
     justify-content: center;
     margin-bottom: 20px;
 }
-
-.notesContentFlex {
-    display: flex;
-    flex-flow: column wrap;
-    align-content: space-between;
-}

@@ -52,7 +52,7 @@ export default function Note(props) {
 
     return (
         <>
-            <div className={styles.noteContents} style={{ backgroundColor: details.backgroundColor }}>
+            <div className={`${styles.noteContents} noteContents`} style={{ backgroundColor: details.backgroundColor }}>
 
                 <div onClick={() => handleNoteClick(details.id)}>
                     {details.title && <p className={styles.noteTitle}>{details.title}</p>}
