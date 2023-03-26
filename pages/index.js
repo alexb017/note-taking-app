@@ -104,8 +104,8 @@ export default function Notes({ data }) {
           <div className="notesContentFlex" style={{ height: heightDiv }}>
             {loading && <Loader />}
             { }
-            {data.map(note => {
-              return <Note key={note.id} details={note} onUpdateNote={updateNote} onDeleteNote={deleteNote} data={data} />
+            {notes.filter(note => note.dateTime === '').map(note => {
+              return <Note key={note.id} details={note} onUpdateNote={updateNote} onDeleteNote={deleteNote} data={notes} />
             })}
 
             <span className="noteContents break"></span>

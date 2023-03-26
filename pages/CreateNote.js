@@ -60,6 +60,8 @@ export default function CreateNote() {
 
             setTitle('');
             setContent('');
+            setBackgroundColor('#ffffff');
+            setDate('');
             router.refresh();
         }
 

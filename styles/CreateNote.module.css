@@ -131,7 +131,7 @@ button.reminder:hover {
 .btnSubmit {
     cursor: pointer;
     display: flex;
-    padding: 8px 16px;
+    padding: 8px 24px;
     background-color: rgb(0 0 0 / 7.5%);
     border-radius: 100px;
     color: var(--secondary-3);
