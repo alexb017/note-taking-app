@@ -55,7 +55,8 @@ export default function CreateNote() {
                 title,
                 content,
                 backgroundColor,
-                dateTime: date
+                dateTime: date,
+                archive: false
             });
 
             setTitle('');

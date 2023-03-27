@@ -3,16 +3,16 @@ import Image from 'next/image';
 import styles from '@/styles/Notes.module.css';
 import Link from 'next/link';
 import db from "../components/firebase";
-import { collection, getDocs, doc, deleteDoc, updateDoc } from "firebase/firestore";
+import { collection, getDocs, doc, deleteDoc, updateDoc, query, where, getDoc } from "firebase/firestore";
 import CreateNote from './CreateNote';
 import Note from "../components/Note";
 import NoteModal from '@/components/NoteModal';
 import { useEffect, useState, useRef } from 'react';
 import Loader from "../components/Loader";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 
 export default function Notes({ data }) {
-  const [notes, setNotes] = useState([...data]);
+  const [notes, setNotes] = useState(data);
   const [loading, setLoading] = useState(true);
   const [heightDiv, setHeightDiv] = useState(0);
   const [pinned, setPinned] = useState([]);
@@ -20,12 +20,12 @@ export default function Notes({ data }) {
   const router = useRouter();
 
   useEffect(() => {
-    setLoading(false);
+    //router.replace(router.asPath)
     console.log(notes)
   }, []);
 
   useEffect(() => {
-    const divs = document.querySelectorAll('.Note_noteContents__N62xp');
+    const divs = document.querySelectorAll(".Note_noteContents__N62xp");
     const divsArray = [...divs];
     const divsHeight = divsArray.reduce((total, current) => total + current.clientHeight, 0);
     let divHeight = 0;
@@ -51,34 +51,54 @@ export default function Notes({ data }) {
 
       console.log('Document updated successfully!');
     } catch (error) {
-      console.error('Error updating document:', error);
+      console.error("Error updating document:", error);
     }
 
   }
 
   async function deleteNote(noteId) {
     try {
-      await deleteDoc(doc(db, 'notes', noteId));
+      await deleteDoc(doc(db, "notes", noteId));
       console.log(`Document with ID ${noteId} deleted successfully`);
     } catch (error) {
-      console.error('Error deleting document:', error);
+      console.error("Error deleting document:", error);
     }
 
-    router.refresh();
+    //router.refresh();
   }
 
-  async function deleteDate(noteId) {
+  async function archiveNote(noteId) {
     try {
-      await deleteDoc(doc(db, 'notes', noteId));
-      console.log(`Document with ID ${noteId} deleted successfully`);
+      const docRef = doc(db, "notes", noteId);
+      const docSnap = await getDoc(docRef);
+      const currentArchiveValue = docSnap.data().archive;
+
+      await updateDoc(doc(db, "notes", noteId), {
+        archive: !currentArchiveValue
+      });
+      console.log(`Document with ID ${noteId} update successfully`);
     } catch (error) {
-      console.error('Error deleting document:', error);
+      console.error("Error updating document:", error);
     }
+
+    //router.refresh();
   }
 
-  function isPinnedNote(noteId) {
+  async function updateDateTime(noteId) {
+    try {
+      await updateDoc(doc(db, "notes", noteId), {
+        dateTime: ""
+      });
 
+      console.log(`Document with ID ${noteId} update successfully`);
+    } catch (error) {
+      console.error("Error updating document:", error);
+    }
+
+    //router.refresh();
   }
+
+
 
   return (
     <>
@@ -102,10 +122,8 @@ export default function Notes({ data }) {
           </div>
 
           <div className="notesContentFlex" style={{ height: heightDiv }}>
-            {loading && <Loader />}
-            { }
-            {notes.filter(note => note.dateTime === '').map(note => {
-              return <Note key={note.id} details={note} onUpdateNote={updateNote} onDeleteNote={deleteNote} data={notes} />
+            {notes.map(note => {
+              return <Note key={note.id} details={note} />
             })}
 
             <span className="noteContents break"></span>
@@ -123,8 +141,13 @@ export default function Notes({ data }) {
 }
 
 export async function getServerSideProps() {
-  const querySnapshot = await getDocs(collection(db, "notes"));
-  const data = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+  const q = query(collection(db, "notes"), where("archive", "==", false));
+  const querySnapshot = await getDocs(q);
+  const data = [];
+  querySnapshot.forEach(doc => data.push({
+    id: doc.id,
+    ...doc.data()
+  }));
 
   return {
     props: { data }
