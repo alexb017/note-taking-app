@@ -10,16 +10,17 @@ import NoteModal from '@/components/NoteModal';
 import { useEffect, useState, useRef } from 'react';
 import Loader from "../components/Loader";
 import { useRouter } from "next/router";
+import NotesContainer from '@/components/NotesContainer';
 
 export default function Notes({ data }) {
   const [notes, setNotes] = useState(data);
   const [loading, setLoading] = useState(true);
-  const [heightDiv, setHeightDiv] = useState(0);
   const [pinned, setPinned] = useState([]);
   const [isPinned, useIsPinned] = useState(false);
   const router = useRouter();
   const noteRef = useRef(null);
   const [isModalSettingsOpen, setIsModalSettingsOpen] = useState(false);
+  const arrayLength = data.length;
 
   useEffect(() => {
     console.log(notes)
@@ -38,22 +39,6 @@ export default function Notes({ data }) {
       document.removeEventListener('mousedown', handleOutsideClick);
     }
   }, [noteRef, isModalSettingsOpen]);
-
-  useEffect(() => {
-    const divs = document.querySelectorAll(".Note_noteContents__N62xp");
-    const divsArray = [...divs];
-    const divsHeight = divsArray.reduce((total, current) => total + current.clientHeight, 0);
-    let divHeight = 0;
-
-    if (data.length <= 4) {
-      divHeight = Number.parseInt(divsHeight) / 2;
-    } else {
-      divHeight = (Number.parseInt(divsHeight) / Number.parseInt(data.length)) * 4;
-    }
-
-    setHeightDiv(divHeight);
-
-  }, [heightDiv]);
 
   async function updateNote(newNote) {
     try {
@@ -113,10 +98,6 @@ export default function Notes({ data }) {
     //router.refresh();
   }
 
-  function toggleModalSettings() {
-    setIsModalSettingsOpen(!isModalSettingsOpen);
-  }
-
 
   return (
     <>
@@ -139,16 +120,16 @@ export default function Notes({ data }) {
 
           </div>
 
-          <div className="notesContentFlex" style={{ height: heightDiv }}>
+          <NotesContainer arrayLength={arrayLength}>
             {notes.map(note => {
-              return <Note key={note.id} details={note} />
+              return <Note key={note.id} details={note} data={data} />
             })}
 
             <span className="noteContents break"></span>
             <span className="noteContents break"></span>
             <span className="noteContents break"></span>
 
-          </div>
+          </NotesContainer>
 
         </div>
       </div>

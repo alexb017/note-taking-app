@@ -3,36 +3,21 @@ import { collection, query, where, getDocs } from "firebase/firestore";
 import { useState, useEffect } from "react";
 import Note from "@/components/Note";
 import styles from "../../styles/Reminders.module.css";
+import NotesContainer from "@/components/NotesContainer";
 
 export default function Reminders({ data }) {
     const [notes, setNotes] = useState(data);
-    const [heightDiv, setHeightDiv] = useState(0);
-
-    useEffect(() => {
-        const divs = document.querySelectorAll(".Note_noteContents__N62xp");
-        const divsArray = [...divs];
-        const divsHeight = divsArray.reduce((total, current) => total + current.clientHeight, 0);
-        let divHeight = 0;
-
-        if (data.length <= 4) {
-            divHeight = Number.parseInt(divsHeight) / 2;
-        } else {
-            divHeight = (Number.parseInt(divsHeight) / Number.parseInt(data.length)) * 4;
-        }
-
-        setHeightDiv(divHeight);
-
-    }, [heightDiv]);
+    const arrayLength = data.length;
 
     return (
         <>
             <h1>Reminders</h1>
             <p>Notes with upcoming reminders appear here</p>
-            <div className="notesContentFlex" style={{ height: heightDiv }}>
+            <NotesContainer arrayLength={arrayLength}>
                 {notes.map(note => {
-                    return <Note key={note.id} details={note} />
+                    return <Note key={note.id} details={note} data={data} />
                 })}
-            </div>
+            </NotesContainer>
         </>
     )
 }

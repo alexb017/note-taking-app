@@ -3,36 +3,21 @@ import { collection, query, where, getDocs, getDoc, updateDoc, doc, deleteDoc } 
 import { useState, useEffect } from "react";
 import Note from "@/components/Note";
 import { useRouter } from "next/navigation";
+import NotesContainer from "@/components/NotesContainer";
 
 export default function Trash({ data }) {
     const [notes, setNotes] = useState(data);
-    const [heightDiv, setHeightDiv] = useState(0);
-
-    useEffect(() => {
-        const divs = document.querySelectorAll(".Note_noteContents__N62xp");
-        const divsArray = [...divs];
-        const divsHeight = divsArray.reduce((total, current) => total + current.clientHeight, 0);
-        let divHeight = 0;
-
-        if (data.length <= 4) {
-            divHeight = Number.parseInt(divsHeight) / 2;
-        } else {
-            divHeight = (Number.parseInt(divsHeight) / Number.parseInt(data.length)) * 4;
-        }
-
-        setHeightDiv(divHeight);
-
-    }, [heightDiv]);
+    const arrayLength = data.length;
 
     return (
         <div>
             <h1>Trash</h1>
             <p>No notes in trash</p>
-            <div className="notesContentFlex" style={{ height: heightDiv }}>
+            <NotesContainer arrayLength={arrayLength}>
                 {notes.map(note => {
-                    return <Note key={note.id} details={note} />
+                    return <Note key={note.id} details={note} data={data} />
                 })}
-            </div>
+            </NotesContainer>
         </div>
     )
 }
