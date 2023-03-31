@@ -25,23 +25,6 @@ export default function Archive({ data }) {
 
     }, [heightDiv]);
 
-    // async function archiveNote(noteId) {
-    //     try {
-    //         const docRef = doc(db, "notes", noteId);
-    //         const docSnap = await getDoc(docRef);
-    //         const currentArchiveValue = docSnap.data().archive;
-
-    //         await updateDoc(doc(db, "notes", noteId), {
-    //             archive: !currentArchiveValue
-    //         });
-    //         console.log(`Document with ID ${noteId} update successfully`);
-    //     } catch (error) {
-    //         console.error("Error updating document:", error);
-    //     }
-
-    //     router.refresh();
-    // }
-
     return (
         <div>
             <h1>Archive</h1>
@@ -56,7 +39,7 @@ export default function Archive({ data }) {
 }
 
 export async function getServerSideProps() {
-    const q = query(collection(db, "notes"), where("archive", "==", true));
+    const q = query(collection(db, "notes"), where("isArchive", "==", true), where("isDelete", "==", false));
     const querySnapshot = await getDocs(q);
     const data = [];
     querySnapshot.forEach(doc => data.push({

@@ -1,11 +1,13 @@
-import { useState } from "react";
-import styles from "./Modal.module.css";
+import { forwardRef } from "react";
 
-export default function Modal({ props }) {
-    const [isOpen, setIsOpen] = useState(false);
+const Modal = forwardRef((props, ref) => {
+    const { children, className, ...rest } = props;
+
     return (
-        <div className={styles.modal}>
-            {props.children}
+        <div className={className} ref={ref} {...rest}>
+            {children}
         </div>
     )
-}
+})
+
+export default Modal;

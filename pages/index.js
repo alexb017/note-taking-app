@@ -18,11 +18,26 @@ export default function Notes({ data }) {
   const [pinned, setPinned] = useState([]);
   const [isPinned, useIsPinned] = useState(false);
   const router = useRouter();
+  const noteRef = useRef(null);
+  const [isModalSettingsOpen, setIsModalSettingsOpen] = useState(false);
 
   useEffect(() => {
-    //router.replace(router.asPath)
     console.log(notes)
   }, []);
+
+  useEffect(() => {
+    function handleOutsideClick(e) {
+      if (noteRef.current && !noteRef.current.contains(e.target) && !noteRef.current.contains(e.target)) {
+        setIsModalSettingsOpen(false);
+      }
+    }
+
+    document.addEventListener('mousedown', handleOutsideClick);
+
+    return () => {
+      document.removeEventListener('mousedown', handleOutsideClick);
+    }
+  }, [noteRef, isModalSettingsOpen]);
 
   useEffect(() => {
     const divs = document.querySelectorAll(".Note_noteContents__N62xp");
@@ -98,6 +113,9 @@ export default function Notes({ data }) {
     //router.refresh();
   }
 
+  function toggleModalSettings() {
+    setIsModalSettingsOpen(!isModalSettingsOpen);
+  }
 
 
   return (
@@ -141,7 +159,7 @@ export default function Notes({ data }) {
 }
 
 export async function getServerSideProps() {
-  const q = query(collection(db, "notes"), where("archive", "==", false));
+  const q = query(collection(db, "notes"), where("isArchive", "==", false), where("isDelete", "==", false));
   const querySnapshot = await getDocs(q);
   const data = [];
   querySnapshot.forEach(doc => data.push({

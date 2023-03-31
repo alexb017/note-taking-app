@@ -113,27 +113,55 @@ textarea {
 }
 
 
-/* Loader */
-.loader {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 9;
-  width: 50px;
-  height: 50px;
-  border-top: 4px solid var(--black);
-  border-right: 4px solid transparent;
-  border-radius: 50%;
-  animation: 1s spin linear infinite;
+/* Modal */
+.modal {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--white);
+  border-radius: 8px;
+  padding: 8px 0px;
+  box-shadow: 0 10px 40px rgb(0 0 0 / 20%);
+  z-index: 99;
 }
 
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
+.modalNoteSettings {
+  position: absolute;
+  top: 48px;
+  right: 4px;
+}
 
-  to {
-    transform: rotate(360deg);
-  }
+.modalBtn {
+  display: flex;
+  align-items: center;
+  padding: 4px 16px;
+  cursor: pointer;
+  background-color: transparent;
+  transition: 100ms ease-in;
+}
+
+.modalBtn svg {
+  margin-right: 8px;
+}
+
+.modalBtn:first-child {
+  color: var(--primary-5);
+}
+
+.modalBtn:hover {
+  background-color: rgb(0 0 0 / 7.5%);
+}
+
+.modalCreateNote {
+  position: absolute;
+  top: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.modalReminder {
+  width: 200px;
+}
+
+.modalBgColors {
+  padding: 8px 16px;
 }

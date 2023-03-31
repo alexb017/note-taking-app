@@ -5,6 +5,7 @@ import db from "../components/firebase";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { collection, getDocs, doc, deleteDoc, updateDoc, query, where, getDoc } from "firebase/firestore";
+import Modal from "./Modal";
 
 export default function Note(props) {
     const [notes, setNotes] = useState(props.data);
@@ -15,7 +16,6 @@ export default function Note(props) {
     const { details } = props;
     const router = useRouter();
     const [selectedNote, setSelectedNote] = useState(null);
-    const routerNext = useRouter();
 
     useEffect(() => {
         function handleOutsideClick(e) {
@@ -36,11 +36,7 @@ export default function Note(props) {
     }
 
     function toggleModalSettings() {
-        if (isModalSettingsOpen) {
-            setIsModalSettingsOpen(false);
-        } else {
-            setIsModalSettingsOpen(true);
-        }
+        setIsModalSettingsOpen(!isModalSettingsOpen);
     }
 
     const handleNoteClick = (noteId) => {
@@ -55,7 +51,17 @@ export default function Note(props) {
 
     async function deleteNote(noteId) {
         try {
-            await deleteDoc(doc(db, "notes", noteId));
+            const docRef = doc(db, "notes", noteId);
+            const docSnap = await getDoc(docRef);
+            const currentDeleteValue = docSnap.data().isDelete;
+
+            if (currentDeleteValue) {
+                await deleteDoc(doc(db, "notes", noteId));
+            } else {
+                await updateDoc(doc(db, "notes", noteId), {
+                    isDelete: !currentDeleteValue
+                });
+            }
             console.log(`Document with ID ${noteId} deleted successfully`);
         } catch (error) {
             console.error("Error deleting document:", error);
@@ -68,10 +74,10 @@ export default function Note(props) {
         try {
             const docRef = doc(db, "notes", noteId);
             const docSnap = await getDoc(docRef);
-            const currentArchiveValue = docSnap.data().archive;
+            const currentArchiveValue = docSnap.data().isArchive;
 
             await updateDoc(doc(db, "notes", noteId), {
-                archive: !currentArchiveValue
+                isArchive: !currentArchiveValue
             });
             console.log(`Document with ID ${noteId} update successfully`);
         } catch (error) {
@@ -104,7 +110,7 @@ export default function Note(props) {
                 </button>
 
                 {isModalSettingsOpen &&
-                    (<div className={styles.modalSettings} ref={modalRef}>
+                    (<Modal className="modal modalNoteSettings" ref={modalRef}>
                         <button type="button" className={styles.modalBtn} onClick={() => deleteNote(details.id)}>
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 256 256"><path d="M216 48h-40v-8a24 24 0 0 0-24-24h-48a24 24 0 0 0-24 24v8H40a8 8 0 0 0 0 16h8v144a16 16 0 0 0 16 16h128a16 16 0 0 0 16-16V64h8a8 8 0 0 0 0-16ZM96 40a8 8 0 0 1 8-8h48a8 8 0 0 1 8 8v8H96Zm96 168H64V64h128Zm-80-104v64a8 8 0 0 1-16 0v-64a8 8 0 0 1 16 0Zm48 0v64a8 8 0 0 1-16 0v-64a8 8 0 0 1 16 0Z" /></svg>
                             Delete note</button>
@@ -121,7 +127,7 @@ export default function Note(props) {
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 256 256"><path d="M224 48H32a16 16 0 0 0-16 16v24a16 16 0 0 0 16 16v88a16 16 0 0 0 16 16h160a16 16 0 0 0 16-16v-88a16 16 0 0 0 16-16V64a16 16 0 0 0-16-16Zm-16 144H48v-88h160Zm16-104H32V64h192v24ZM96 136a8 8 0 0 1 8-8h48a8 8 0 0 1 0 16h-48a8 8 0 0 1-8-8Z" /></svg>
                             Archive note
                         </button>
-                    </div>)}
+                    </Modal>)}
             </div>
         </>
     )
