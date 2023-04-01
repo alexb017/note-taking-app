@@ -1,9 +1,9 @@
-.notes {
-    padding: 20px;
-}
-
 .noteContentAdd {
     display: flex;
     justify-content: center;
-    margin-bottom: 20px;
+    margin: 48px 0;
+}
+
+.pinned {
+    margin: 20px 0;
 }

@@ -8,6 +8,9 @@
   --primary-3: #31643f;
   --primary-4: #fff475;
   --primary-5: #fb5a50;
+  --primary-6: #fab005;
+
+  --primary-6-op: rgb(250 176 5 / 30%);
 
   --secondary: #999999;
   --secondary-1: #dbdbdb;
@@ -80,6 +83,7 @@ textarea {
 .container {
   width: 1280px;
   margin: 0 auto;
+  padding: 0 20px;
 }
 
 .notesContentFlex {

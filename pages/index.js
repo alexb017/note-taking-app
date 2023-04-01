@@ -16,7 +16,7 @@ export default function Notes({ data }) {
   const [notes, setNotes] = useState(data);
   const [loading, setLoading] = useState(true);
   const [pinned, setPinned] = useState([]);
-  const [isPinned, useIsPinned] = useState(false);
+  const [isPinned, setIsPinned] = useState(false);
   const router = useRouter();
   const noteRef = useRef(null);
   const [isModalSettingsOpen, setIsModalSettingsOpen] = useState(false);
@@ -56,48 +56,15 @@ export default function Notes({ data }) {
 
   }
 
-  async function deleteNote(noteId) {
-    try {
-      await deleteDoc(doc(db, "notes", noteId));
-      console.log(`Document with ID ${noteId} deleted successfully`);
-    } catch (error) {
-      console.error("Error deleting document:", error);
+  function isPinnedNote() {
+    const pinNotes = notes.filter(note => note.isPinned);
+
+    if (pinNotes.length === 0) {
+      setIsPinned(false);
+    } else {
+      setIsPinned(true);
     }
-
-    //router.refresh();
   }
-
-  async function archiveNote(noteId) {
-    try {
-      const docRef = doc(db, "notes", noteId);
-      const docSnap = await getDoc(docRef);
-      const currentArchiveValue = docSnap.data().archive;
-
-      await updateDoc(doc(db, "notes", noteId), {
-        archive: !currentArchiveValue
-      });
-      console.log(`Document with ID ${noteId} update successfully`);
-    } catch (error) {
-      console.error("Error updating document:", error);
-    }
-
-    //router.refresh();
-  }
-
-  async function updateDateTime(noteId) {
-    try {
-      await updateDoc(doc(db, "notes", noteId), {
-        dateTime: ""
-      });
-
-      console.log(`Document with ID ${noteId} update successfully`);
-    } catch (error) {
-      console.error("Error updating document:", error);
-    }
-
-    //router.refresh();
-  }
-
 
   return (
     <>
@@ -120,17 +87,42 @@ export default function Notes({ data }) {
 
           </div>
 
-          <NotesContainer arrayLength={arrayLength}>
-            {notes.map(note => {
-              return <Note key={note.id} details={note} data={data} />
-            })}
+          <div className={styles.pinned}>
+            {isPinned &&
+              <>
+                <p>PINNED</p>
+                <NotesContainer arrayLength={arrayLength}>
+                  {notes.filter(note => note.isPinned === true).map(note => {
+                    return <Note key={note.id} details={note} data={data} />
+                  })}
 
-            <span className="noteContents break"></span>
-            <span className="noteContents break"></span>
-            <span className="noteContents break"></span>
+                  <span className="noteContents break"></span>
+                  <span className="noteContents break"></span>
+                  <span className="noteContents break"></span>
 
-          </NotesContainer>
+                </NotesContainer>
+              </>
+            }
+          </div>
 
+          {arrayLength === 0 ? (
+            <div>
+              <h1>Notes</h1>
+              <p>Notes you add appear here</p>
+            </div>
+          ) :
+
+            <NotesContainer arrayLength={arrayLength}>
+              {notes.filter(note => !note.isArchive && !note.isDelete && !note.isPinned).map(note => {
+                return <Note key={note.id} details={note} data={data} />
+              })}
+
+              <span className="noteContents break"></span>
+              <span className="noteContents break"></span>
+              <span className="noteContents break"></span>
+
+            </NotesContainer>
+          }
         </div>
       </div>
 
@@ -140,7 +132,7 @@ export default function Notes({ data }) {
 }
 
 export async function getServerSideProps() {
-  const q = query(collection(db, "notes"), where("isArchive", "==", false), where("isDelete", "==", false));
+  const q = query(collection(db, "notes"));
   const querySnapshot = await getDocs(q);
   const data = [];
   querySnapshot.forEach(doc => data.push({

@@ -58,7 +58,8 @@ export default function CreateNote() {
                 backgroundColor,
                 dateTime: date,
                 isArchive: false,
-                isDelete: false
+                isDelete: false,
+                isPinned: false
             });
 
             setTitle('');

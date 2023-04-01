@@ -1,5 +1,6 @@
 .nav {
     background-color: var(--white);
+    border-bottom: 1px solid var(--secondary-1);
 }
 
 .navContent {
@@ -38,7 +39,8 @@
 }
 
 .active {
-    background-color: var(--secondary-2);
+    color: var(--black) !important;
+    background-color: var(--primary-6-op);
 }
 
 .navTitle {
@@ -50,7 +52,7 @@
 
 .navTitle svg {
     margin-right: 8px;
-    color: var(--secondary-3);
+    color: var(--primary-6);
 }
 
 .notesSettings {
@@ -66,8 +68,7 @@
     color: var(--secondary-3);
     cursor: pointer;
     transition: 100ms ease-in;
-    background-color: var(--white);
-    box-shadow: 0 0 1px rgb(0 0 0 / 30%), 0 0 10px rgb(0 0 0 / 10%);
+    background-color: var(--secondary-2);
 }
 
 .notesSettingsBtn svg {
@@ -89,6 +90,7 @@
 
 .modalSettings p {
     padding: 4px 16px;
+    font-size: 14px;
 }
 
 .btnAppearance {
@@ -97,6 +99,7 @@
     justify-content: space-between;
     cursor: pointer;
     padding: 4px 16px;
+    font-size: 14px;
     margin-top: 8px;
     background-color: transparent;
     transition: 100ms ease-in;
