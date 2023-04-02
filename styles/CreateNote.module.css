@@ -58,6 +58,10 @@
     background-color: rgb(0 0 0 / 7.5%);
 }
 
+.btn:focus {
+    background-color: rgb(0 0 0 / 7.5%);
+}
+
 .bgColorsContent,
 .reminderContent {
     position: relative;

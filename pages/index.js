@@ -16,11 +16,13 @@ export default function Notes({ data }) {
   const [notes, setNotes] = useState(data);
   const [loading, setLoading] = useState(true);
   const [pinned, setPinned] = useState([]);
+  const [pinNotes, setPinNotes] = useState([]);
   const [isPinned, setIsPinned] = useState(false);
   const router = useRouter();
   const noteRef = useRef(null);
   const [isModalSettingsOpen, setIsModalSettingsOpen] = useState(false);
-  const arrayLength = data.length;
+  const arrayLength = notes.length;
+  const arrayPinnedLength = notes.filter(note => note.isPinned).length;
 
   useEffect(() => {
     console.log(notes)
@@ -56,15 +58,17 @@ export default function Notes({ data }) {
 
   }
 
-  function isPinnedNote() {
-    const pinNotes = notes.filter(note => note.isPinned);
+  // function addPinNote(pinNote) {
+  //   const pinNote = notesPinned.filter(note => note.id === pinNote.id);
 
-    if (pinNotes.length === 0) {
-      setIsPinned(false);
-    } else {
-      setIsPinned(true);
-    }
-  }
+  //   if (pinNote) {
+  //     const updatePinNotes = pinNotes.map(note => {
+  //       if (note.id === pinNote.id) {
+  //         return { ...note }
+  //       }
+  //     })
+  //   }
+  // }
 
   return (
     <>
@@ -85,9 +89,9 @@ export default function Notes({ data }) {
             {isPinned &&
               <>
                 <p>PINNED</p>
-                <NotesContainer arrayLength={arrayLength}>
+                <NotesContainer arrayLength={arrayPinnedLength}>
                   {notes.filter(note => note.isPinned).map(note => {
-                    return <Note key={note.id} details={note} data={data} />
+                    return <Note key={note.id} details={note} data={notes} />
                   })}
 
                   <span className="noteContents break"></span>
@@ -107,8 +111,8 @@ export default function Notes({ data }) {
           ) :
 
             <NotesContainer arrayLength={arrayLength}>
-              {notes.map(note => {
-                return <Note key={note.id} details={note} data={data} />
+              {notes.filter(note => !note.isArchive && !note.isDelete && !note.isPinned).map(note => {
+                return <Note key={note.id} details={note} data={notes} />
               })}
 
               <span className="noteContents break"></span>
@@ -126,10 +130,9 @@ export default function Notes({ data }) {
 }
 
 export async function getServerSideProps() {
-  const q = query(collection(db, "notes"), where("isArchive", "==", false), where("isDelete", "==", false));
-  const querySnapshot = await getDocs(q);
-  const data = [];
-  querySnapshot.forEach(doc => data.push({
+  const documentsCollection = collection(db, "notes");
+  const documentsSnapshot = await getDocs(documentsCollection);
+  const data = documentsSnapshot.docs.map(doc => ({
     id: doc.id,
     ...doc.data()
   }));

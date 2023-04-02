@@ -8,7 +8,7 @@ import NotesContainer from "@/components/NotesContainer";
 
 export default function Archive({ data }) {
     const [notes, setNotes] = useState(data);
-    const arrayLength = data.length;
+    const arrayLength = notes.length;
 
     return (
         <>
@@ -23,7 +23,7 @@ export default function Archive({ data }) {
                 <p>Your archived notes appear here</p>
                 <NotesContainer arrayLength={arrayLength}>
                     {notes.map(note => {
-                        return <Note key={note.id} details={note} data={data} />
+                        return <Note key={note.id} details={note} data={notes} />
                     })}
                 </NotesContainer>
             </div>
@@ -34,8 +34,7 @@ export default function Archive({ data }) {
 export async function getServerSideProps() {
     const q = query(collection(db, "notes"), where("isArchive", "==", true), where("isDelete", "==", false));
     const querySnapshot = await getDocs(q);
-    const data = [];
-    querySnapshot.forEach(doc => data.push({
+    const data = querySnapshot.docs.map(doc => ({
         id: doc.id,
         ...doc.data()
     }));

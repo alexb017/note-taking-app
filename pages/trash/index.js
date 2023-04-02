@@ -8,7 +8,7 @@ import NotesContainer from "@/components/NotesContainer";
 
 export default function Trash({ data }) {
     const [notes, setNotes] = useState(data);
-    const arrayLength = data.length;
+    const arrayLength = notes.length;
 
     return (
         <>
@@ -23,7 +23,7 @@ export default function Trash({ data }) {
                 <p>No notes in trash</p>
                 <NotesContainer arrayLength={arrayLength}>
                     {notes.map(note => {
-                        return <Note key={note.id} details={note} data={data} />
+                        return <Note key={note.id} details={note} data={notes} />
                     })}
                 </NotesContainer>
             </div>
@@ -35,8 +35,7 @@ export default function Trash({ data }) {
 export async function getServerSideProps() {
     const q = query(collection(db, "notes"), where("isDelete", "==", true));
     const querySnapshot = await getDocs(q);
-    const data = [];
-    querySnapshot.forEach(doc => data.push({
+    const data = querySnapshot.docs.map(doc => ({
         id: doc.id,
         ...doc.data()
     }));

@@ -67,6 +67,10 @@
     background-color: rgb(0 0 0 / 7.5%);
 }
 
+.btnSettings:focus {
+    background-color: rgb(0 0 0 / 7.5%);
+}
+
 .modalSettings {
     position: absolute;
     top: 48px;
