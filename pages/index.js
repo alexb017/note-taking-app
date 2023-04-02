@@ -78,13 +78,7 @@ export default function Notes({ data }) {
         <div className={styles.notesContent}>
 
           <div className={styles.noteContentAdd}>
-            {/* <div>
-              <h1>Notes</h1>
-              <p>Notes you add appear here</p>
-            </div> */}
-
             <CreateNote />
-
           </div>
 
           <div className={styles.pinned}>
@@ -92,7 +86,7 @@ export default function Notes({ data }) {
               <>
                 <p>PINNED</p>
                 <NotesContainer arrayLength={arrayLength}>
-                  {notes.filter(note => note.isPinned === true).map(note => {
+                  {notes.filter(note => note.isPinned).map(note => {
                     return <Note key={note.id} details={note} data={data} />
                   })}
 
@@ -113,7 +107,7 @@ export default function Notes({ data }) {
           ) :
 
             <NotesContainer arrayLength={arrayLength}>
-              {notes.filter(note => !note.isArchive && !note.isDelete && !note.isPinned).map(note => {
+              {notes.map(note => {
                 return <Note key={note.id} details={note} data={data} />
               })}
 
@@ -132,7 +126,7 @@ export default function Notes({ data }) {
 }
 
 export async function getServerSideProps() {
-  const q = query(collection(db, "notes"));
+  const q = query(collection(db, "notes"), where("isArchive", "==", false), where("isDelete", "==", false));
   const querySnapshot = await getDocs(q);
   const data = [];
   querySnapshot.forEach(doc => data.push({

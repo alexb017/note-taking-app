@@ -7,13 +7,30 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 16px;
+    padding: 20px;
+}
+
+.btnMenuMobile {
+    display: flex;
+    cursor: pointer;
+}
+
+@media screen and (min-width: 1024px) {
+    .btnMenuMobile {
+        display: none;
+    }
 }
 
 .navUl {
-    display: flex;
-    align-items: center;
-    list-style-type: none;
+    display: none;
+}
+
+@media screen and (min-width: 1024px) {
+    .navUl {
+        display: flex;
+        align-items: center;
+        list-style-type: none;
+    }
 }
 
 .navLi:not(:last-child) {
@@ -53,6 +70,16 @@
 .navTitle svg {
     margin-right: 8px;
     color: var(--primary-6);
+}
+
+.navRight {
+    display: none;
+}
+
+@media screen and (min-width: 1024px) {
+    .navRight {
+        display: block;
+    }
 }
 
 .notesSettings {
@@ -107,4 +134,67 @@
 
 .btnAppearance:hover {
     background-color: var(--secondary-2);
+}
+
+/* menu mobile */
+.modalMenu {
+    position: fixed;
+    top: 82px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgb(255 255 255 / 30%);
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    z-index: 999;
+    padding: 20px;
+}
+
+.navUlMobile {
+    list-style-type: none;
+}
+
+.navLiMobile a {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    padding: 12px 24px;
+    border-radius: 100px;
+    color: var(--secondary-3);
+    transition: 100ms ease-in;
+}
+
+.navLiMobile a:hover:not(.active) {
+    background-color: var(--secondary-2);
+}
+
+.navLiMobile a svg {
+    margin-right: 8px;
+}
+
+.active {
+    color: var(--black) !important;
+    background-color: var(--primary-6-op);
+}
+
+.navLiMobile:last-child {
+    margin-top: 16px;
+}
+
+.modalSettingsMobile {
+    position: absolute;
+    left: 0;
+    width: 206px;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--white);
+    border-radius: 8px;
+    padding: 8px 0;
+    box-shadow: 0 10px 40px rgb(0 0 0 / 20%);
+    z-index: 99;
+}
+
+.modalSettingsMobile p {
+    padding: 4px 16px;
+    font-size: 14px;
 }

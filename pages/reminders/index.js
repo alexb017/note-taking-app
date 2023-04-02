@@ -1,3 +1,4 @@
+import Head from "next/head";
 import db from "@/components/firebase";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { useState, useEffect } from "react";
@@ -11,6 +12,12 @@ export default function Reminders({ data }) {
 
     return (
         <>
+            <Head>
+                <title>Note Taking App</title>
+                <meta name="description" content="Build a note-taking app" />
+                <meta name="viewport" content="width=device-width, initial-scale=1" />
+                <link rel="icon" href="/favicon.ico" />
+            </Head>
             <h1>Reminders</h1>
             <p>Notes with upcoming reminders appear here</p>
             <NotesContainer arrayLength={arrayLength}>

@@ -6,7 +6,19 @@
     box-shadow: 0 0 1px rgb(0 0 0 / 30%), 0 0 5px rgb(0 0 0 / 10%);
     margin: 8px;
     transition: 100ms ease-in;
-    width: calc(25% - 16px);
+    width: auto;
+}
+
+@media screen and (min-width: 800px) {
+    .noteContents {
+        width: calc(33.33% - 16px);
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    .noteContents {
+        width: calc(25% - 16px);
+    }
 }
 
 .noteContents:hover {
@@ -87,4 +99,43 @@
 
 .modalBtn:hover {
     background-color: rgb(0 0 0 / 7.5%);
+}
+
+.deleteModal {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgb(255 255 255 / 30%);
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.deleteModalContent {
+    padding: 20px;
+    border-radius: 8px;
+    background-color: var(--white);
+    box-shadow: 0 10px 40px rgb(0 0 0 / 20%);
+}
+
+.deleteModalBtns {
+    display: flex;
+    align-items: center;
+    margin-top: 16px;
+}
+
+.deleteModalBtns .modalBtn {
+    color: var(--seconday-3);
+    border-radius: 100px;
+}
+
+.deleteModalBtns .modalBtn:last-child {
+    background-color: var(--primary-5);
+    color: var(--white);
+    margin-left: 16px;
 }

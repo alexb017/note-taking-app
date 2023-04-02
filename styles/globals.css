@@ -81,7 +81,7 @@ textarea {
 }
 
 .container {
-  width: 1280px;
+  max-width: 1280px;
   margin: 0 auto;
   padding: 0 20px;
 }
@@ -158,8 +158,15 @@ textarea {
 .modalCreateNote {
   position: absolute;
   top: 40px;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 0;
+
+}
+
+@media screen and (min-width: 800px) {
+  .modalCreateNote {
+    left: 50%;
+    transform: translateX(-50%);
+  }
 }
 
 .modalReminder {
