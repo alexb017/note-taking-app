@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { collection, addDoc } from "firebase/firestore";
 import db from "../components/firebase";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 import styles from "@/styles/CreateNote.module.css";
 import Modal from "../components/Modal";
 
@@ -66,7 +66,8 @@ export default function CreateNote() {
             setContent('');
             setBackgroundColor('#ffffff');
             setDate('');
-            router.refresh();
+
+            //router.reload();
         }
 
     }

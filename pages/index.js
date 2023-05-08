@@ -3,7 +3,7 @@ import Image from 'next/image';
 import styles from '@/styles/Notes.module.css';
 import Link from 'next/link';
 import db from "../components/firebase";
-import { collection, getDocs, doc, deleteDoc, updateDoc, query, where, getDoc } from "firebase/firestore";
+import { collection, getDocs, doc, deleteDoc, updateDoc, query, where, getDoc, onSnapshot } from "firebase/firestore";
 import CreateNote from './CreateNote';
 import Note from "../components/Note";
 import NoteModal from '@/components/NoteModal';
@@ -18,6 +18,7 @@ export default function Notes({ data }) {
   const [pinned, setPinned] = useState([]);
   const [pinNotes, setPinNotes] = useState([]);
   const [isPinned, setIsPinned] = useState(false);
+  const [selectedNote, setSelectedNote] = useState(null);
   const router = useRouter();
   const noteRef = useRef(null);
   const [isModalSettingsOpen, setIsModalSettingsOpen] = useState(false);
@@ -26,7 +27,7 @@ export default function Notes({ data }) {
 
   useEffect(() => {
     console.log(notes)
-  }, []);
+  }, [notes]);
 
   useEffect(() => {
     function handleOutsideClick(e) {
@@ -42,33 +43,61 @@ export default function Notes({ data }) {
     }
   }, [noteRef, isModalSettingsOpen]);
 
-  async function updateNote(newNote) {
-    try {
-      await updateDoc(doc(db, "notes", newNote), {
-        title,
-        content,
-        backgroundColor,
-        dateTime
-      });
+  async function updateNote() {
+    const unsubscribe = onSnapshot(collection(db, "notes"), (querySnapshot) => {
+      const data = querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+      setNotes(data);
+    });
 
-      console.log('Document updated successfully!');
+    return unsubscribe;
+  }
+
+  async function deleteNote(noteId) {
+    const updatedCart = notes.filter((note) => note.id !== noteId);
+    setNotes(updatedCart);
+    console.log(updatedCart)
+
+    try {
+      const docRef = doc(db, "notes", noteId);
+      const docSnap = await getDoc(docRef);
+      const currentDeleteValue = docSnap.data().isDelete;
+
+      if (currentDeleteValue) {
+        await deleteDoc(docRef);
+      } else {
+        await updateDoc(docRef, {
+          isDelete: !currentDeleteValue
+        });
+      }
+
+      console.log(`Document with ID ${noteId} deleted successfully`);
     } catch (error) {
-      console.error("Error updating document:", error);
+      console.error("Error deleting document:", error);
     }
 
   }
 
-  // function addPinNote(pinNote) {
-  //   const pinNote = notesPinned.filter(note => note.id === pinNote.id);
+  function addPinNote(pinId) {
+    const existingPin = notes.find(note => note.id === pinId);
+    //setPinNotes([...pinNotes, { ...pinNote }]);
+    if (existingPin) {
+      setIsPinned(true);
+    }
 
-  //   if (pinNote) {
-  //     const updatePinNotes = pinNotes.map(note => {
-  //       if (note.id === pinNote.id) {
-  //         return { ...note }
-  //       }
-  //     })
-  //   }
-  // }
+  }
+
+  function handleNoteClick(noteId) {
+    router.push(`/?id=${noteId}`);
+    setSelectedNote(notes.find(note => note.id === noteId));
+  }
+
+  function handleModalClose() {
+    setSelectedNote(null)
+    router.replace('/', undefined, { shallow: true });
+  }
 
   return (
     <>
@@ -91,7 +120,7 @@ export default function Notes({ data }) {
                 <p>PINNED</p>
                 <NotesContainer arrayLength={arrayPinnedLength}>
                   {notes.filter(note => note.isPinned).map(note => {
-                    return <Note key={note.id} details={note} data={notes} />
+                    return <Note key={note.id} details={note} data={notes} onAddPinNote={addPinNote} />
                   })}
 
                   <span className="noteContents break"></span>
@@ -112,7 +141,7 @@ export default function Notes({ data }) {
 
             <NotesContainer arrayLength={arrayLength}>
               {notes.filter(note => !note.isArchive && !note.isDelete && !note.isPinned).map(note => {
-                return <Note key={note.id} details={note} data={notes} />
+                return <Note key={note.id} details={note} data={notes} onUpdateNote={updateNote} onHandleNoteClick={handleNoteClick} onHandleModalClose={handleModalClose} selectedNote={selectedNote} />
               })}
 
               <span className="noteContents break"></span>
@@ -130,9 +159,8 @@ export default function Notes({ data }) {
 }
 
 export async function getServerSideProps() {
-  const documentsCollection = collection(db, "notes");
-  const documentsSnapshot = await getDocs(documentsCollection);
-  const data = documentsSnapshot.docs.map(doc => ({
+  const querySnapshot = await getDocs(collection(db, "notes"));
+  const data = querySnapshot.docs.map(doc => ({
     id: doc.id,
     ...doc.data()
   }));

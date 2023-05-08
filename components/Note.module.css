@@ -1,7 +1,6 @@
 .noteContents {
     position: relative;
     background-color: var(--white);
-    padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 1px rgb(0 0 0 / 30%), 0 0 5px rgb(0 0 0 / 10%);
     margin: 8px;
@@ -25,27 +24,32 @@
     box-shadow: 0 0 1px rgb(0 0 0 / 30%), 0 0 10px rgb(0 0 0 / 10%)
 }
 
+.topNoteContent {
+    padding: 20px 20px 0 20px;
+}
+
 .noteTitle {
     font-size: 20px;
 }
 
 .dateTimeBtn {
     display: flex;
+    align-items: center;
     cursor: pointer;
-    margin-top: 16px;
-}
-
-.dateTime {
     font-size: 12px;
     color: var(--secondary-3);
-    background-color: rgb(0 0 0 / 7.5%);
-    padding: 4px 12px;
-    padding-left: 6px;
-    border-radius: 100px;
+    margin-top: 8px;
 }
 
-.dateTime svg {
+.dateTimeBtn svg {
     margin-right: 4px;
+}
+
+.editNoteContent {
+    margin-top: 8px;
+    margin-bottom: 20px;
+    height: 36px;
+    padding: 0 12px 0 12px;
 }
 
 .btnSettings {
@@ -59,7 +63,7 @@
     transition: 100ms ease-in;
     border-radius: 50%;
     color: var(--secondary-3);
-    margin: 4px;
+    margin: 20px;
     z-index: 1;
 }
 
@@ -71,10 +75,16 @@
     background-color: rgb(0 0 0 / 7.5%);
 }
 
+.btnsList {
+    display: flex;
+    align-items: center;
+    transition: 200ms ease-in-out;
+}
+
 .modalSettings {
     position: absolute;
     top: 48px;
-    right: 4px;
+    right: 20px;
     background-color: var(--white);
     box-shadow: 0 10px 40px rgb(0 0 0 / 20%);
     display: flex;
@@ -86,15 +96,15 @@
 
 .modalBtn {
     display: flex;
-    align-items: center;
-    padding: 4px 16px;
+    padding: 8px;
+    border-radius: 50%;
+    color: var(--secondary-3);
     cursor: pointer;
-    background-color: transparent;
-    transition: 100ms ease-in;
+    transition: 200ms ease-in-out;
 }
 
-.modalBtn svg {
-    margin-right: 8px;
+.modalBtn:hover {
+    background-color: rgb(0 0 0 / 7.5%);
 }
 
 .modalBtn:first-child {

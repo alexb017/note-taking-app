@@ -1,6 +1,6 @@
 import Head from "next/head";
 import db from "@/components/firebase";
-import { collection, query, where, getDocs, getDoc, updateDoc, doc, deleteDoc } from "firebase/firestore";
+import { collection, query, where, getDocs, getDoc, updateDoc, doc, deleteDoc, onSnapshot } from "firebase/firestore";
 import { useState, useEffect } from "react";
 import Note from "@/components/Note";
 import { useRouter } from "next/navigation";
@@ -9,6 +9,26 @@ import NotesContainer from "@/components/NotesContainer";
 export default function Trash({ data }) {
     const [notes, setNotes] = useState(data);
     const arrayLength = notes.length;
+
+    async function updateNote() {
+        const unsubscribe = onSnapshot(query(collection(db, "notes"), where("isDelete", "==", true)), (querySnapshot) => {
+            const data = querySnapshot.docs.map(doc => ({
+                id: doc.id,
+                ...doc.data()
+            }));
+            setNotes(data);
+        });
+
+        return unsubscribe;
+    }
+
+    function handleNoteClick() {
+        return;
+    }
+
+    function handleModalClose() {
+        return;
+    }
 
     return (
         <>
@@ -23,12 +43,11 @@ export default function Trash({ data }) {
                 <p>No notes in trash</p>
                 <NotesContainer arrayLength={arrayLength}>
                     {notes.map(note => {
-                        return <Note key={note.id} details={note} data={notes} />
+                        return <Note key={note.id} details={note} data={notes} onUpdateNote={updateNote} onHandleNoteClick={handleNoteClick} onHandleModalClose={handleModalClose} />
                     })}
                 </NotesContainer>
             </div>
         </>
-
     )
 }
 
