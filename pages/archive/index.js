@@ -4,6 +4,7 @@ import { collection, query, where, getDocs, getDoc, updateDoc, doc, onSnapshot }
 import { useState, useEffect } from "react";
 import Note from "@/components/Note";
 import { useRouter } from "next/router";
+import styles from "../../styles/Archive.module.css";
 import NotesContainer from "@/components/NotesContainer";
 
 export default function Archive({ data }) {
@@ -43,8 +44,10 @@ export default function Archive({ data }) {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <div>
-                <h1>Archive</h1>
-                <p>Your archived notes appear here</p>
+                <div className={styles.content}>
+                    <h1>Archive</h1>
+                    <p>Your archived notes appear here</p>
+                </div>
                 <NotesContainer arrayLength={arrayLength}>
                     {notes.map(note => {
                         return <Note key={note.id} details={note} data={notes} onUpdateNote={updateNote} onHandleNoteClick={handleNoteClick} onHandleModalClose={handleModalClose} selectedNote={selectedNote} />

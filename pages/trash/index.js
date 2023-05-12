@@ -3,7 +3,7 @@ import db from "@/components/firebase";
 import { collection, query, where, getDocs, getDoc, updateDoc, doc, deleteDoc, onSnapshot } from "firebase/firestore";
 import { useState, useEffect } from "react";
 import Note from "@/components/Note";
-import { useRouter } from "next/navigation";
+import styles from "../../styles/Trash.module.css";
 import NotesContainer from "@/components/NotesContainer";
 
 export default function Trash({ data }) {
@@ -39,8 +39,10 @@ export default function Trash({ data }) {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <div>
-                <h1>Trash</h1>
-                <p>No notes in trash</p>
+                <div className={styles.content}>
+                    <h1>Trash</h1>
+                    <p>No notes in trash</p>
+                </div>
                 <NotesContainer arrayLength={arrayLength}>
                     {notes.map(note => {
                         return <Note key={note.id} details={note} data={notes} onUpdateNote={updateNote} onHandleNoteClick={handleNoteClick} onHandleModalClose={handleModalClose} />

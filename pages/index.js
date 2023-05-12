@@ -22,7 +22,6 @@ export default function Notes({ data }) {
   const router = useRouter();
   const noteRef = useRef(null);
   const [isModalSettingsOpen, setIsModalSettingsOpen] = useState(false);
-  const arrayLength = notes.length;
   const arrayPinnedLength = notes.filter(note => note.isPinned).length;
 
   useEffect(() => {
@@ -55,33 +54,8 @@ export default function Notes({ data }) {
     return unsubscribe;
   }
 
-  async function deleteNote(noteId) {
-    const updatedCart = notes.filter((note) => note.id !== noteId);
-    setNotes(updatedCart);
-    console.log(updatedCart)
-
-    try {
-      const docRef = doc(db, "notes", noteId);
-      const docSnap = await getDoc(docRef);
-      const currentDeleteValue = docSnap.data().isDelete;
-
-      if (currentDeleteValue) {
-        await deleteDoc(docRef);
-      } else {
-        await updateDoc(docRef, {
-          isDelete: !currentDeleteValue
-        });
-      }
-
-      console.log(`Document with ID ${noteId} deleted successfully`);
-    } catch (error) {
-      console.error("Error deleting document:", error);
-    }
-
-  }
-
   function addPinNote(pinId) {
-    const existingPin = notes.find(note => note.id === pinId);
+    const existingNote = notes.find(note => note.id === pinId);
     //setPinNotes([...pinNotes, { ...pinNote }]);
     if (existingPin) {
       setIsPinned(true);
@@ -111,7 +85,7 @@ export default function Notes({ data }) {
         <div className={styles.notesContent}>
 
           <div className={styles.noteContentAdd}>
-            <CreateNote />
+            <CreateNote onUpdateNote={updateNote} />
           </div>
 
           <div className={styles.pinned}>
@@ -132,14 +106,14 @@ export default function Notes({ data }) {
             }
           </div>
 
-          {arrayLength === 0 ? (
+          {notes.length === 0 ? (
             <div>
               <h1>Notes</h1>
               <p>Notes you add appear here</p>
             </div>
           ) :
 
-            <NotesContainer arrayLength={arrayLength}>
+            <NotesContainer arrayLength={notes.length}>
               {notes.filter(note => !note.isArchive && !note.isDelete && !note.isPinned).map(note => {
                 return <Note key={note.id} details={note} data={notes} onUpdateNote={updateNote} onHandleNoteClick={handleNoteClick} onHandleModalClose={handleModalClose} selectedNote={selectedNote} />
               })}

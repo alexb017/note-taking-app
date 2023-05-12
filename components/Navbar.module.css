@@ -33,17 +33,18 @@
     }
 }
 
-.navLi:not(:last-child) {
+/* .navLi:not(:last-child) {
     margin-right: 16px;
-}
+} */
 
 .navLi a {
     display: flex;
     align-items: center;
     font-size: 14px;
+    font-weight: 500;
     padding: 12px 24px;
     border-radius: 100px;
-    color: var(--secondary-3);
+    color: var(--black);
     transition: 100ms ease-in;
 }
 
@@ -56,12 +57,13 @@
 }
 
 .active {
-    color: var(--black) !important;
+    color: var(--black);
     background-color: var(--primary-6-op);
 }
 
 .navTitle {
     font-size: 24px;
+    font-weight: 500;
     color: var(--secondary-3);
     display: flex;
     align-items: center;
@@ -92,7 +94,7 @@
     font-size: 14px;
     padding: 12px 24px;
     border-radius: 100px;
-    color: var(--secondary-3);
+    color: var(--black);
     cursor: pointer;
     transition: 100ms ease-in;
     background-color: var(--secondary-2);
@@ -160,7 +162,7 @@
     font-size: 14px;
     padding: 12px 24px;
     border-radius: 100px;
-    color: var(--secondary-3);
+    color: var(--black);
     transition: 100ms ease-in;
 }
 
@@ -170,11 +172,6 @@
 
 .navLiMobile a svg {
     margin-right: 8px;
-}
-
-.active {
-    color: var(--black) !important;
-    background-color: var(--primary-6-op);
 }
 
 .navLiMobile:last-child {
