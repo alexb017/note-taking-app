@@ -10,5 +10,13 @@
 }
 
 .pinned {
-    margin: 20px 0;
+    margin: 32px 0;
+}
+
+.pinned p {
+    margin-bottom: 16px;
+}
+
+.pNotes {
+    margin-bottom: 16px;
 }

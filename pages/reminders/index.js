@@ -47,7 +47,7 @@ export default function Reminders({ data }) {
                     <h1>Reminders</h1>
                     <p>Notes with upcoming reminders appear here</p>
                 </div>
-                <NotesContainer arrayLength={notes.length}>
+                <NotesContainer>
                     {notes.map(note => {
                         return <Note key={note.id} details={note} data={notes} onUpdateNote={updateNote} onHandleNoteClick={handleNoteClick} onHandleModalClose={handleModalClose} selectedNote={selectedNote} />
                     })}

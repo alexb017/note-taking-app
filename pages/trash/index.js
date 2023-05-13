@@ -43,7 +43,7 @@ export default function Trash({ data }) {
                     <h1>Trash</h1>
                     <p>No notes in trash</p>
                 </div>
-                <NotesContainer arrayLength={arrayLength}>
+                <NotesContainer>
                     {notes.map(note => {
                         return <Note key={note.id} details={note} data={notes} onUpdateNote={updateNote} onHandleNoteClick={handleNoteClick} onHandleModalClose={handleModalClose} />
                     })}

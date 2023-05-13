@@ -54,15 +54,6 @@ export default function Notes({ data }) {
     return unsubscribe;
   }
 
-  function addPinNote(pinId) {
-    const existingNote = notes.find(note => note.id === pinId);
-    //setPinNotes([...pinNotes, { ...pinNote }]);
-    if (existingPin) {
-      setIsPinned(true);
-    }
-
-  }
-
   function handleNoteClick(noteId) {
     router.push(`/?id=${noteId}`);
     setSelectedNote(notes.find(note => note.id === noteId));
@@ -88,23 +79,15 @@ export default function Notes({ data }) {
             <CreateNote onUpdateNote={updateNote} />
           </div>
 
-          <div className={styles.pinned}>
-            {isPinned &&
-              <>
-                <p>PINNED</p>
-                <NotesContainer arrayLength={arrayPinnedLength}>
-                  {notes.filter(note => note.isPinned).map(note => {
-                    return <Note key={note.id} details={note} data={notes} onAddPinNote={addPinNote} />
-                  })}
-
-                  <span className="noteContents break"></span>
-                  <span className="noteContents break"></span>
-                  <span className="noteContents break"></span>
-
-                </NotesContainer>
-              </>
-            }
-          </div>
+          {notes.filter(note => note.isPinned).length > 0 &&
+            <div className={styles.pinned}>
+              <p>PINNED</p>
+              <NotesContainer>
+                {notes.filter(note => note.isPinned).map(note => {
+                  return <Note key={note.id} details={note} data={notes} onUpdateNote={updateNote} onHandleNoteClick={handleNoteClick} onHandleModalClose={handleModalClose} selectedNote={selectedNote} />
+                })}
+              </NotesContainer>
+            </div>}
 
           {notes.length === 0 ? (
             <div>
@@ -113,16 +96,14 @@ export default function Notes({ data }) {
             </div>
           ) :
 
-            <NotesContainer arrayLength={notes.length}>
-              {notes.filter(note => !note.isArchive && !note.isDelete && !note.isPinned).map(note => {
-                return <Note key={note.id} details={note} data={notes} onUpdateNote={updateNote} onHandleNoteClick={handleNoteClick} onHandleModalClose={handleModalClose} selectedNote={selectedNote} />
-              })}
-
-              <span className="noteContents break"></span>
-              <span className="noteContents break"></span>
-              <span className="noteContents break"></span>
-
-            </NotesContainer>
+            <>
+              <p className={styles.pNotes}>All Notes</p>
+              <NotesContainer>
+                {notes.filter(note => !note.isArchive && !note.isDelete && !note.isPinned).map(note => {
+                  return <Note key={note.id} details={note} data={notes} onUpdateNote={updateNote} onHandleNoteClick={handleNoteClick} onHandleModalClose={handleModalClose} selectedNote={selectedNote} />
+                })}
+              </NotesContainer>
+            </>
           }
         </div>
       </div>

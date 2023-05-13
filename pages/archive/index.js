@@ -48,7 +48,7 @@ export default function Archive({ data }) {
                     <h1>Archive</h1>
                     <p>Your archived notes appear here</p>
                 </div>
-                <NotesContainer arrayLength={arrayLength}>
+                <NotesContainer>
                     {notes.map(note => {
                         return <Note key={note.id} details={note} data={notes} onUpdateNote={updateNote} onHandleNoteClick={handleNoteClick} onHandleModalClose={handleModalClose} selectedNote={selectedNote} />
                     })}
