@@ -8,9 +8,8 @@ import NotesContainer from "@/components/NotesContainer";
 
 export default function Trash({ data }) {
     const [notes, setNotes] = useState(data);
-    const arrayLength = notes.length;
 
-    async function updateNote() {
+    function updateNote() {
         const unsubscribe = onSnapshot(query(collection(db, "notes"), where("isDelete", "==", true)), (querySnapshot) => {
             const data = querySnapshot.docs.map(doc => ({
                 id: doc.id,
@@ -39,15 +38,18 @@ export default function Trash({ data }) {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <div>
-                <div className={styles.content}>
-                    <h1>Trash</h1>
-                    <p>No notes in trash</p>
-                </div>
-                <NotesContainer>
-                    {notes.map(note => {
-                        return <Note key={note.id} details={note} data={notes} onUpdateNote={updateNote} onHandleNoteClick={handleNoteClick} onHandleModalClose={handleModalClose} />
-                    })}
-                </NotesContainer>
+                {notes.filter(note => note.isDelete).length > 0 ?
+                    <NotesContainer>
+                        {notes.map(note => {
+                            return <Note key={note.id} details={note} data={notes} onUpdateNote={updateNote} onHandleNoteClick={handleNoteClick} onHandleModalClose={handleModalClose} />
+                        })}
+                    </NotesContainer>
+                    :
+                    <div className={styles.content}>
+                        <h1>Trash</h1>
+                        <p>No notes in trash</p>
+                    </div>
+                }
             </div>
         </>
     )

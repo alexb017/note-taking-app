@@ -42,7 +42,7 @@ export default function Notes({ data }) {
     }
   }, [noteRef, isModalSettingsOpen]);
 
-  async function updateNote() {
+  function updateNote() {
     const unsubscribe = onSnapshot(collection(db, "notes"), (querySnapshot) => {
       const data = querySnapshot.docs.map(doc => ({
         id: doc.id,
@@ -56,11 +56,11 @@ export default function Notes({ data }) {
 
   function handleNoteClick(noteId) {
     router.push(`/?id=${noteId}`);
-    setSelectedNote(notes.find(note => note.id === noteId));
+    //setSelectedNote(notes.find(note => note.id === noteId));
   }
 
   function handleModalClose() {
-    setSelectedNote(null)
+    //setSelectedNote(null)
     router.replace('/', undefined, { shallow: true });
   }
 
@@ -81,7 +81,7 @@ export default function Notes({ data }) {
 
           {notes.filter(note => note.isPinned).length > 0 &&
             <div className={styles.pinned}>
-              <p>PINNED</p>
+              <p>Pinned</p>
               <NotesContainer>
                 {notes.filter(note => note.isPinned).map(note => {
                   return <Note key={note.id} details={note} data={notes} onUpdateNote={updateNote} onHandleNoteClick={handleNoteClick} onHandleModalClose={handleModalClose} selectedNote={selectedNote} />
@@ -97,7 +97,7 @@ export default function Notes({ data }) {
           ) :
 
             <>
-              <p className={styles.pNotes}>All Notes</p>
+              <p className={styles.pNotes}>Others</p>
               <NotesContainer>
                 {notes.filter(note => !note.isArchive && !note.isDelete && !note.isPinned).map(note => {
                   return <Note key={note.id} details={note} data={notes} onUpdateNote={updateNote} onHandleNoteClick={handleNoteClick} onHandleModalClose={handleModalClose} selectedNote={selectedNote} />

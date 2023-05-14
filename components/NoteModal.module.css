@@ -4,12 +4,187 @@
     right: 0;
     bottom: 0;
     left: 0;
-    background-color: rgb(255 255 255 / 30%);
-    -webkit-backdrop-filter: blur(20px);
-    backdrop-filter: blur(20px);
+    background-color: rgb(255 255 255 / 10%);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
     z-index: 999;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
+}
+
+.form {
+    background-color: var(--white);
+    padding: 20px 0 12px;
+    border-radius: 8px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 1px 6px;
+    width: 100%;
+}
+
+@media screen and (min-width: 800px) {
+    .form {
+        width: 540px;
+    }
+}
+
+.formContent {
+    display: flex;
+    flex-direction: column;
+}
+
+.formContent input,
+.formContent textarea {
+    padding: 0 20px 10px;
+}
+
+.formContent input::placeholder,
+.formContent textarea::placeholder {
+    font-weight: 600;
+    color: var(--secondary);
+}
+
+.formContent textarea::placeholder {
+    font-size: 14px;
+}
+
+.formOptions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 12px 0;
+}
+
+.formOptionsLeft {
+    display: flex;
+    align-items: center;
+}
+
+.btn {
+    cursor: pointer;
+    display: flex;
+    padding: 8px;
+    background-color: transparent;
+    transition: 100ms ease-in;
+    border-radius: 50%;
+    color: var(--black);
+}
+
+.btn:hover {
+    background-color: rgb(0 0 0 / 7.5%);
+}
+
+.btn:focus {
+    background-color: rgb(0 0 0 / 7.5%);
+}
+
+.bgColorsContent,
+.reminderContent,
+.bgImageChange,
+.archiveContent {
+    position: relative;
+    margin-right: 8px;
+}
+
+.modalColors,
+.modalReminder {
+    position: absolute;
+    top: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--white);
+    border-radius: 8px;
+    padding: 8px 16px;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3), 0 2px 6px 2px rgba(0, 0, 0, 0.15);
+    z-index: 99;
+}
+
+.modalReminder {
+    display: flex;
+    flex-direction: column;
+    padding: 8px 0;
+    width: 200px;
+}
+
+.reminder {
+    padding: 4px 16px;
+}
+
+button.reminder {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    color: var(--secondary-3);
+    background-color: transparent;
+    transition: 200ms ease-in;
+}
+
+button.reminder:hover {
+    background-color: rgb(0 0 0 / 7.5%);
+}
+
+.modalColors {
+    display: flex;
+    flex-direction: column;
+}
+
+.modalColors p {
+    padding-top: 4px;
+}
+
+.listColors {
+    display: flex;
+    flex-direction: row;
+    padding: 4px 0;
+}
+
+.color {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    margin: 2px;
+    border: 2px solid transparent;
+    transition: 200ms ease-in;
+    cursor: pointer;
+}
+
+.color:hover {
+    border: 2px solid var(--secondary-3);
+}
+
+.color:first-child {
+    border: 2px solid var(--secondary-1);
+}
+
+.color:first-child:hover {
+    border-color: var(--secondary-3);
+}
+
+.btnSubmit {
+    cursor: pointer;
+    display: flex;
+    padding: 8px 24px;
+    background-color: rgb(0 0 0 / 7.5%);
+    border-radius: 100px;
+    color: var(--black);
+}
+
+.dateTimeBtn {
+    display: flex;
+    cursor: pointer;
+    padding: 0 20px 10px;
+}
+
+.dateTime {
+    font-size: 12px;
+    color: var(--secondary-3);
+    background-color: rgb(0 0 0 / 7.5%);
+    padding: 4px 12px;
+    padding-left: 6px;
+    border-radius: 100px;
+}
+
+.dateTime svg {
+    margin-right: 4px;
 }

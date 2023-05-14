@@ -5,9 +5,16 @@
     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
     transition: 200ms ease-in;
     width: 100%;
-    display: block;
+    display: inline-block;
     break-inside: avoid-column;
-    margin-bottom: 16px;
+    margin-bottom: 8px;
+    float: left;
+}
+
+@media screen and (min-width: 768px) {
+    .noteContents {
+        width: 240px;
+    }
 }
 
 .noteContents:hover {
@@ -77,6 +84,10 @@
     justify-content: space-between;
     opacity: 1;
     transition: 200ms ease-in-out;
+}
+
+.isPinnedNote {
+    opacity: 1;
 }
 
 .modalSettings {
@@ -169,7 +180,7 @@
 .modalColors,
 .modalReminder {
     position: absolute;
-    top: 40px;
+    bottom: -20px;
     left: 50%;
     transform: translateX(-50%);
     background-color: var(--white);
@@ -199,15 +210,23 @@
     height: 32px;
     border-radius: 50%;
     margin: 2px;
-    border: 1px solid transparent;
-    transition: 100ms ease-in;
+    border: 2px solid transparent;
+    transition: 200ms ease-in;
     cursor: pointer;
 }
 
 .color:hover {
-    border: 1px solid var(--secondary-3);
+    border: 2px solid var(--secondary-3);
 }
 
 .color:first-child {
-    border: 1px solid var(--secondary-1);
+    border: 2px solid var(--secondary-1);
+}
+
+.color:first-child:hover {
+    border-color: var(--secondary-3);
+}
+
+.isActive {
+    border: 2px solid var(--secondary-3);
 }

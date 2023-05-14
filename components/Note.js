@@ -180,6 +180,8 @@ export default function Note(props) {
         } catch (error) {
             console.error("Error pinned document:", error);
         }
+
+        props.onUpdateNote();
     }
 
     function openDeleteModal() {
@@ -192,6 +194,16 @@ export default function Note(props) {
         } else {
             setIsModalSettingsOpen(false);
         }
+    }
+
+    function updateNoteModal(noteId) {
+        setSelectedNote(props.data.find(note => note.id === noteId));
+        props.onHandleNoteClick(noteId)
+    }
+
+    function closeUpdateNoteModal() {
+        setSelectedNote(null);
+        props.onHandleModalClose();
     }
 
     return (
@@ -218,7 +230,7 @@ export default function Note(props) {
                             ) :
                                 (
                                     <>
-                                        <button type="button" className={styles.modalBtn} onClick={() => props.onHandleNoteClick(details.id)}>
+                                        <button type="button" className={styles.modalBtn} onClick={() => updateNoteModal(details.id)}>
                                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 256 256"><path d="m227.32 73.37l-44.69-44.68a16 16 0 0 0-22.63 0L36.69 152A15.86 15.86 0 0 0 32 163.31V208a16 16 0 0 0 16 16h168a8 8 0 0 0 0-16H115.32l112-112a16 16 0 0 0 0-22.63ZM92.69 208H48v-44.69l88-88L180.69 120ZM192 108.69L147.32 64l24-24L216 84.69Z" /></svg>
                                             {/* Edit note */}
                                         </button>
@@ -230,26 +242,10 @@ export default function Note(props) {
                                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 256 256"><path d="M224 48H32a16 16 0 0 0-16 16v24a16 16 0 0 0 16 16v88a16 16 0 0 0 16 16h160a16 16 0 0 0 16-16v-88a16 16 0 0 0 16-16V64a16 16 0 0 0-16-16Zm-16 144H48v-88h160Zm16-104H32V64h192v24ZM96 136a8 8 0 0 1 8-8h48a8 8 0 0 1 0 16h-48a8 8 0 0 1-8-8Z" /></svg>
                                             {/* {!details.isArchive ? "Archive note" : "Unarchive note"} */}
                                         </button>
-
-
-                                        <div className={styles.bgColorsContent}>
-                                            <button type="button" className={styles.modalBtn} onClick={toggleModalColorsClick} ref={btnColorsRef}>
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 256 256"><path d="M200.77 53.89A103.27 103.27 0 0 0 128 24h-1.07A104 104 0 0 0 24 128c0 43 26.58 79.06 69.36 94.17A32 32 0 0 0 136 192a16 16 0 0 1 16-16h46.21a31.81 31.81 0 0 0 31.2-24.88a104.43 104.43 0 0 0 2.59-24a103.28 103.28 0 0 0-31.23-73.23Zm13 93.71a15.89 15.89 0 0 1-15.56 12.4H152a32 32 0 0 0-32 32a16 16 0 0 1-21.31 15.07C62.49 194.3 40 164 40 128a88 88 0 0 1 87.09-88h.9a88.35 88.35 0 0 1 88 87.25a88.86 88.86 0 0 1-2.18 20.35ZM140 76a12 12 0 1 1-12-12a12 12 0 0 1 12 12Zm-44 24a12 12 0 1 1-12-12a12 12 0 0 1 12 12Zm0 56a12 12 0 1 1-12-12a12 12 0 0 1 12 12Zm88-56a12 12 0 1 1-12-12a12 12 0 0 1 12 12Z" /></svg>
-                                                {/* Change backgroundColor */}
-                                            </button>
-                                            {modalColors && <Modal className="modal modalCreateNote modalBgColors" ref={modalColorsRef}>
-                                                <p>Background options</p>
-                                                <div className={styles.listColors}>
-                                                    <div className={styles.color} style={{ backgroundColor: '#ffffff' }} onClick={() => addBackgroundColorClick('#ffffff')}></div>
-                                                    <div className={styles.color} style={{ backgroundColor: '#fff475' }} onClick={() => addBackgroundColorClick('#fff475')}></div>
-                                                    <div className={styles.color} style={{ backgroundColor: '#c7ebb3' }} onClick={() => addBackgroundColorClick('#c7ebb3')}></div>
-                                                    <div className={styles.color} style={{ backgroundColor: '#f4dfcd' }} onClick={() => addBackgroundColorClick('#f4dfcd')}></div>
-                                                    <div className={styles.color} style={{ backgroundColor: '#ffd5f8' }} onClick={() => addBackgroundColorClick('#ffd5f8')}></div>
-                                                    <div className={styles.color} style={{ backgroundColor: '#a9def9' }} onClick={() => addBackgroundColorClick('#a9def9')}></div>
-                                                </div>
-                                            </Modal>}
-                                        </div>
-
+                                        <button type="button" className={styles.modalBtn} onClick={toggleModalColorsClick} ref={btnColorsRef}>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 256 256"><path d="M200.77 53.89A103.27 103.27 0 0 0 128 24h-1.07A104 104 0 0 0 24 128c0 43 26.58 79.06 69.36 94.17A32 32 0 0 0 136 192a16 16 0 0 1 16-16h46.21a31.81 31.81 0 0 0 31.2-24.88a104.43 104.43 0 0 0 2.59-24a103.28 103.28 0 0 0-31.23-73.23Zm13 93.71a15.89 15.89 0 0 1-15.56 12.4H152a32 32 0 0 0-32 32a16 16 0 0 1-21.31 15.07C62.49 194.3 40 164 40 128a88 88 0 0 1 87.09-88h.9a88.35 88.35 0 0 1 88 87.25a88.86 88.86 0 0 1-2.18 20.35ZM140 76a12 12 0 1 1-12-12a12 12 0 0 1 12 12Zm-44 24a12 12 0 1 1-12-12a12 12 0 0 1 12 12Zm0 56a12 12 0 1 1-12-12a12 12 0 0 1 12 12Zm88-56a12 12 0 1 1-12-12a12 12 0 0 1 12 12Z" /></svg>
+                                            {/* Change backgroundColor */}
+                                        </button>
                                         <button type="button" className={styles.modalBtn}>
                                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 256 256"><path d="M216 40H40a16 16 0 0 0-16 16v144a16 16 0 0 0 16 16h176a16 16 0 0 0 16-16V56a16 16 0 0 0-16-16Zm0 16v102.75l-26.07-26.06a16 16 0 0 0-22.63 0l-20 20l-44-44a16 16 0 0 0-22.62 0L40 149.37V56ZM40 172l52-52l80 80H40Zm176 28h-21.37l-36-36l20-20L216 181.38V200Zm-72-100a12 12 0 1 1 12 12a12 12 0 0 1-12-12Z" /></svg>
                                             {/* Change image */}
@@ -270,13 +266,17 @@ export default function Note(props) {
                     </div>
                 </div>
 
-                {props.selectedNote && <NoteModal details={props.selectedNote} onClose={props.onHandleModalClose} />}
+                {details.isPinned ?
+                    <button type="button" className={`${styles.modalBtn} ${styles.btnPinn} ${isModalSettingsOpen ? "" : styles.isPinnedNote}`} onClick={() => pinNote(details.id)}>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 256 256"><path d="M224 176a8 8 0 0 1-8 8h-80v56a8 8 0 0 1-16 0v-56H40a8 8 0 0 1 0-16h9.29L70.46 48H64a8 8 0 0 1 0-16h128a8 8 0 0 1 0 16h-6.46l21.17 120H216a8 8 0 0 1 8 8Z" /></svg>
+                    </button>
+                    :
+                    <button type="button" className={`${styles.modalBtn} ${styles.btnPinn} ${isModalSettingsOpen ? "" : styles.hidden}`} onClick={() => pinNote(details.id)}>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 256 256"><path d="M216 168h-9.29L185.54 48H192a8 8 0 0 0 0-16H64a8 8 0 0 0 0 16h6.46L49.29 168H40a8 8 0 0 0 0 16h80v56a8 8 0 0 0 16 0v-56h80a8 8 0 0 0 0-16ZM86.71 48h82.58l21.17 120H65.54Z" /></svg>
+                        {/* {!details.isPinned ? "Pin note" : "Unpin note"} */}
+                    </button>
+                }
 
-
-                <button type="button" className={`${styles.modalBtn} ${styles.btnPinn} ${isModalSettingsOpen ? "" : styles.hidden}`} onClick={() => pinNote(details.id)}>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 256 256"><path d="m235.32 81.37l-60.69-60.68a16 16 0 0 0-22.63 0l-53.63 53.8c-10.66-3.34-35-7.37-60.4 13.14a16 16 0 0 0-1.29 23.78L85 159.71l-42.66 42.63a8 8 0 0 0 11.32 11.32L96.29 171l48.29 48.29A16 16 0 0 0 155.9 224h1.13a15.93 15.93 0 0 0 11.64-6.33c19.64-26.1 17.75-47.32 13.19-60L235.33 104a16 16 0 0 0-.01-22.63ZM224 92.69l-57.27 57.46a8 8 0 0 0-1.49 9.22c9.46 18.93-1.8 38.59-9.34 48.62L48 100.08c12.08-9.74 23.64-12.31 32.48-12.31A40.13 40.13 0 0 1 96.81 91a8 8 0 0 0 9.25-1.51L163.32 32L224 92.68Z" /></svg>
-                    {/* {!details.isPinned ? "Pin note" : "Unpin note"} */}
-                </button>
 
 
                 {/* <button type="button" className={styles.btnSettings} onClick={toggleModalSettings} ref={btnRef}>
@@ -299,7 +299,21 @@ export default function Note(props) {
                         </div>
                     </div>
                 </div>}
+
+                {modalColors && <Modal className="modal modalCreateNote modalBgColors" ref={modalColorsRef}>
+                    <p>Background options</p>
+                    <div className={styles.listColors}>
+                        <div className={styles.color} style={{ backgroundColor: '#ffffff' }} onClick={() => addBackgroundColorClick('#ffffff')}></div>
+                        <div className={styles.color} style={{ backgroundColor: '#f28b82' }} onClick={() => addBackgroundColorClick('#f28b82')}></div>
+                        <div className={styles.color} style={{ backgroundColor: '#fff475' }} onClick={() => addBackgroundColorClick('#fff475')}></div>
+                        <div className={styles.color} style={{ backgroundColor: '#a7ffeb' }} onClick={() => addBackgroundColorClick('#a7ffeb')}></div>
+                        <div className={styles.color} style={{ backgroundColor: '#cbf0f8' }} onClick={() => addBackgroundColorClick('#cbf0f8')}></div>
+                        <div className={styles.color} style={{ backgroundColor: '#e8eaed' }} onClick={() => addBackgroundColorClick('#e8eaed')}></div>
+                    </div>
+                </Modal>}
             </div>
+
+            {selectedNote && <NoteModal details={selectedNote} onClose={closeUpdateNoteModal} onUpdateNote={props.onUpdateNote} onUpdateBackgroundColor={changeBackgroundColor} setBackgroundColor={setBackgroundColor} archiveNote={archiveNote} deleteNote={deleteNote} />}
         </>
     )
 }

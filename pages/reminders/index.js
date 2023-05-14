@@ -12,7 +12,7 @@ export default function Reminders({ data }) {
     const [selectedNote, setSelectedNote] = useState(null);
     const router = useRouter();
 
-    async function updateNote() {
+    function updateNote() {
         const unsubscribe = onSnapshot(query(collection(db, "notes"), where("dateTime", "!=", '')), (querySnapshot) => {
             const data = querySnapshot.docs.map(doc => ({
                 id: doc.id,
@@ -43,15 +43,17 @@ export default function Reminders({ data }) {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <div>
-                <div className={styles.content}>
-                    <h1>Reminders</h1>
-                    <p>Notes with upcoming reminders appear here</p>
-                </div>
-                <NotesContainer>
-                    {notes.map(note => {
-                        return <Note key={note.id} details={note} data={notes} onUpdateNote={updateNote} onHandleNoteClick={handleNoteClick} onHandleModalClose={handleModalClose} selectedNote={selectedNote} />
-                    })}
-                </NotesContainer>
+                {notes.filter(note => note.dateTime !== "").length > 0 ?
+                    <NotesContainer>
+                        {notes.map(note => {
+                            return <Note key={note.id} details={note} data={notes} onUpdateNote={updateNote} onHandleNoteClick={handleNoteClick} onHandleModalClose={handleModalClose} selectedNote={selectedNote} />
+                        })}
+                    </NotesContainer>
+                    :
+                    <div className={styles.content}>
+                        <h1>Reminders</h1>
+                        <p>Notes with upcoming reminders appear here</p>
+                    </div>}
             </div>
         </>
     )

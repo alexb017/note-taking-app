@@ -2,7 +2,7 @@
     background-color: var(--white);
     padding: 20px 0 12px;
     border-radius: 8px;
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 1px 6px;
     width: 100%;
 }
 
@@ -100,7 +100,7 @@ button.reminder {
     cursor: pointer;
     color: var(--secondary-3);
     background-color: transparent;
-    transition: 100ms ease-in;
+    transition: 200ms ease-in;
 }
 
 button.reminder:hover {
@@ -128,7 +128,7 @@ button.reminder:hover {
     border-radius: 50%;
     margin: 2px;
     border: 2px solid transparent;
-    transition: 100ms ease-in;
+    transition: 200ms ease-in;
     cursor: pointer;
 }
 

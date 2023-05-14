@@ -13,7 +13,7 @@ export default function Archive({ data }) {
     const router = useRouter();
     const arrayLength = notes.length;
 
-    async function updateNote() {
+    function updateNote() {
         const unsubscribe = onSnapshot(query(collection(db, "notes"), where("isArchive", "==", true), where("isDelete", "==", false)), (querySnapshot) => {
             const data = querySnapshot.docs.map(doc => ({
                 id: doc.id,
@@ -44,15 +44,17 @@ export default function Archive({ data }) {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <div>
-                <div className={styles.content}>
-                    <h1>Archive</h1>
-                    <p>Your archived notes appear here</p>
-                </div>
-                <NotesContainer>
-                    {notes.map(note => {
-                        return <Note key={note.id} details={note} data={notes} onUpdateNote={updateNote} onHandleNoteClick={handleNoteClick} onHandleModalClose={handleModalClose} selectedNote={selectedNote} />
-                    })}
-                </NotesContainer>
+                {notes.filter(note => note.isArchive && !note.isDelete).length > 0 ?
+                    <NotesContainer>
+                        {notes.map(note => {
+                            return <Note key={note.id} details={note} data={notes} onUpdateNote={updateNote} onHandleNoteClick={handleNoteClick} onHandleModalClose={handleModalClose} selectedNote={selectedNote} />
+                        })}
+                    </NotesContainer>
+                    :
+                    <div className={styles.content}>
+                        <h1>Archive</h1>
+                        <p>Your archived notes appear here</p>
+                    </div>}
             </div>
         </>
     )

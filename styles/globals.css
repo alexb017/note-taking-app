@@ -92,18 +92,19 @@ textarea {
 
 .notesContentFlex {
   column-count: 1;
-  column-gap: 16px;
+  column-gap: 8px;
+  margin: 16px 0;
 }
 
 @media screen and (min-width: 768px) {
   .notesContentFlex {
-    column-count: 2;
+    column-count: 3;
   }
 }
 
 @media screen and (min-width: 1200px) {
   .notesContentFlex {
-    column-count: 4;
+    column-count: 5;
   }
 }
 
@@ -172,7 +173,7 @@ textarea {
 
 .modalCreateNote {
   position: absolute;
-  top: 40px;
+  bottom: -70px;
   left: 0;
 
 }

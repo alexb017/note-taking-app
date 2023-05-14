@@ -13,10 +13,16 @@
     margin: 32px 0;
 }
 
-.pinned p {
+.pinned>p {
+    font-size: 12px;
+    text-transform: uppercase;
+    padding-left: 20px;
     margin-bottom: 16px;
 }
 
 .pNotes {
+    font-size: 12px;
+    text-transform: uppercase;
+    padding-left: 20px;
     margin-bottom: 16px;
 }

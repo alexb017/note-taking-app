@@ -138,11 +138,11 @@ export default function CreateNote(props) {
                                 <p>Background options</p>
                                 <div className={styles.listColors}>
                                     <div className={styles.color} style={{ backgroundColor: '#ffffff' }} onClick={() => addBackgroundColorClick('#ffffff')}></div>
+                                    <div className={styles.color} style={{ backgroundColor: '#f28b82' }} onClick={() => addBackgroundColorClick('#f28b82')}></div>
                                     <div className={styles.color} style={{ backgroundColor: '#fff475' }} onClick={() => addBackgroundColorClick('#fff475')}></div>
-                                    <div className={styles.color} style={{ backgroundColor: '#c7ebb3' }} onClick={() => addBackgroundColorClick('#c7ebb3')}></div>
-                                    <div className={styles.color} style={{ backgroundColor: '#f4dfcd' }} onClick={() => addBackgroundColorClick('#f4dfcd')}></div>
-                                    <div className={styles.color} style={{ backgroundColor: '#ffd5f8' }} onClick={() => addBackgroundColorClick('#ffd5f8')}></div>
-                                    <div className={styles.color} style={{ backgroundColor: '#a9def9' }} onClick={() => addBackgroundColorClick('#a9def9')}></div>
+                                    <div className={styles.color} style={{ backgroundColor: '#a7ffeb' }} onClick={() => addBackgroundColorClick('#a7ffeb')}></div>
+                                    <div className={styles.color} style={{ backgroundColor: '#cbf0f8' }} onClick={() => addBackgroundColorClick('#cbf0f8')}></div>
+                                    <div className={styles.color} style={{ backgroundColor: '#e8eaed' }} onClick={() => addBackgroundColorClick('#e8eaed')}></div>
                                 </div>
                             </Modal>}
                         </div>
