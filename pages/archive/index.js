@@ -1,10 +1,9 @@
 import Head from "next/head";
 import db from "@/components/firebase";
-import { collection, query, where, getDocs, getDoc, updateDoc, doc, onSnapshot } from "firebase/firestore";
-import { useState, useEffect } from "react";
+import { collection, query, where, getDocs, onSnapshot } from "firebase/firestore";
+import { useState } from "react";
 import Note from "@/components/Note";
 import { useRouter } from "next/router";
-import styles from "../../styles/Archive.module.css";
 import NotesContainer from "@/components/NotesContainer";
 
 export default function Archive({ data }) {
@@ -51,7 +50,7 @@ export default function Archive({ data }) {
                         })}
                     </NotesContainer>
                     :
-                    <div className={styles.content}>
+                    <div className="content">
                         <h1>Archive</h1>
                         <p>Your archived notes appear here</p>
                     </div>}

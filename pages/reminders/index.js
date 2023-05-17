@@ -1,9 +1,8 @@
 import Head from "next/head";
 import db from "@/components/firebase";
 import { collection, query, where, getDocs, onSnapshot } from "firebase/firestore";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Note from "@/components/Note";
-import styles from "../../styles/Reminders.module.css";
 import NotesContainer from "@/components/NotesContainer";
 import { useRouter } from "next/router";
 
@@ -50,7 +49,7 @@ export default function Reminders({ data }) {
                         })}
                     </NotesContainer>
                     :
-                    <div className={styles.content}>
+                    <div className="content">
                         <h1>Reminders</h1>
                         <p>Notes with upcoming reminders appear here</p>
                     </div>}

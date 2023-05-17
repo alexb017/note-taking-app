@@ -1,28 +1,18 @@
 import Head from 'next/head';
-import Image from 'next/image';
-import styles from '@/styles/Notes.module.css';
-import Link from 'next/link';
 import db from "../components/firebase";
-import { collection, getDocs, doc, deleteDoc, updateDoc, query, where, getDoc, onSnapshot } from "firebase/firestore";
+import { collection, getDocs, onSnapshot } from "firebase/firestore";
 import CreateNote from './CreateNote';
 import Note from "../components/Note";
-import NoteModal from '@/components/NoteModal';
 import { useEffect, useState, useRef } from 'react';
-import Loader from "../components/Loader";
 import { useRouter } from "next/router";
 import NotesContainer from '@/components/NotesContainer';
 
 export default function Notes({ data }) {
   const [notes, setNotes] = useState(data);
-  const [loading, setLoading] = useState(true);
-  const [pinned, setPinned] = useState([]);
-  const [pinNotes, setPinNotes] = useState([]);
-  const [isPinned, setIsPinned] = useState(false);
   const [selectedNote, setSelectedNote] = useState(null);
   const router = useRouter();
   const noteRef = useRef(null);
   const [isModalSettingsOpen, setIsModalSettingsOpen] = useState(false);
-  const arrayPinnedLength = notes.filter(note => note.isPinned).length;
 
   useEffect(() => {
     console.log(notes)
@@ -72,15 +62,15 @@ export default function Notes({ data }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className={styles.notes}>
-        <div className={styles.notesContent}>
+      <div>
+        <div>
 
-          <div className={styles.noteContentAdd}>
+          <div className="note-content-add">
             <CreateNote onUpdateNote={updateNote} />
           </div>
 
           {notes.filter(note => note.isPinned).length > 0 &&
-            <div className={styles.pinned}>
+            <div className="pinned">
               <p>Pinned</p>
               <NotesContainer>
                 {notes.filter(note => note.isPinned).map(note => {
@@ -97,7 +87,7 @@ export default function Notes({ data }) {
           ) :
 
             <>
-              <p className={styles.pNotes}>Others</p>
+              {notes.filter(note => note.isPinned).length > 0 ? <p className="others">Others</p> : ""}
               <NotesContainer>
                 {notes.filter(note => !note.isArchive && !note.isDelete && !note.isPinned).map(note => {
                   return <Note key={note.id} details={note} data={notes} onUpdateNote={updateNote} onHandleNoteClick={handleNoteClick} onHandleModalClose={handleModalClose} selectedNote={selectedNote} />
