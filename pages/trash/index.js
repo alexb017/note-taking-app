@@ -38,7 +38,7 @@ export default function Trash({ data }) {
             </Head>
             <div>
                 {notes.filter(note => note.isDelete).length > 0 ?
-                    <NotesContainer>
+                    <NotesContainer className="notes-container">
                         {notes.map(note => {
                             return <Note key={note.id} details={note} data={notes} onUpdateNote={updateNote} onHandleNoteClick={handleNoteClick} onHandleModalClose={handleModalClose} />
                         })}

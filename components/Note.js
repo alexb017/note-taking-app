@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import NoteModal from "./NoteModal";
 import db from "../components/firebase";
 import { doc, deleteDoc, updateDoc, getDoc } from "firebase/firestore";
-import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
+import { getDownloadURL, getStorage, ref, uploadBytes, deleteObject } from "firebase/storage";
 import Modal from "./Modal";
 import { format, addDays, setHours, setMinutes } from 'date-fns';
 
@@ -82,9 +82,20 @@ export default function Note(props) {
         const docRef = doc(db, "notes", noteId);
         const docSnap = await getDoc(docRef);
         const currentDeleteValue = docSnap.data().isDelete;
+        const currentPinValue = docSnap.data().isPinned;
 
         if (currentDeleteValue) {
             await deleteDoc(docRef);
+
+            if (imageSrc !== "") {
+                handleDeleteImage(noteId);
+            }
+
+        } else if (currentPinValue) {
+            await updateDoc(docRef, {
+                isDelete: !currentDeleteValue,
+                isPinned: !currentPinValue
+            });
         } else {
             await updateDoc(docRef, {
                 isDelete: !currentDeleteValue
@@ -162,6 +173,32 @@ export default function Note(props) {
             }).then((url) => {
                 setImageSrc(url);
                 handleUpdateImageSrc(url, noteId);
+            }).catch((error) => {
+                // error
+            });
+    }
+
+    async function handleDeleteImageSrc(noteId) {
+        setImageSrc('');
+
+        await updateDoc(doc(db, "notes", noteId), {
+            imageSrc: ""
+        });
+
+        props.onUpdateNote();
+    }
+
+    function handleDeleteImage(noteId) {
+        handleDeleteImageSrc(noteId);
+
+        // Create a reference to the file to delete
+        const storage = getStorage();
+        const storageRef = ref(storage, noteId);
+
+        // Delete the file
+        deleteObject(storageRef)
+            .then(() => {
+                // file delete successfully
             }).catch((error) => {
                 // error
             });
@@ -249,10 +286,12 @@ export default function Note(props) {
                     <div className="edit-note-content">
                         <div className={`btns-list ${isModalSettingsOpen ? "" : "hidden"}`}>
                             {details.isDelete ? (
-                                <button type="button" className="btn-modal" onClick={() => handleRestoreDeleteNote(details.id)}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 256 256"><path d="M232 112a64.07 64.07 0 0 1-64 64H51.31l34.35 34.34a8 8 0 0 1-11.32 11.32l-48-48a8 8 0 0 1 0-11.32l48-48a8 8 0 0 1 11.32 11.32L51.31 160H168a48 48 0 0 0 0-96H80a8 8 0 0 1 0-16h88a64.07 64.07 0 0 1 64 64Z" /></svg>
-                                    {/* Restore note */}
-                                </button>
+                                <div className="btn-delete-note">
+                                    <button type="button" className="btn-modal" onClick={() => handleRestoreDeleteNote(details.id)}>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 256 256"><path d="M232 112a64.07 64.07 0 0 1-64 64H51.31l34.35 34.34a8 8 0 0 1-11.32 11.32l-48-48a8 8 0 0 1 0-11.32l48-48a8 8 0 0 1 11.32 11.32L51.31 160H168a48 48 0 0 0 0-96H80a8 8 0 0 1 0-16h88a64.07 64.07 0 0 1 64 64Z" /></svg>
+                                    </button>
+                                    <div className="btn-name-details">Restore note</div>
+                                </div>
                             ) :
                                 (
                                     <>
@@ -295,12 +334,13 @@ export default function Note(props) {
                                             {modalColors && <Modal className="modal modal-colors" ref={modalColorsRef}>
                                                 <p>Background options</p>
                                                 <div className="list-colors">
-                                                    <div className="color" style={{ backgroundColor: '#ffffff' }} onClick={() => addBackgroundColorClick('#ffffff')}></div>
-                                                    <div className="color" style={{ backgroundColor: '#f28b82' }} onClick={() => addBackgroundColorClick('#f28b82')}></div>
-                                                    <div className="color" style={{ backgroundColor: '#fff475' }} onClick={() => addBackgroundColorClick('#fff475')}></div>
-                                                    <div className="color" style={{ backgroundColor: '#a7ffeb' }} onClick={() => addBackgroundColorClick('#a7ffeb')}></div>
-                                                    <div className="color" style={{ backgroundColor: '#cbf0f8' }} onClick={() => addBackgroundColorClick('#cbf0f8')}></div>
-                                                    <div className="color" style={{ backgroundColor: '#e8eaed' }} onClick={() => addBackgroundColorClick('#e8eaed')}></div>
+                                                    <div className={`color color-default ${backgroundColor === "#ffffff" ? "is-active" : ""}`} style={{ backgroundColor: '#ffffff' }} onClick={() => addBackgroundColorClick('#ffffff')}></div>
+                                                    <div className={`color ${backgroundColor === "#f28b82" ? "is-active" : ""}`} style={{ backgroundColor: '#f28b82' }} onClick={() => addBackgroundColorClick('#f28b82')}></div>
+                                                    <div className={`color ${backgroundColor === "#fff475" ? "is-active" : ""}`} style={{ backgroundColor: '#fff475' }} onClick={() => addBackgroundColorClick('#fff475')}></div>
+                                                    <div className={`color ${backgroundColor === "#a7ffeb" ? "is-active" : ""}`} style={{ backgroundColor: '#a7ffeb' }} onClick={() => addBackgroundColorClick('#a7ffeb')}></div>
+                                                    <div className={`color ${backgroundColor === "#cbf0f8" ? "is-active" : ""}`} style={{ backgroundColor: '#cbf0f8' }} onClick={() => addBackgroundColorClick('#cbf0f8')}></div>
+                                                    <div className={`color ${backgroundColor === "#d7aefb" ? "is-active" : ""}`} style={{ backgroundColor: '#d7aefb' }} onClick={() => addBackgroundColorClick('#d7aefb')}></div>
+                                                    <div className={`color ${backgroundColor === "#e8eaed" ? "is-active" : ""}`} style={{ backgroundColor: '#e8eaed' }} onClick={() => addBackgroundColorClick('#e8eaed')}></div>
                                                 </div>
                                             </Modal>}
                                         </div>
@@ -311,11 +351,12 @@ export default function Note(props) {
                                             </label>
                                             <div className="btn-name-details">Add image</div>
                                         </div>
+
                                         <div className="btn-archive-note">
                                             <button type="button" className="btn-modal" onClick={() => handleArchiveNote(details.id)}>
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 256 256"><path d="M224 48H32a16 16 0 0 0-16 16v24a16 16 0 0 0 16 16v88a16 16 0 0 0 16 16h160a16 16 0 0 0 16-16v-88a16 16 0 0 0 16-16V64a16 16 0 0 0-16-16Zm-16 144H48v-88h160Zm16-104H32V64h192v24ZM96 136a8 8 0 0 1 8-8h48a8 8 0 0 1 0 16h-48a8 8 0 0 1-8-8Z" /></svg>
                                             </button>
-                                            <div className="btn-name-details">Archive</div>
+                                            <div className="btn-name-details">{details.isArchive ? "Unarchive" : "Archive"}</div>
                                         </div>
                                     </>)}
 
@@ -338,16 +379,24 @@ export default function Note(props) {
                     </div>
                 </div>
 
-                {details.isPinned ?
-                    <button type="button" className={`btn-modal btn-pinn ${isModalSettingsOpen ? "" : "hidden"}`} onClick={() => handlePinNote(details.id)}>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 256 256"><path d="M224 176a8 8 0 0 1-8 8h-80v56a8 8 0 0 1-16 0v-56H40a8 8 0 0 1 0-16h9.29L70.46 48H64a8 8 0 0 1 0-16h128a8 8 0 0 1 0 16h-6.46l21.17 120H216a8 8 0 0 1 8 8Z" /></svg>
-                    </button>
-                    :
-                    <button type="button" className={`btn-modal btn-pinn ${isModalSettingsOpen ? "" : "hidden"}`} onClick={() => handlePinNote(details.id)}>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 256 256"><path d="M216 168h-9.29L185.54 48H192a8 8 0 0 0 0-16H64a8 8 0 0 0 0 16h6.46L49.29 168H40a8 8 0 0 0 0 16h80v56a8 8 0 0 0 16 0v-56h80a8 8 0 0 0 0-16ZM86.71 48h82.58l21.17 120H65.54Z" /></svg>
-                        {/* {!details.isPinned ? "Pin note" : "Unpin note"} */}
-                    </button>
-                }
+                {!details.isDelete &&
+                    <div className="btn-pin-content">
+                        {details.isPinned ?
+                            <div className="btn-pin-note">
+                                <button type="button" className={`btn-modal ${isModalSettingsOpen ? "" : "hidden"}`} onClick={() => handlePinNote(details.id)}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 256 256"><path d="M224 176a8 8 0 0 1-8 8h-80v56a8 8 0 0 1-16 0v-56H40a8 8 0 0 1 0-16h9.29L70.46 48H64a8 8 0 0 1 0-16h128a8 8 0 0 1 0 16h-6.46l21.17 120H216a8 8 0 0 1 8 8Z" /></svg>
+                                </button>
+                                <div className="btn-name-details">Unpin note</div>
+                            </div>
+                            :
+                            <div className="btn-pin-note">
+                                <button type="button" className={`btn-modal ${isModalSettingsOpen ? "" : "hidden"}`} onClick={() => handlePinNote(details.id)}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 256 256"><path d="M216 168h-9.29L185.54 48H192a8 8 0 0 0 0-16H64a8 8 0 0 0 0 16h6.46L49.29 168H40a8 8 0 0 0 0 16h80v56a8 8 0 0 0 16 0v-56h80a8 8 0 0 0 0-16ZM86.71 48h82.58l21.17 120H65.54Z" /></svg>
+                                </button>
+                                <div className="btn-name-details">Pin note</div>
+                            </div>
+                        }
+                    </div>}
 
                 {isDeleteModal && <div className="delete-modal">
                     <div className="delete-modal-content">
@@ -357,7 +406,6 @@ export default function Note(props) {
                                 Cancel
                             </button>
                             <button type="button" className="btn-modal" onClick={() => handleDeleteNote(details.id)}>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 256 256"><path d="M216 48h-40v-8a24 24 0 0 0-24-24h-48a24 24 0 0 0-24 24v8H40a8 8 0 0 0 0 16h8v144a16 16 0 0 0 16 16h128a16 16 0 0 0 16-16V64h8a8 8 0 0 0 0-16ZM96 40a8 8 0 0 1 8-8h48a8 8 0 0 1 8 8v8H96Zm96 168H64V64h128Zm-80-104v64a8 8 0 0 1-16 0v-64a8 8 0 0 1 16 0Zm48 0v64a8 8 0 0 1-16 0v-64a8 8 0 0 1 16 0Z" /></svg>
                                 Delete note
                             </button>
                         </div>
@@ -379,9 +427,11 @@ export default function Note(props) {
                     onUploadImageSrc={handleUploadImageSrc}
                     removeDate={removeDate}
                     setRemoveDate={setRemoveDate}
+                    date={date}
                     onAddTodayReminderClick={addTodayReminderClick}
                     onAddTomorrowReminderClick={addTomorrowReminderClick}
-                    onHandleRemoveDateClick={handleRemoveDateClick} />}
+                    onHandleRemoveDateClick={handleRemoveDateClick}
+                    onHandleDeleteImage={handleDeleteImage} />}
         </>
     )
 }

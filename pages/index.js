@@ -14,6 +14,9 @@ export default function Notes({ data }) {
   const noteRef = useRef(null);
   const [isModalSettingsOpen, setIsModalSettingsOpen] = useState(false);
 
+  const notesPinned = notes.filter(note => note.isPinned);
+  const notesList = notes.filter(note => !note.isArchive && !note.isDelete && !note.isPinned);
+
   useEffect(() => {
     console.log(notes)
   }, [notes]);
@@ -69,17 +72,17 @@ export default function Notes({ data }) {
             <CreateNote onUpdateNote={updateNote} />
           </div>
 
-          {notes.filter(note => note.isPinned).length > 0 &&
+          {notesPinned.length > 0 &&
             <div className="pinned">
               <p>Pinned</p>
               <NotesContainer>
-                {notes.filter(note => note.isPinned).map(note => {
+                {notesPinned.map(note => {
                   return <Note key={note.id} details={note} data={notes} onUpdateNote={updateNote} onHandleNoteClick={handleNoteClick} onHandleModalClose={handleModalClose} selectedNote={selectedNote} />
                 })}
               </NotesContainer>
             </div>}
 
-          {notes.length === 0 ? (
+          {notesList.length === 0 && notesPinned.length === 0 ? (
             <div>
               <h1>Notes</h1>
               <p>Notes you add appear here</p>
@@ -87,9 +90,9 @@ export default function Notes({ data }) {
           ) :
 
             <>
-              {notes.filter(note => note.isPinned).length > 0 ? <p className="others">Others</p> : ""}
+              {notesList.length !== 0 && notesPinned.length > 0 ? <p className="others">Others</p> : ""}
               <NotesContainer>
-                {notes.filter(note => !note.isArchive && !note.isDelete && !note.isPinned).map(note => {
+                {notesList.map(note => {
                   return <Note key={note.id} details={note} data={notes} onUpdateNote={updateNote} onHandleNoteClick={handleNoteClick} onHandleModalClose={handleModalClose} selectedNote={selectedNote} />
                 })}
               </NotesContainer>

@@ -1,7 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 import db from "../components/firebase";
 import { doc, updateDoc } from "firebase/firestore";
-import { deleteObject, getStorage, ref } from "firebase/storage";
 import Modal from "./Modal";
 
 export default function NoteModal(props) {
@@ -96,39 +95,13 @@ export default function NoteModal(props) {
         props.onUpdateNote();
     }
 
-    async function handleDeleteImageSrc(noteId) {
-        props.setImageSrc('');
-
-        await updateDoc(doc(db, "notes", noteId), {
-            imageSrc: ""
-        });
-
-        props.onUpdateNote();
-    }
-
-    function handleDeleteImage(noteId) {
-        handleDeleteImageSrc(noteId);
-
-        // Create a reference to the file to delete
-        const storage = getStorage();
-        const storageRef = ref(storage, noteId);
-
-        // Delete the file
-        deleteObject(storageRef)
-            .then(() => {
-                // file delete successfully
-            }).catch((error) => {
-                // error
-            });
-    }
-
     return (
         <div className="note-modal">
             <div className="note-modal-container">
                 <div className="form" style={{ backgroundColor: backgroundColor }}>
                     {props.imageSrc && <div className="image-src-container">
                         <img src={props.imageSrc} className="image-src" loading="lazy" alt="just an image" />
-                        <button type="button" className="btn-modal btn-image-src" onClick={() => handleDeleteImage(details.id)}>
+                        <button type="button" className="btn-modal btn-image-src" onClick={() => props.onHandleDeleteImage(details.id)}>
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 256 256"><path d="M224 56a8 8 0 0 1-8 8h-8v144a16 16 0 0 1-16 16H64a16 16 0 0 1-16-16V64h-8a8 8 0 0 1 0-16h176a8 8 0 0 1 8 8ZM88 32h80a8 8 0 0 0 0-16H88a8 8 0 0 0 0 16Z" /></svg>
                         </button>
                     </div>}
@@ -136,13 +109,13 @@ export default function NoteModal(props) {
                         <input type="text" placeholder="Title" value={title} onChange={(e) => handleUpdateTitle(e, details.id)} />
                         <textarea type="text" rows="3" placeholder="Take a note..." value={content} onChange={(e) => handleUpdateContent(e, details.id)} />
                         <div className="date-time-content">
-                            {details.dateTime &&
+                            {props.date &&
                                 <div className="date-time-content-flex date-time-content-note" onMouseEnter={() => props.setRemoveDate(true)} onMouseLeave={() => props.setRemoveDate(false)}>
                                     <button type="button" className="btn-date-time">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 256 256"><path d="M128 24a104 104 0 1 0 104 104A104.11 104.11 0 0 0 128 24Zm0 192a88 88 0 1 1 88-88a88.1 88.1 0 0 1-88 88Zm64-88a8 8 0 0 1-8 8h-56a8 8 0 0 1-8-8V72a8 8 0 0 1 16 0v48h48a8 8 0 0 1 8 8Z" /></svg>
                                         {details.dateTime}
                                     </button>
-                                    <button type="button" className={`btn-date-time-remove ${props.removeDate ? "" : "hidden"}`} onClick={() => handleRemoveDateClick(details.id)}>
+                                    <button type="button" className={`btn-date-time-remove ${props.removeDate ? "" : "hidden"}`} onClick={() => props.onHandleRemoveDateClick(details.id)}>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 256 256"><path fill="currentColor" d="M205.66 194.34a8 8 0 0 1-11.32 11.32L128 139.31l-66.34 66.35a8 8 0 0 1-11.32-11.32L116.69 128L50.34 61.66a8 8 0 0 1 11.32-11.32L128 116.69l66.34-66.35a8 8 0 0 1 11.32 11.32L139.31 128Z" /></svg>
                                     </button>
                                 </div>}
@@ -156,14 +129,22 @@ export default function NoteModal(props) {
                                     </button>
                                     <div className="btn-name-details">Remind me</div>
                                     {modalReminder && <Modal className="modal modal-reminder" ref={modalReminderRef}>
-                                        <p className="reminder">Pick date & time</p>
-                                        <button type="button" className="btn-reminder" onClick={() => addReminderClick('Mar 29, 2023 1:30 PM')}>
-                                            <span>Mar 21, 2023</span>
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 256 256"><path d="M197.66 69.66L83.31 184H168a8 8 0 0 1 0 16H64a8 8 0 0 1-8-8V88a8 8 0 0 1 16 0v84.69L186.34 58.34a8 8 0 0 1 11.32 11.32Z" /></svg>
+                                        <p className="reminder">Reminder:</p>
+                                        <button type="button" className="btn-reminder" onClick={() => props.onAddTodayReminderClick(details.id)}>
+                                            <div className="btn-reminder-format">
+                                                <p>Later today</p>
+                                                <p>8:00 PM</p>
+                                            </div>
                                         </button>
-                                        <button type="button" className="btn-reminder">
-                                            <span>8:00 AM</span>
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 256 256"><path d="M197.66 69.66L83.31 184H168a8 8 0 0 1 0 16H64a8 8 0 0 1-8-8V88a8 8 0 0 1 16 0v84.69L186.34 58.34a8 8 0 0 1 11.32 11.32Z" /></svg>
+                                        <button type="button" className="btn-reminder" onClick={() => onAddTomorrowReminderClick(details.id)}>
+                                            <div className="btn-reminder-format">
+                                                <p>Tomorrow</p>
+                                                <div>8:00 AM</div>
+                                            </div>
+                                        </button>
+                                        <button type="button" className="btn-reminder pick-date-time">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 256 256"><path d="M128 24a104 104 0 1 0 104 104A104.11 104.11 0 0 0 128 24Zm0 192a88 88 0 1 1 88-88a88.1 88.1 0 0 1-88 88Zm64-88a8 8 0 0 1-8 8h-56a8 8 0 0 1-8-8V72a8 8 0 0 1 16 0v48h48a8 8 0 0 1 8 8Z" /></svg>
+                                            <p>Pick date & time</p>
                                         </button>
                                     </Modal>}
                                 </div>
@@ -176,12 +157,13 @@ export default function NoteModal(props) {
                                     {modalColors && <Modal className="modal modal-colors" ref={modalColorsRef}>
                                         <p>Background options</p>
                                         <div className="list-colors">
-                                            <div className="color" style={{ backgroundColor: '#ffffff' }} onClick={() => addBackgroundColorClick('#ffffff')}></div>
-                                            <div className="color" style={{ backgroundColor: '#f28b82' }} onClick={() => addBackgroundColorClick('#f28b82')}></div>
-                                            <div className="color" style={{ backgroundColor: '#fff475' }} onClick={() => addBackgroundColorClick('#fff475')}></div>
-                                            <div className="color" style={{ backgroundColor: '#a7ffeb' }} onClick={() => addBackgroundColorClick('#a7ffeb')}></div>
-                                            <div className="color" style={{ backgroundColor: '#cbf0f8' }} onClick={() => addBackgroundColorClick('#cbf0f8')}></div>
-                                            <div className="color" style={{ backgroundColor: '#e8eaed' }} onClick={() => addBackgroundColorClick('#e8eaed')}></div>
+                                            <div className={`color color-default ${backgroundColor === "#ffffff" ? "is-active" : ""}`} style={{ backgroundColor: '#ffffff' }} onClick={() => addBackgroundColorClick('#ffffff')}></div>
+                                            <div className={`color ${backgroundColor === "#f28b82" ? "is-active" : ""}`} style={{ backgroundColor: '#f28b82' }} onClick={() => addBackgroundColorClick('#f28b82')}></div>
+                                            <div className={`color ${backgroundColor === "#fff475" ? "is-active" : ""}`} style={{ backgroundColor: '#fff475' }} onClick={() => addBackgroundColorClick('#fff475')}></div>
+                                            <div className={`color ${backgroundColor === "#a7ffeb" ? "is-active" : ""}`} style={{ backgroundColor: '#a7ffeb' }} onClick={() => addBackgroundColorClick('#a7ffeb')}></div>
+                                            <div className={`color ${backgroundColor === "#cbf0f8" ? "is-active" : ""}`} style={{ backgroundColor: '#cbf0f8' }} onClick={() => addBackgroundColorClick('#cbf0f8')}></div>
+                                            <div className={`color ${backgroundColor === "#d7aefb" ? "is-active" : ""}`} style={{ backgroundColor: '#d7aefb' }} onClick={() => addBackgroundColorClick('#d7aefb')}></div>
+                                            <div className={`color ${backgroundColor === "#e8eaed" ? "is-active" : ""}`} style={{ backgroundColor: '#e8eaed' }} onClick={() => addBackgroundColorClick('#e8eaed')}></div>
                                         </div>
                                     </Modal>}
                                 </div>
@@ -197,7 +179,6 @@ export default function NoteModal(props) {
                                 <div className="archive-content">
                                     <button type="button" className="btn-modal" onClick={() => props.onArchiveNote(details.id)}>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 256 256"><path d="M224 48H32a16 16 0 0 0-16 16v24a16 16 0 0 0 16 16v88a16 16 0 0 0 16 16h160a16 16 0 0 0 16-16v-88a16 16 0 0 0 16-16V64a16 16 0 0 0-16-16Zm-16 144H48v-88h160Zm16-104H32V64h192v24ZM96 136a8 8 0 0 1 8-8h48a8 8 0 0 1 0 16h-48a8 8 0 0 1-8-8Z" /></svg>
-                                        {/* {!details.isArchive ? "Archive note" : "Unarchive note"} */}
                                     </button>
                                     <div className="btn-name-details">Archive</div>
                                 </div>
@@ -205,7 +186,6 @@ export default function NoteModal(props) {
                                 <div className="delete-content">
                                     <button type="button" className="btn-modal" onClick={() => props.onDeleteNote(details.id)}>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 256 256"><path d="M216 48h-40v-8a24 24 0 0 0-24-24h-48a24 24 0 0 0-24 24v8H40a8 8 0 0 0 0 16h8v144a16 16 0 0 0 16 16h128a16 16 0 0 0 16-16V64h8a8 8 0 0 0 0-16ZM96 40a8 8 0 0 1 8-8h48a8 8 0 0 1 8 8v8H96Zm96 168H64V64h128Zm-80-104v64a8 8 0 0 1-16 0v-64a8 8 0 0 1 16 0Zm48 0v64a8 8 0 0 1-16 0v-64a8 8 0 0 1 16 0Z" /></svg>
-                                        {/* Delete note */}
                                     </button>
                                     <div className="btn-name-details">Delete note</div>
                                 </div>

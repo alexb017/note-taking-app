@@ -44,7 +44,7 @@ export default function Archive({ data }) {
             </Head>
             <div>
                 {notes.filter(note => note.isArchive && !note.isDelete).length > 0 ?
-                    <NotesContainer>
+                    <NotesContainer className="notes-container">
                         {notes.map(note => {
                             return <Note key={note.id} details={note} data={notes} onUpdateNote={updateNote} onHandleNoteClick={handleNoteClick} onHandleModalClose={handleModalClose} selectedNote={selectedNote} />
                         })}
