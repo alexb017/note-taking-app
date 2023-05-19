@@ -61,7 +61,7 @@ export default function Note(props) {
         if (modalColors) {
             setModalColors(false);
         } else {
-            setModalColors(true)
+            setModalColors(true);
         }
     }
 
@@ -69,7 +69,7 @@ export default function Note(props) {
         if (modalReminder) {
             setModalReminder(false);
         } else {
-            setModalReminder(true)
+            setModalReminder(true);
         }
     }
 
@@ -85,20 +85,17 @@ export default function Note(props) {
         const currentPinValue = docSnap.data().isPinned;
 
         if (currentDeleteValue) {
+            handleDeleteImage(noteId);
             await deleteDoc(docRef);
-
-            if (imageSrc !== "") {
-                handleDeleteImage(noteId);
-            }
-
-        } else if (currentPinValue) {
-            await updateDoc(docRef, {
-                isDelete: !currentDeleteValue,
-                isPinned: !currentPinValue
-            });
         } else {
             await updateDoc(docRef, {
                 isDelete: !currentDeleteValue
+            });
+        }
+
+        if (currentPinValue) {
+            await updateDoc(doc(db, "notes", noteId), {
+                isPinned: !currentPinValue
             });
         }
 
