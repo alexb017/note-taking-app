@@ -85,7 +85,9 @@ export default function Note(props) {
         const currentPinValue = docSnap.data().isPinned;
 
         if (currentDeleteValue) {
-            handleDeleteImage(noteId);
+            if (imageSrc !== "") {
+                handleDeleteImage(noteId);
+            }
             await deleteDoc(docRef);
         } else {
             await updateDoc(docRef, {
