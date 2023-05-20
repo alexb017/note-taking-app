@@ -14,7 +14,7 @@ export default function CreateNote(props) {
     const modalReminderRef = useRef(null);
     const btnColorsRef = useRef(null);
     const btnReminderRef = useRef(null);
-    const [backgroundColor, setBackgroundColor] = useState('#ffffff');
+    const [backgroundColor, setBackgroundColor] = useState('#fff');
     const [date, setDate] = useState('');
     const [removeDate, setRemoveDate] = useState(false);
     const [imageSrc, setImageSrc] = useState('');
@@ -238,13 +238,13 @@ export default function CreateNote(props) {
                             {modalColors && <Modal className="modal modal-colors" ref={modalColorsRef}>
                                 <p>Background options</p>
                                 <div className="list-colors">
-                                    <div className={`color color-default ${backgroundColor === "#ffffff" ? "is-active" : ""}`} style={{ backgroundColor: '#ffffff' }} onClick={() => addBackgroundColorClick('#ffffff')}></div>
-                                    <div className={`color ${backgroundColor === "#f28b82" ? "is-active" : ""}`} style={{ backgroundColor: '#f28b82' }} onClick={() => addBackgroundColorClick('#f28b82')}></div>
-                                    <div className={`color ${backgroundColor === "#fff475" ? "is-active" : ""}`} style={{ backgroundColor: '#fff475' }} onClick={() => addBackgroundColorClick('#fff475')}></div>
-                                    <div className={`color ${backgroundColor === "#a7ffeb" ? "is-active" : ""}`} style={{ backgroundColor: '#a7ffeb' }} onClick={() => addBackgroundColorClick('#a7ffeb')}></div>
-                                    <div className={`color ${backgroundColor === "#cbf0f8" ? "is-active" : ""}`} style={{ backgroundColor: '#cbf0f8' }} onClick={() => addBackgroundColorClick('#cbf0f8')}></div>
-                                    <div className={`color ${backgroundColor === "#d7aefb" ? "is-active" : ""}`} style={{ backgroundColor: '#d7aefb' }} onClick={() => addBackgroundColorClick('#d7aefb')}></div>
-                                    <div className={`color ${backgroundColor === "#e8eaed" ? "is-active" : ""}`} style={{ backgroundColor: '#e8eaed' }} onClick={() => addBackgroundColorClick('#e8eaed')}></div>
+                                    <div className={`color color-default color-white ${backgroundColor === "#fff" ? "is-active" : ""}`} onClick={() => addBackgroundColorClick('#fff')}></div>
+                                    <div className={`color color-red ${backgroundColor === "#f28b82" ? "is-active" : ""}`} onClick={() => addBackgroundColorClick('#f28b82')}></div>
+                                    <div className={`color color-yellow ${backgroundColor === "#fff475" ? "is-active" : ""}`} onClick={() => addBackgroundColorClick('#fff475')}></div>
+                                    <div className={`color color-teal ${backgroundColor === "#a7ffeb" ? "is-active" : ""}`} onClick={() => addBackgroundColorClick('#a7ffeb')}></div>
+                                    <div className={`color color-blue ${backgroundColor === "#cbf0f8" ? "is-active" : ""}`} onClick={() => addBackgroundColorClick('#cbf0f8')}></div>
+                                    <div className={`color color-purple ${backgroundColor === "#d7aefb" ? "is-active" : ""}`} onClick={() => addBackgroundColorClick('#d7aefb')}></div>
+                                    <div className={`color color-gray ${backgroundColor === "#e8eaed" ? "is-active" : ""}`} onClick={() => addBackgroundColorClick('#e8eaed')}></div>
                                 </div>
                             </Modal>}
                         </div>
@@ -266,7 +266,7 @@ export default function CreateNote(props) {
                         </div>
 
                     </div>
-                    <button type="submit" className="btn-submit">New note</button>
+                    <button type="submit" className="btn-submit btn-submit-new">New note</button>
                 </div>
             </form>
         </div>
