@@ -177,7 +177,7 @@ export default function EditNote(props) {
                                             </div>
                                         </Button>
                                         <Button className="btn-reminder pick-date-time">
-                                            <Icon iconName="iconClock" />
+                                            <Icon iconName="iconClock" width="16px" height="16px" />
                                             <p>Pick date & time</p>
                                         </Button>
                                     </Modal>}

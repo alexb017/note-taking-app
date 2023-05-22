@@ -12,11 +12,21 @@
   --color-gray-light: #f1f3f4;
   --color-gray-dark: #5f6368;
 
+  --color-orange-title: #fbbc04;
+  --color-name-details: #e8eaed;
+  --color-bg-name-details: #3c3f43;
+
   --color-black-opacity-7: rgb(0 0 0 / 7.5%);
   --color-black-opacity-10: rgb(0 0 0 / 10%);
   --color-black-opacity-20: rgb(0 0 0 / 20%);
   --color-black-opacity-50: rgb(0 0 0 / 50%);
   --color-white-opacity-50: rgb(255 255 255 / 50%);
+
+  --box-shadow-note: 0 1px 2px rgb(0 0 0 / 7.5%), 0 1px 3px 1px rgb(0 0 0 / 10%);
+  --box-shadow-note-hover: 0 1px 6px rgb(0 0 0 / 7.5%), 0 1px 8px 1px rgb(0 0 0 / 10%);
+  --box-shadow-modal: 0 1px 2px rgb(0 0 0 / 7.5%), 0 2px 6px 2px rgb(0 0 0 / 10%);
+  --box-shadow-modals: 0 10px 40px rgb(0 0 0 / 20%);
+  --box-shadow-form: 0px 3px 6px rgb(0 0 0 / 7.5%), 0px 1px 6px rgb(0 0 0 / 10%);
 }
 
 body.dark {
@@ -30,9 +40,17 @@ body.dark {
   --color-blue: #2d555e;
   --color-purple: #42275e;
   --color-gray: #3c3f43;
-  --color-gray-light: #f1f3f4;
-  --color-gray-dark: #5f6368;
+  --color-gray-light: #3c3f43;
+  --color-gray-dark: #e8eaed;
 
+  --color-black-opacity-7: rgb(255 255 255 / 7.5%);
+  --color-black-opacity-10: rgb(255 255 255 / 10%);
+
+  --box-shadow-note: 0 1px 1px rgb(255 255 255 / 20%), 0 0 1px rgb(255 255 255 / 50%);
+  --box-shadow-note-hover: 0 1px 1px rgb(255 255 255 / 40%), 0 0 1px rgb(255 255 255 / 70%);
+  --box-shadow-modal: 0 0 1px rgb(255 255 255 / 10%), 0 1px 1px rgb(255 255 255 / 50%);
+  --box-shadow-modals: 0 0 1px rgb(255 255 255 / 50%);
+  --box-shadow-form: 0px 1px 1px rgb(255 255 255 / 20%), 0px 1px 1px rgb(255 255 255 / 50%);
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
@@ -44,6 +62,7 @@ body {
   color: var(--color-black);
   font-weight: 400;
   background-color: var(--color-white);
+  transition: 200ms ease-in;
 
   /* background-image: linear-gradient(to right, rgba(200, 200, 200, 0.15) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(200, 200, 200, 0.15) 1px, transparent 1px);
@@ -151,6 +170,7 @@ input[type="file"] {
 .nav {
   background-color: var(--color-white);
   border-bottom: 1px solid var(--color-gray);
+  transition: 200ms ease-in;
 }
 
 .nav-content {
@@ -176,7 +196,7 @@ input[type="file"] {
 
 .nav-title .icon {
   margin-right: 8px;
-  color: var(--color-orange);
+  color: var(--color-orange-title);
 }
 
 .nav-title .icon svg {
@@ -217,7 +237,7 @@ input[type="file"] {
   background-color: var(--color-white);
   border-radius: 8px;
   padding: 8px 0;
-  box-shadow: 0 10px 40px var(--color-black-opacity-20);
+  box-shadow: var(--box-shadow-modals);
   z-index: 99;
 }
 
@@ -332,7 +352,7 @@ input[type="file"] {
   position: relative;
   background-color: var(--color-white);
   border-radius: 8px;
-  box-shadow: 0 1px 2px var(--color-black-opacity-7), 0 1px 3px 1px var(--color-black-opacity-10);
+  box-shadow: var(--box-shadow-note);
   transition: 200ms ease-in;
   display: inline-block;
   margin-bottom: 16px;
@@ -340,7 +360,7 @@ input[type="file"] {
 }
 
 .note-contents:hover {
-  box-shadow: 0 1px 6px var(--color-black-opacity-7), 0 1px 8px 1px var(--color-black-opacity-10);
+  box-shadow: var(--box-shadow-note-hover);
 }
 
 .top-note-content {
@@ -408,7 +428,7 @@ input[type="file"] {
   padding: 20px;
   border-radius: 8px;
   background-color: var(--color-white);
-  box-shadow: 0 10px 40px var(--color-black-opacity-20);
+  box-shadow: var(--box-shadow-modals);
   width: 540px;
 }
 
@@ -426,7 +446,6 @@ input[type="file"] {
 }
 
 .delete-modal-btns .btn-modal:last-child {
-  color: var(--color-red);
   margin-left: 32px;
 }
 
@@ -440,7 +459,7 @@ input[type="file"] {
   flex-direction: column;
   background-color: var(--color-white);
   border-radius: 8px;
-  box-shadow: 0 1px 2px var(--color-black-opacity-7), 0 2px 6px 2px var(--color-black-opacity-10);
+  box-shadow: var(--box-shadow-modal);
   z-index: 99;
 }
 
@@ -686,8 +705,8 @@ input[type="file"] {
   font-size: 12px;
   padding: 4px 8px;
   border-radius: 4px;
-  color: var(--color-gray);
-  background-color: var(--color-black);
+  color: var(--color-name-details);
+  background-color: var(--color-bg-name-details);
   z-index: 100;
 }
 
@@ -742,8 +761,9 @@ input[type="file"] {
   position: relative;
   background-color: var(--color-white);
   border-radius: 8px;
-  box-shadow: 0px 3px 6px var(--color-black-opacity-7), 0px 1px 6px var(--color-black-opacity-10);
+  box-shadow: var(--box-shadow-form);
   width: 100%;
+  transition: 200ms ease-in;
 }
 
 @media screen and (min-width: 768px) {

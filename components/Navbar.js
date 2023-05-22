@@ -1,11 +1,15 @@
 import Link from "next/link";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, use } from "react";
 import Button from "./Button";
 import Icon from "./Icon";
 
 export default function Navbar() {
+    const [isDarkTheme, setIsDarkTheme] = useState(() => {
+        if (typeof window !== "undefined" && window.localStorage) {
+            return localStorage.getItem("isDarkTheme") === 'true';
+        }
+    });
     const [showModalSettings, setShowModalSettings] = useState(false);
-    const [menuMobile, setMenuMobile] = useState(false);
     const modalRef = useRef(null);
     const btnRef = useRef(null);
 
@@ -22,6 +26,21 @@ export default function Navbar() {
             document.removeEventListener('mousedown', handleOutsideClick);
         }
     }, [modalRef, showModalSettings, btnRef]);
+
+    useEffect(() => {
+        localStorage.setItem('isDarkTheme', isDarkTheme);
+
+        if (isDarkTheme) {
+            document.body.classList.add("dark");
+        } else {
+            document.body.classList.remove("dark");
+        }
+    }, [isDarkTheme]);
+
+    function handleThemeClick() {
+        setIsDarkTheme(!isDarkTheme);
+        setShowModalSettings(false);
+    }
 
     function toggleModalSettings() {
         setShowModalSettings(!showModalSettings);
@@ -43,7 +62,7 @@ export default function Navbar() {
                         {showModalSettings && <div className="modal-settings" ref={modalRef}>
                             <p>Settings</p>
                             <hr />
-                            <Button className="btn-appearance">
+                            <Button className="btn-appearance" onClick={handleThemeClick}>
                                 Switch appearance
                                 <Icon iconName="iconMoon" />
                             </Button>
