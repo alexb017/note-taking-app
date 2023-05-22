@@ -5,9 +5,9 @@ export default function NotesContainer(props) {
 
     const breakpointColumnsObj = {
         default: 8,
-        1920: 5,
-        1280: 4,
-        1024: 3,
+        1920: 6,
+        1366: 4,
+        1280: 3,
         768: 2,
         500: 1
     };

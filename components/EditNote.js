@@ -1,19 +1,20 @@
 import { useRef, useState, useEffect } from "react";
-import db from "../components/firebase";
+import db from "./firebase";
 import { doc, updateDoc } from "firebase/firestore";
 import Modal from "./Modal";
 import Button from "./Button";
 import Icon from "./Icon";
 import Palette from "./Palette";
+import { format, addDays, setHours, setMinutes } from 'date-fns';
 
-export default function NoteModal(props) {
+export default function EditNote(props) {
     const { details } = props;
     const [title, setTitle] = useState(details.title);
     const [content, setContent] = useState(details.content);
-    const [backgroundColor, setBackgroundColor] = useState(() => {
-        return details.backgroundColor;
-    });
-    const [date, setDate] = useState('');
+    const [backgroundColor, setBackgroundColor] = useState(details.backgroundColor);
+    const [date, setDate] = useState(details.dateTime);
+    const [imageSrc, setImageSrc] = useState(details.imageSrc);
+
     const [modalReminder, setModalReminder] = useState(false);
     const [modalColors, setModalColors] = useState(false);
     const modalColorsRef = useRef(null);
@@ -65,15 +66,10 @@ export default function NoteModal(props) {
         }
     }
 
-    function addReminderClick(reminder) {
-        setDate(reminder);
-        setModalReminder(false)
-    }
-
     function addBackgroundColorClick(color) {
         setBackgroundColor(color);
         props.setBackgroundColor(color);
-        props.onUpdateBackgroundColor(details.id, color);
+        props.onHandleChangeBackgroundColor(details.id, color);
     }
 
     async function handleUpdateTitle(e, noteId) {
@@ -98,28 +94,63 @@ export default function NoteModal(props) {
         props.onUpdateNote();
     }
 
+    function handleAddTodayReminderClick(noteId) {
+        const today = setMinutes(setHours(new Date(), 20), 0);
+        const formatDate = format(today, 'EEEE, h:mm a');
+        setDate(formatDate);
+        props.onHandleAddTodayReminderClick(noteId);
+        setModalReminder(false);
+    }
+
+    function handleAddTomorrowReminderClick(noteId) {
+        const today = setMinutes(setHours(new Date(), 8), 0);
+        const tomorrow = addDays(today, 1);
+        const formatDate = format(tomorrow, 'EEEE, h:mm a');
+        setDate(formatDate);
+        props.onHandleAddTomorrowReminderClick(noteId);
+        setModalReminder(false);
+    }
+
+    function handleRemoveDateClick(noteId) {
+        setDate('');
+        props.onHandleRemoveDateClick(noteId);
+    }
+
+    function handleUploadImageSrc(e, noteId) {
+        //setImageSrc(details.imageSrc);
+        props.onHandleUploadImageSrc(e, noteId);
+    }
+
+    function handleDeleteImage(noteId) {
+        props.setImageSrc('');
+        props.onHandleDeleteImage(noteId);
+    }
+
     return (
         <div className="note-modal">
             <div className="note-modal-container">
                 <div className="form" style={{ backgroundColor: `var(--${backgroundColor})` }}>
                     {props.imageSrc && <div className="image-src-container">
                         <img src={props.imageSrc} className="image-src" loading="lazy" alt="just an image" />
-                        <Button className="btn-modal btn-image-src" onClick={() => props.onHandleDeleteImage(details.id)}>
-                            <Icon iconName="iconTrashFill" />
-                        </Button>
+                        <div className="btn-image-src">
+                            <Button className="btn-modal" onClick={() => handleDeleteImage(details.id)}>
+                                <Icon iconName="iconTrashFill" />
+                            </Button>
+                            <div className="btn-name-details">Delete image</div>
+                        </div>
                     </div>}
                     <div className="form-content">
                         <input type="text" placeholder="Title" value={title} onChange={(e) => handleUpdateTitle(e, details.id)} />
                         <textarea type="text" rows="3" placeholder="Take a note..." value={content} onChange={(e) => handleUpdateContent(e, details.id)} />
                         <div className="date-time-content">
-                            {props.date &&
+                            {date &&
                                 <div className="date-time-content-flex date-time-content-note" onMouseEnter={() => props.setRemoveDate(true)} onMouseLeave={() => props.setRemoveDate(false)}>
                                     <Button className="btn-date-time">
-                                        <Icon iconName="iconClock" />
-                                        {details.dateTime}
+                                        <Icon iconName="iconClock" width="16px" height="16px" />
+                                        {date}
                                     </Button>
-                                    <Button className={`btn-date-time-remove ${props.removeDate ? "" : "hidden"}`} onClick={() => props.onHandleRemoveDateClick(details.id)}>
-                                        <Icon iconName="iconClose" />
+                                    <Button className={`btn-date-time-remove ${props.removeDate ? "" : "hidden"}`} onClick={() => handleRemoveDateClick(details.id)}>
+                                        <Icon iconName="iconClose" width="16px" height="16px" />
                                     </Button>
                                 </div>}
                         </div>
@@ -133,13 +164,13 @@ export default function NoteModal(props) {
                                     <div className="btn-name-details">Remind me</div>
                                     {modalReminder && <Modal className="modal modal-reminder note-modal-reminder" ref={modalReminderRef}>
                                         <p className="reminder">Reminder:</p>
-                                        <Button className="btn-reminder" onClick={() => props.onAddTodayReminderClick(details.id)}>
+                                        <Button className="btn-reminder" onClick={() => handleAddTodayReminderClick(details.id)}>
                                             <div className="btn-reminder-format">
                                                 <p>Later today</p>
                                                 <p>8:00 PM</p>
                                             </div>
                                         </Button>
-                                        <Button className="btn-reminder" onClick={() => onAddTomorrowReminderClick(details.id)}>
+                                        <Button className="btn-reminder" onClick={() => handleAddTomorrowReminderClick(details.id)}>
                                             <div className="btn-reminder-format">
                                                 <p>Tomorrow</p>
                                                 <div>8:00 AM</div>
@@ -175,7 +206,7 @@ export default function NoteModal(props) {
                                 <div className="bg-image-change">
                                     <label className="btn-modal">
                                         <Icon iconName="iconImage" />
-                                        <input type="file" onChange={(e) => props.onUploadImageSrc(e, details.id)} accept="image/*" />
+                                        <input type="file" onChange={(e) => handleUploadImageSrc(e, details.id)} accept="image/*" />
                                     </label>
                                     <div className="btn-name-details">Add image</div>
                                 </div>

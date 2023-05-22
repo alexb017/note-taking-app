@@ -722,6 +722,7 @@ input[type="file"] {
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   z-index: 9999;
+  overflow: scroll;
 }
 
 .note-modal-container {

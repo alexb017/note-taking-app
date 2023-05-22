@@ -77,6 +77,7 @@ export default function CreateNote(props) {
         setBackgroundColor('color-white');
         setImageSrc('');
         setDate('');
+        setArchiveNote(false);
 
         props.onUpdateNote();
     }
@@ -185,9 +186,12 @@ export default function CreateNote(props) {
             {imageSrc &&
                 <div className="image-src-container">
                     <img className="image-src" src={imageSrc} loading="lazy" alt="Selected image" />
-                    <Button className="btn-modal btn-image-src" onClick={handleDeleteImage}>
-                        <Icon iconName="iconTrashFill" />
-                    </Button>
+                    <div className="btn-image-src">
+                        <Button className="btn-modal" onClick={handleDeleteImage}>
+                            <Icon iconName="iconTrashFill" />
+                        </Button>
+                        <div className="btn-name-details">Delete image</div>
+                    </div>
                 </div>}
             <form className="form-content" onSubmit={handleNoteSubmit}>
                 <input type="text" placeholder="Title" value={title} onChange={(e) => setTitle(e.target.value)} />
@@ -196,11 +200,11 @@ export default function CreateNote(props) {
                     <div className="date-time-content">
                         <div className="date-time-content-flex" onMouseEnter={() => setRemoveDate(true)} onMouseLeave={() => setRemoveDate(false)}>
                             <Button className="btn-date-time">
-                                <Icon iconName="iconClock" />
+                                <Icon iconName="iconClock" width="16px" height="16px" />
                                 {date}
                             </Button>
                             <Button className={`btn-date-time-remove ${removeDate ? "" : "hidden"}`} onClick={removeDateClick}>
-                                <Icon iconName="iconClose" />
+                                <Icon iconName="iconClose" width="16px" height="16px" />
                             </Button>
                         </div>
                     </div>)}

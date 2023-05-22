@@ -77,7 +77,14 @@ export default function Notes({ data }) {
               <p>Pinned</p>
               <NotesContainer>
                 {notesPinned.map(note => {
-                  return <Note key={note.id} details={note} data={notes} onUpdateNote={updateNote} onHandleNoteClick={handleNoteClick} onHandleModalClose={handleModalClose} selectedNote={selectedNote} />
+                  return <Note
+                    key={note.id}
+                    details={note}
+                    data={notes}
+                    onUpdateNote={updateNote}
+                    onHandleNoteClick={handleNoteClick}
+                    onHandleModalClose={handleModalClose}
+                    selectedNote={selectedNote} />
                 })}
               </NotesContainer>
             </div>}
@@ -93,7 +100,14 @@ export default function Notes({ data }) {
               {notesList.length !== 0 && notesPinned.length > 0 ? <p className="others">Others</p> : ""}
               <NotesContainer>
                 {notesList.map(note => {
-                  return <Note key={note.id} details={note} data={notes} onUpdateNote={updateNote} onHandleNoteClick={handleNoteClick} onHandleModalClose={handleModalClose} selectedNote={selectedNote} />
+                  return <Note
+                    key={note.id}
+                    details={note}
+                    data={notes}
+                    onUpdateNote={updateNote}
+                    onHandleNoteClick={handleNoteClick}
+                    onHandleModalClose={handleModalClose}
+                    selectedNote={selectedNote} />
                 })}
               </NotesContainer>
             </>

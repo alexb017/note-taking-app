@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import NoteModal from "./NoteModal";
+import EditNote from "./EditNote";
 import db from "../components/firebase";
 import { doc, deleteDoc, updateDoc, getDoc } from "firebase/firestore";
 import { getDownloadURL, getStorage, ref, uploadBytes, deleteObject } from "firebase/storage";
@@ -10,24 +10,19 @@ import Button from "./Button";
 import Palette from "./Palette";
 
 export default function Note(props) {
-    const [notes, setNotes] = useState(props.data);
-    const [isModalSettingsOpen, setIsModalSettingsOpen] = useState(false);
     const { details } = props;
     const [selectedNote, setSelectedNote] = useState(null);
+    const [date, setDate] = useState('');
+    const [backgroundColor, setBackgroundColor] = useState(details.backgroundColor);
+    const [imageSrc, setImageSrc] = useState(details.imageSrc);
+    const [isModalSettingsOpen, setIsModalSettingsOpen] = useState(false);
     const [isDeleteModal, setIsDeleteModal] = useState(false);
-    const [imageSrc, setImageSrc] = useState(() => {
-        return details.imageSrc;
-    });
     const modalColorsRef = useRef(null);
     const btnColorsRef = useRef(null);
     const [modalColors, setModalColors] = useState(false);
-    const [backgroundColor, setBackgroundColor] = useState(() => {
-        return details.backgroundColor;
-    });
     const [modalReminder, setModalReminder] = useState(false);
     const modalReminderRef = useRef(null);
     const btnReminderRef = useRef(null);
-    const [date, setDate] = useState('');
     const [removeDate, setRemoveDate] = useState(false);
 
     useEffect(() => {
@@ -78,7 +73,7 @@ export default function Note(props) {
 
     function addBackgroundColorClick(color) {
         setBackgroundColor(color);
-        changeBackgroundColor(details.id, color);
+        handleChangeBackgroundColor(details.id, color);
     }
 
     async function handleDeleteNote(noteId) {
@@ -123,10 +118,18 @@ export default function Note(props) {
         const docRef = doc(db, "notes", noteId);
         const docSnap = await getDoc(docRef);
         const currentArchiveValue = docSnap.data().isArchive;
+        const currentPinnedValue = docSnap.data().isPinned;
 
-        await updateDoc(docRef, {
-            isArchive: !currentArchiveValue
-        });
+        if (currentPinnedValue) {
+            await updateDoc(docRef, {
+                isArchive: !currentArchiveValue,
+                isPinned: !currentPinnedValue
+            });
+        } else {
+            await updateDoc(docRef, {
+                isArchive: !currentArchiveValue
+            });
+        }
 
         props.onUpdateNote();
     }
@@ -143,7 +146,7 @@ export default function Note(props) {
         props.onUpdateNote();
     }
 
-    async function changeBackgroundColor(noteId, color) {
+    async function handleChangeBackgroundColor(noteId, color) {
         await updateDoc(doc(db, "notes", noteId), {
             backgroundColor: color
         });
@@ -227,8 +230,9 @@ export default function Note(props) {
     }
 
     function updateNoteModal(noteId) {
-        setSelectedNote(props.data.find(note => note.id === noteId));
-        props.onHandleNoteClick(noteId)
+        const editNote = props.data.find(note => note.id === noteId);
+        setSelectedNote(editNote);
+        props.onHandleNoteClick(noteId);
     }
 
     function closeUpdateNoteModal() {
@@ -236,7 +240,7 @@ export default function Note(props) {
         props.onHandleModalClose();
     }
 
-    function addTodayReminderClick(noteId) {
+    function handleAddTodayReminderClick(noteId) {
         // Set the hour to 8 PM (20:00)
         const today = setMinutes(setHours(new Date(), 20), 0);
         const formatDate = format(today, 'EEEE, h:mm a');
@@ -245,7 +249,7 @@ export default function Note(props) {
         setModalReminder(false);
     }
 
-    function addTomorrowReminderClick(noteId) {
+    function handleAddTomorrowReminderClick(noteId) {
         // Set the hour to 8 AM (8:00)
         const today = setMinutes(setHours(new Date(), 8), 0);
         const tomorrow = addDays(today, 1);
@@ -256,18 +260,21 @@ export default function Note(props) {
     }
 
     async function handleRemoveDateClick(noteId) {
-        setDate('');
-
         await updateDoc(doc(db, "notes", noteId), {
             dateTime: ""
         });
 
+        setDate('');
         props.onUpdateNote();
     }
 
     return (
         <>
-            <div className="note-contents" style={{ backgroundColor: `var(--${backgroundColor})` }} onMouseEnter={() => setIsModalSettingsOpen(true)} onMouseLeave={modalSettingsOpen} onClick={() => setIsModalSettingsOpen(true)}>
+            <div className="note-contents"
+                style={{ backgroundColor: `var(--${backgroundColor})` }}
+                onMouseEnter={() => setIsModalSettingsOpen(true)}
+                onMouseLeave={modalSettingsOpen}
+                onClick={() => setIsModalSettingsOpen(true)}>
 
                 <div>
                     {imageSrc && <img src={imageSrc} className="image-src" loading="lazy" alt="just an image" />}
@@ -310,13 +317,13 @@ export default function Note(props) {
                                             <div className="btn-name-details">Remind me</div>
                                             {modalReminder && <Modal className="modal modal-reminder" ref={modalReminderRef}>
                                                 <p className="reminder">Reminder:</p>
-                                                <Button className="btn-reminder" onClick={() => addTodayReminderClick(details.id)}>
+                                                <Button className="btn-reminder" onClick={() => handleAddTodayReminderClick(details.id)}>
                                                     <div className="btn-reminder-format">
                                                         <p>Later today</p>
                                                         <p>8:00 PM</p>
                                                     </div>
                                                 </Button>
-                                                <Button className="btn-reminder" onClick={() => addTomorrowReminderClick(details.id)}>
+                                                <Button className="btn-reminder" onClick={() => handleAddTomorrowReminderClick(details.id)}>
                                                     <div className="btn-reminder-format">
                                                         <p>Tomorrow</p>
                                                         <div>8:00 AM</div>
@@ -417,23 +424,23 @@ export default function Note(props) {
             </div>
 
             {selectedNote &&
-                <NoteModal
+                <EditNote
                     details={selectedNote}
                     onClose={closeUpdateNoteModal}
                     onUpdateNote={props.onUpdateNote}
-                    onUpdateBackgroundColor={changeBackgroundColor}
+                    date={date}
+                    onHandleAddTodayReminderClick={handleAddTodayReminderClick}
+                    onHandleAddTomorrowReminderClick={handleAddTomorrowReminderClick}
+                    onHandleRemoveDateClick={handleRemoveDateClick}
+                    onHandleChangeBackgroundColor={handleChangeBackgroundColor}
                     setBackgroundColor={setBackgroundColor}
                     onArchiveNote={handleArchiveNote}
                     onDeleteNote={handleDeleteNote}
                     imageSrc={imageSrc}
                     setImageSrc={setImageSrc}
-                    onUploadImageSrc={handleUploadImageSrc}
+                    onHandleUploadImageSrc={handleUploadImageSrc}
                     removeDate={removeDate}
                     setRemoveDate={setRemoveDate}
-                    date={date}
-                    onAddTodayReminderClick={addTodayReminderClick}
-                    onAddTomorrowReminderClick={addTomorrowReminderClick}
-                    onHandleRemoveDateClick={handleRemoveDateClick}
                     onHandleDeleteImage={handleDeleteImage} />}
         </>
     )
