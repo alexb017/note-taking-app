@@ -114,7 +114,7 @@ input[type="file"] {
 
 .main {
   width: 100%;
-  padding: 0 20px;
+  padding: 0 15px;
 }
 
 @media screen and (min-width: 1280px) {
@@ -157,7 +157,13 @@ input[type="file"] {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 8px 20px;
+  padding: 8px 15px;
+}
+
+@media screen and (min-width: 1280px) {
+  .nav-content {
+    padding: 8px 20px;
+  }
 }
 
 .nav-title {
@@ -722,13 +728,12 @@ input[type="file"] {
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   z-index: 9999;
-  overflow: scroll;
 }
 
 .note-modal-container {
   max-width: 580px;
   margin: 0 auto;
-  padding: 200px 20px;
+  padding: 200px 15px;
 }
 
 /* Form */
