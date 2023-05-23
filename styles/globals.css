@@ -750,9 +750,14 @@ input[type="file"] {
 }
 
 .note-modal-container {
-  max-width: 580px;
   margin: 0 auto;
   padding: 200px 15px;
+}
+
+@media screen and (min-width: 768px) {
+  .note-modal-container {
+    max-width: 580px;
+  }
 }
 
 /* Form */
@@ -768,7 +773,7 @@ input[type="file"] {
 
 @media screen and (min-width: 768px) {
   .form {
-    width: 540px;
+    width: 550px;
   }
 }
 
