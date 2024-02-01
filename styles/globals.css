@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap');
+
 :root {
   --color-white: #fff;
   --color-black: #202124;
@@ -23,8 +26,10 @@
   --color-white-opacity-50: rgb(255 255 255 / 50%);
 
   --box-shadow-note: 0 1px 2px rgb(0 0 0 / 7.5%), 0 1px 3px 1px rgb(0 0 0 / 10%);
-  --box-shadow-note-hover: 0 1px 6px rgb(0 0 0 / 7.5%), 0 1px 8px 1px rgb(0 0 0 / 10%);
-  --box-shadow-modal: 0 1px 2px rgb(0 0 0 / 7.5%), 0 2px 6px 2px rgb(0 0 0 / 10%);
+  --box-shadow-note-hover: 0 1px 6px rgb(0 0 0 / 7.5%),
+    0 1px 8px 1px rgb(0 0 0 / 10%);
+  --box-shadow-modal: 0 1px 2px rgb(0 0 0 / 7.5%),
+    0 2px 6px 2px rgb(0 0 0 / 10%);
   --box-shadow-modals: 0 10px 40px rgb(0 0 0 / 20%);
   --box-shadow-form: 0px 3px 6px rgb(0 0 0 / 7.5%), 0px 1px 6px rgb(0 0 0 / 10%);
 }
@@ -46,18 +51,20 @@ body.dark {
   --color-black-opacity-7: rgb(255 255 255 / 7.5%);
   --color-black-opacity-10: rgb(255 255 255 / 10%);
 
-  --box-shadow-note: 0 1px 1px rgb(255 255 255 / 20%), 0 0 1px rgb(255 255 255 / 50%);
-  --box-shadow-note-hover: 0 1px 1px rgb(255 255 255 / 40%), 0 0 1px rgb(255 255 255 / 70%);
-  --box-shadow-modal: 0 0 1px rgb(255 255 255 / 10%), 0 1px 1px rgb(255 255 255 / 50%);
+  --box-shadow-note: 0 1px 1px rgb(255 255 255 / 20%),
+    0 0 1px rgb(255 255 255 / 50%);
+  --box-shadow-note-hover: 0 1px 1px rgb(255 255 255 / 40%),
+    0 0 1px rgb(255 255 255 / 70%);
+  --box-shadow-modal: 0 0 1px rgb(255 255 255 / 10%),
+    0 1px 1px rgb(255 255 255 / 50%);
   --box-shadow-modals: 0 0 1px rgb(255 255 255 / 50%);
-  --box-shadow-form: 0px 1px 1px rgb(255 255 255 / 20%), 0px 1px 1px rgb(255 255 255 / 50%);
+  --box-shadow-form: 0px 1px 1px rgb(255 255 255 / 20%),
+    0px 1px 1px rgb(255 255 255 / 50%);
 }
-
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
 
 body {
   font-family: 'Inter', sans-serif;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.5;
   color: var(--color-black);
   font-weight: 400;
@@ -120,8 +127,13 @@ textarea {
   all: unset;
 }
 
-input[type="file"] {
+input[type='file'] {
   display: none;
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
 }
 
 /* App */
@@ -131,13 +143,24 @@ input[type="file"] {
   flex-direction: row;
 }
 
+.home-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: calc(100vh - 57px);
+}
+
 .main {
+  width: 100%;
+}
+
+.main-notes {
   width: 100%;
   padding: 0 15px;
 }
 
 @media screen and (min-width: 1280px) {
-  .main {
+  .main-notes {
     width: calc(100% - 280px);
   }
 }
@@ -216,11 +239,15 @@ input[type="file"] {
 .btn-secondary {
   display: flex;
   align-items: center;
-  padding: 12px 24px;
+  padding: 8px 16px;
   border-radius: 100px;
   color: var(--color-black);
+  font-weight: 500;
   cursor: pointer;
   transition: 100ms ease-in;
+  background-color: var(--color-gray-light);
+}
+.btn-secondary:hover {
   background-color: var(--color-gray);
 }
 
@@ -235,14 +262,20 @@ input[type="file"] {
   display: flex;
   flex-direction: column;
   background-color: var(--color-white);
-  border-radius: 8px;
+  border-radius: 16px;
   padding: 8px 0;
   box-shadow: var(--box-shadow-modals);
   z-index: 99;
 }
 
+.settings-content {
+  display: flex;
+  flex-direction: column;
+}
+
 .modal-settings p {
-  padding: 4px 16px;
+  font-weight: 500;
+  padding: 6px 16px;
 }
 
 .btn-appearance {
@@ -251,6 +284,7 @@ input[type="file"] {
   justify-content: space-between;
   cursor: pointer;
   padding: 4px 16px;
+  font-weight: 500;
   margin-top: 8px;
   background-color: transparent;
   transition: 150ms ease-in;
@@ -339,7 +373,7 @@ input[type="file"] {
   margin: 32px 0;
 }
 
-.pinned>p,
+.pinned > p,
 .others {
   font-size: 12px;
   text-transform: uppercase;
@@ -711,7 +745,7 @@ input[type="file"] {
 }
 
 @media screen and (min-width: 1280px) {
-  .btn-modal:hover+.btn-name-details {
+  .btn-modal:hover + .btn-name-details {
     display: block;
   }
 }
@@ -824,4 +858,65 @@ input[type="file"] {
   position: absolute;
   right: 12px;
   bottom: 12px;
+}
+
+/* Home */
+.nav-auth {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.auth-login {
+  font-weight: 500;
+}
+.auth-signup {
+  font-weight: 500;
+  padding: 8px 16px;
+  border-radius: 12px;
+  background-color: var(--color-blue);
+}
+.home-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+}
+.home-content-top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.home-content h1 {
+  font-size: 24px;
+  font-weight: 500;
+}
+.home-box {
+  font-size: 54px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -2px;
+}
+.home-i {
+  color: var(--color-blue);
+}
+.home-d {
+  color: var(--color-orange);
+}
+.home-e {
+  color: var(--color-purple);
+}
+.home-a {
+  color: var(--color-red);
+}
+.home-s {
+  color: var(--color-teal);
+}
+.home-copy {
+  font-size: 14px;
+  color: var(--color-gray-dark);
+}
+
+.emoji {
+  font-family: 'Noto Color Emoji', sans-serif;
 }

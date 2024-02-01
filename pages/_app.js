@@ -6,12 +6,12 @@ import '@/styles/globals.css';
 export default function App({ Component, pageProps }) {
   return (
     <Layout>
-      <div className='container'>
-        <NavbarLeft />
-        <main className='main'>
+      <div className="container">
+        {/* <NavbarLeft /> */}
+        <main className="main">
           <Component {...pageProps} />
         </main>
       </div>
     </Layout>
-  )
+  );
 }
