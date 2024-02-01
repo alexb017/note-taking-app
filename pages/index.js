@@ -1,11 +1,12 @@
 import Head from 'next/head';
 import Link from 'next/link';
+import LoginIcon from '../components/icons/login';
 
 export default function Home() {
   return (
     <>
       <Head>
-        <title>Note Taking App</title>
+        <title>NoteTaking App</title>
         <meta name="description" content="Build a note-taking app" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
@@ -20,14 +21,14 @@ export default function Home() {
                 <span className="home-d">d</span>
                 <span className="home-e">e</span>
                 <span className="home-a">a</span>
-                <span className="home-s">s</span> to life{' '}
-                <span className="emoji">✨</span>
+                <span className="home-s">s</span>{' '}
+                <span className="emoji">✨</span> <br></br> to life
               </p>
             </div>
           </div>
           <div className="nav-auth">
             <Link href="/login" className="auth-login">
-              Login
+              <LoginIcon classname="icon" /> Login
             </Link>
             <Link href="/signup" className="auth-signup">
               Sign up
