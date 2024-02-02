@@ -1,8 +1,9 @@
+'use client';
+
 import Link from 'next/link';
-import { useState, useEffect, useRef, use } from 'react';
-import Button from './Button';
-import Icon from './Icon';
-import UserIcon from './icons/user';
+import { useState, useEffect, useRef } from 'react';
+import LogoIcon from '../icons/logo';
+import styles from './navbar.module.css';
 
 export default function Navbar() {
   const [isDarkTheme, setIsDarkTheme] = useState(() => {
@@ -52,10 +53,10 @@ export default function Navbar() {
   }
 
   return (
-    <nav className="nav">
-      <div className="nav-content">
-        <Link href="/" className="nav-title">
-          <Icon iconName="iconFileTextFill" width="40px" height="40px" />
+    <nav className={styles.nav}>
+      <div className={styles.navContent}>
+        <Link href="/" className={styles.navTitle}>
+          <LogoIcon classname={styles.iconWh} />
           NoteTaking
         </Link>
         <div className="nav-right">

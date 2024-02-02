@@ -1,8 +1,14 @@
 import Head from 'next/head';
 import Link from 'next/link';
 import GoogleIcon from '../../components/icons/google';
+import { useContext } from 'react';
+import { AuthContext } from '../AuthContext';
+import { useRouter } from 'next/navigation';
 
 export default function Login() {
+  const { user, googleSignIn } = useContext(AuthContext);
+  const router = useRouter();
+
   return (
     <>
       <Head>
@@ -47,7 +53,23 @@ export default function Login() {
                 className="form-auth-submit"
               />
             </form>
-            <button className="auth-google">
+            <button
+              className="auth-google"
+              onClick={async () => {
+                try {
+                  const res = await googleSignIn();
+
+                  if (res) {
+                    router.push('/notes');
+                  }
+                } catch (error) {
+                  if (error.code === 'auth/popup-closed-by-user') {
+                    return;
+                  }
+                  throw new Error(error);
+                }
+              }}
+            >
               <GoogleIcon classname="icon" />
               Sign in with Google
             </button>

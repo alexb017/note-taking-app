@@ -1,4 +1,4 @@
-export default function GoogleIcon({ classname }) {
+export default function GoogleIcon({ classname }: { classname?: string }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

@@ -3,10 +3,11 @@ import db from '../../components/firebase';
 import { collection, getDocs, onSnapshot } from 'firebase/firestore';
 import CreateNote from '../CreateNote';
 import Note from '../../components/Note';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useContext } from 'react';
 import { useRouter } from 'next/router';
 import NotesContainer from '@/components/NotesContainer';
 import Layout from './layout';
+import { AuthContext } from '../AuthContext';
 
 export default function Notes({ data }) {
   const [notes, setNotes] = useState(data);
@@ -14,6 +15,7 @@ export default function Notes({ data }) {
   const router = useRouter();
   const noteRef = useRef(null);
   const [isModalSettingsOpen, setIsModalSettingsOpen] = useState(false);
+  const { user } = useContext(AuthContext);
 
   const notesPinned = notes.filter((note) => note.isPinned);
   const notesList = notes.filter(

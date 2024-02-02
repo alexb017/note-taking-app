@@ -1,0 +1,140 @@
+:root {
+  --color-white: #fff;
+  --color-black: #202124;
+  --color-red: #f28b82;
+  --color-orange: #fbbc04;
+  --color-yellow: #fff475;
+  --color-yellow-light: #feefc3;
+  --color-teal: #a7ffeb;
+  --color-blue: #cbf0f8;
+  --color-purple: #d7aefb;
+  --color-gray: #e8eaed;
+  --color-gray-light: #f1f3f4;
+  --color-gray-dark: #5f6368;
+
+  --color-orange-title: #fbbc04;
+  --color-name-details: #e8eaed;
+  --color-bg-name-details: #3c3f43;
+
+  --gray-text: #9ca3af;
+  --gray-border: #d1d5db;
+  --blue-link: #60a5fa;
+
+  --box-shadow-btn: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
+    rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+
+  --color-black-opacity-7: rgb(0 0 0 / 7.5%);
+  --color-black-opacity-10: rgb(0 0 0 / 10%);
+  --color-black-opacity-20: rgb(0 0 0 / 20%);
+  --color-black-opacity-50: rgb(0 0 0 / 50%);
+  --color-white-opacity-50: rgb(255 255 255 / 50%);
+
+  --box-shadow-note: 0 1px 2px rgb(0 0 0 / 7.5%), 0 1px 3px 1px rgb(0 0 0 / 10%);
+  --box-shadow-note-hover: 0 1px 6px rgb(0 0 0 / 7.5%),
+    0 1px 8px 1px rgb(0 0 0 / 10%);
+  --box-shadow-modal: 0 1px 2px rgb(0 0 0 / 7.5%),
+    0 2px 6px 2px rgb(0 0 0 / 10%);
+  --box-shadow-modals: 0 10px 40px rgb(0 0 0 / 20%);
+  --box-shadow-form: 0px 3px 6px rgb(0 0 0 / 7.5%), 0px 1px 6px rgb(0 0 0 / 10%);
+}
+
+body.dark {
+  --color-white: #202124;
+  --color-black: #e8eaed;
+  --color-red: #5c2b29;
+  --color-orange: #614a19;
+  --color-yellow: #635d19;
+  --color-yellow-light: #41331c;
+  --color-teal: #16504b;
+  --color-blue: #2d555e;
+  --color-purple: #42275e;
+  --color-gray: #3c3f43;
+  --color-gray-light: #3c3f43;
+  --color-gray-dark: #e8eaed;
+
+  --color-black-opacity-7: rgb(255 255 255 / 7.5%);
+  --color-black-opacity-10: rgb(255 255 255 / 10%);
+
+  --box-shadow-note: 0 1px 1px rgb(255 255 255 / 20%),
+    0 0 1px rgb(255 255 255 / 50%);
+  --box-shadow-note-hover: 0 1px 1px rgb(255 255 255 / 40%),
+    0 0 1px rgb(255 255 255 / 70%);
+  --box-shadow-modal: 0 0 1px rgb(255 255 255 / 10%),
+    0 1px 1px rgb(255 255 255 / 50%);
+  --box-shadow-modals: 0 0 1px rgb(255 255 255 / 50%);
+  --box-shadow-form: 0px 1px 1px rgb(255 255 255 / 20%),
+    0px 1px 1px rgb(255 255 255 / 50%);
+}
+
+body {
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--color-black);
+  font-weight: 400;
+  background-color: var(--color-white);
+  transition: 150ms ease-in;
+
+  /* background-image: linear-gradient(to right, rgba(200, 200, 200, 0.15) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(200, 200, 200, 0.15) 1px, transparent 1px);
+  background-size: 20px 20px; */
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+*,
+::before,
+::after {
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+  color: var(--color-black);
+}
+
+svg {
+  fill: currentColor;
+}
+
+button {
+  all: unset;
+}
+
+h1 {
+  font-size: 36px;
+  line-height: 1.2;
+}
+
+h3 {
+  font-size: 22px;
+}
+
+strong {
+  font-weight: 700;
+}
+
+hr {
+  border: 1px solid var(--color-gray);
+}
+
+p svg {
+  display: inline-block;
+  vertical-align: text-bottom;
+}
+
+input,
+textarea {
+  all: unset;
+}
+
+input[type='file'] {
+  display: none;
+}
+
+/* Remove blue rectangle when click on mobile device, idk finded on stakoverflow */
+* {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
