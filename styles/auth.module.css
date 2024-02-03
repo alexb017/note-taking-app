@@ -1,0 +1,113 @@
+.auth {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 57px);
+}
+
+.authContent {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  width: 320px;
+}
+
+.authTitleH1 {
+  font-size: 36px;
+  font-weight: 600;
+}
+
+.authTitleP {
+  font-weight: 500;
+  color: var(--color-gray-dark);
+  margin-top: 8px;
+}
+
+.formAuth {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.formAuthContent {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.formLabel {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-weight: 500;
+}
+
+.formInput {
+  height: 44px;
+  border-radius: 4px;
+  border: 1px solid var(--gray-border);
+  padding: 0 12px;
+  cursor: text;
+}
+
+.formInput::placeholder {
+  color: var(--gray-text);
+  font-weight: 400;
+}
+
+.formAuthSubmit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 44px;
+  color: var(--color-white);
+  background-color: var(--color-black);
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: var(--box-shadow-btn);
+  transition: all 150ms ease-out;
+}
+
+.formAuthSubmit:hover {
+  background-color: var(--color-gray-dark);
+}
+
+.loginTextSignup {
+  text-align: center;
+  font-weight: 500;
+}
+.loginTextSignup a {
+  color: var(--blue-link);
+}
+
+.authGoogle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 44px;
+  border: 1px solid var(--gray-border);
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 150ms ease-out;
+}
+
+.back {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  font-weight: 500;
+  color: var(--gray-text);
+  transition: color 150ms ease-out;
+}
+.back:hover {
+  color: var(--color-black);
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+}

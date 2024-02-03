@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useState, useEffect, useRef } from 'react';
 import LogoIcon from '../icons/logo';
 import styles from './navbar.module.css';
+import { signOut, useSession } from 'next-auth/react';
 
 export default function Navbar() {
   const [isDarkTheme, setIsDarkTheme] = useState(() => {
@@ -14,6 +15,7 @@ export default function Navbar() {
   const [showModalSettings, setShowModalSettings] = useState(false);
   const modalRef = useRef(null);
   const btnRef = useRef(null);
+  const session = useSession();
 
   useEffect(() => {
     function handleOutsideClick(e) {
@@ -55,11 +57,13 @@ export default function Navbar() {
   return (
     <nav className={styles.nav}>
       <div className={styles.navContent}>
-        <Link href="/" className={styles.navTitle}>
+        <h1 className={styles.navTitle}>
           <LogoIcon classname={styles.iconWh} />
           NoteTaking
-        </Link>
+        </h1>
         <div className="nav-right">
+          <div>{session?.data?.user?.name}</div>
+          <button onClick={() => signOut()}>Logout</button>
           {/* <div className="nav-auth">
             <Link href="/login" className="auth-login">
               Login
