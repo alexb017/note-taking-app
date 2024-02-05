@@ -2,7 +2,7 @@ import Link from 'next/link';
 import LoginIcon from '../components/icons/login';
 import styles from './home.module.css';
 
-export default async function Home() {
+export default function Home() {
   return (
     <>
       <div className={styles.homeContainer}>

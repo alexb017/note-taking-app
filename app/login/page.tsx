@@ -4,9 +4,13 @@ import Link from 'next/link';
 import GoogleIcon from '../../components/icons/google';
 import styles from '../../styles/auth.module.css';
 import ArrowLeftIcon from '@/components/icons/arrow-left';
-import { signIn } from 'next-auth/react';
+import { useContext } from 'react';
+import { AuthContext } from '../AuthContext';
+import { useRouter } from 'next/navigation';
 
 export default function Login() {
+  const { googleSignIn } = useContext(AuthContext);
+  const router = useRouter();
   return (
     <>
       <div className={styles.auth}>
@@ -48,7 +52,20 @@ export default function Login() {
               />
             </form>
             <button
-              onClick={() => signIn('google')}
+              onClick={async () => {
+                try {
+                  const res = await googleSignIn();
+
+                  if (res) {
+                    router.push('/notes');
+                  }
+                } catch (error: any) {
+                  if (error.code === 'auth/popup-closed-by-user') {
+                    return;
+                  }
+                  throw new Error(error);
+                }
+              }}
               className={styles.authGoogle}
             >
               <GoogleIcon classname={styles.icon} />
