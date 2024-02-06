@@ -1,8 +1,9 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
-import Navbar from '../components/navbar/navbar';
+import Navbar from '../components/navbar';
 import { AuthProvider } from './AuthContext';
+import { Providers } from './providers';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -20,8 +21,10 @@ export default async function RootLayout({
     <html lang="en">
       <body className={`${inter.className}`}>
         <AuthProvider>
-          <Navbar />
-          <main className="main">{children}</main>
+          <Providers>
+            <Navbar />
+            <main className="main">{children}</main>
+          </Providers>
         </AuthProvider>
       </body>
     </html>

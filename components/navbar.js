@@ -2,9 +2,10 @@
 
 import Link from 'next/link';
 import { useState, useEffect, useRef, useContext } from 'react';
-import LogoIcon from '../icons/logo';
-import styles from './navbar.module.css';
+import LogoIcon from './icons/logo';
 import { AuthContext } from '@/app/AuthContext';
+import { Button } from '@nextui-org/button';
+import { useRouter } from 'next/navigation';
 
 export default function Navbar() {
   const [isDarkTheme, setIsDarkTheme] = useState(() => {
@@ -15,6 +16,7 @@ export default function Navbar() {
   const [showModalSettings, setShowModalSettings] = useState(false);
   const modalRef = useRef(null);
   const btnRef = useRef(null);
+  const router = useRouter();
 
   const { user, googleSignOut } = useContext(AuthContext);
   console.log(user);
@@ -57,15 +59,36 @@ export default function Navbar() {
   }
 
   return (
-    <nav className={styles.nav}>
-      <div className={styles.navContent}>
-        <h1 className={styles.navTitle}>
-          <LogoIcon classname={styles.iconWh} />
+    <nav className="bg-white border-b border-gray-200">
+      <div className="flex items-center justify-between h-14 px-4">
+        <Link
+          href="/"
+          className="flex items-center gap-1 text-gray-500 text-2xl font-medium"
+        >
+          <LogoIcon classname="h-10 text-yellow-500" />
           NoteTaking
-        </h1>
-        <div className="nav-right">
+        </Link>
+        <div className="flex items-center gap-2">
           {!user ? (
-            <>hey</>
+            <>
+              <Button
+                color="default"
+                variant="light"
+                radius="md"
+                className="font-medium"
+                onClick={() => router.push('/login')}
+              >
+                Log In
+              </Button>
+              <Button
+                color="primary"
+                variant="shadow"
+                radius="md"
+                onClick={() => router.push('/signup')}
+              >
+                Sign Up
+              </Button>
+            </>
           ) : (
             <>
               <p>{user?.displayName}</p>

@@ -2,56 +2,57 @@
 
 import Link from 'next/link';
 import GoogleIcon from '../../components/icons/google';
-import styles from '../../styles/auth.module.css';
-import ArrowLeftIcon from '@/components/icons/arrow-left';
 import { useContext } from 'react';
 import { AuthContext } from '../AuthContext';
 import { useRouter } from 'next/navigation';
+import { Input, Button } from '@nextui-org/react';
 
 export default function Login() {
   const { googleSignIn } = useContext(AuthContext);
   const router = useRouter();
+
   return (
     <>
-      <div className={styles.auth}>
-        <div className={styles.authContent}>
-          <div>
-            <h1 className={styles.authTitleH1}>Login</h1>
-            <p className={styles.authTitleP}>
+      <div className="flex justify-center items-center h-57px">
+        <div className="flex flex-col gap-6 w-[320px]">
+          <div className="flex flex-col">
+            <h1 className="text-3xl font-semibold">Login</h1>
+            <p className="font-medium">
               Welcome back! Please enter your details.
             </p>
           </div>
-          <div className={styles.formAuthContent}>
-            <form className={styles.formAuth}>
-              <label htmlFor="email" className={styles.formLabel}>
-                Email address
-                <input
-                  type="text"
-                  name="email"
-                  id="email"
-                  className={styles.formInput}
-                  autoComplete="email"
-                  placeholder="your@company.com"
-                />
-              </label>
-              <label htmlFor="password" className={styles.formLabel}>
-                Password
-                <input
-                  type="password"
-                  name="password"
-                  id="password"
-                  className={styles.formInput}
-                  autoComplete="current-password"
-                  placeholder="********"
-                />
-              </label>
-              <input
-                type="submit"
-                value="Continue with Email"
-                className={styles.formAuthSubmit}
+          <div className="flex flex-col gap-4">
+            <form className="flex flex-col gap-2">
+              <Input
+                type="email"
+                variant="bordered"
+                label="Email"
+                placeholder="Enter your email"
+                radius="md"
               />
+              <Input
+                isClearable
+                type="password"
+                variant="bordered"
+                label="Password"
+                placeholder="Enter your password"
+                radius="md"
+              />
+              <Button
+                type="submit"
+                color="primary"
+                variant="shadow"
+                radius="md"
+                size="lg"
+              >
+                Log In
+              </Button>
             </form>
-            <button
+            <Button
+              variant="bordered"
+              radius="md"
+              size="lg"
+              className="font-medium"
               onClick={async () => {
                 try {
                   const res = await googleSignIn();
@@ -66,19 +67,17 @@ export default function Login() {
                   throw new Error(error);
                 }
               }}
-              className={styles.authGoogle}
             >
-              <GoogleIcon classname={styles.icon} />
+              <GoogleIcon classname="h-5" />
               Continue with Google
-            </button>
+            </Button>
           </div>
-          <p className={styles.loginTextSignup}>
-            Don't have an account? <Link href="/signup">Sign up</Link>
+          <p className="text-center">
+            Don't have an account?{' '}
+            <Link href="/signup" className="text-blue-500">
+              Sign up
+            </Link>
           </p>
-          <Link href="/" className={styles.back}>
-            <ArrowLeftIcon classname={styles.icon} />
-            Back Home
-          </Link>
         </div>
       </div>
     </>

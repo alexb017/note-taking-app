@@ -1,33 +1,20 @@
-import Link from 'next/link';
-import LoginIcon from '../components/icons/login';
-import styles from './home.module.css';
-
 export default function Home() {
   return (
     <>
-      <div className={styles.homeContainer}>
-        <div className={styles.homeContent}>
-          <div className={styles.homeContentTop}>
-            <h1 className={styles.homeContentH1}>Welcome to NoteTaking!</h1>
-            <div className={styles.homeBox}>
-              <p>
-                Bring <span className={styles.homeI}>i</span>
-                <span className={styles.homeD}>d</span>
-                <span className={styles.homeE}>e</span>
-                <span className={styles.homeA}>a</span>
-                <span className={styles.homeS}>s</span>✨<br></br> to life
-              </p>
-            </div>
+      <div className="flex items-center justify-center h-57px">
+        <div className="flex flex-col items-center gap-12">
+          <div className="flex flex-col items-center gap-2">
+            <h3 className=" text-2xl font-medium">Welcome to NoteTaking!</h3>
+
+            <h1 className=" text-8xl font-semibold leading-none tracking-tighter text-center">
+              Bring <span className=" text-red-500">i</span>
+              <span className="text-yellow-500">d</span>
+              <span className="text-green-500">e</span>
+              <span className="text-blue-500">a</span>
+              <span className="text-violet-500">s</span>✨<br></br> to life
+            </h1>
           </div>
-          <div className={styles.authFlex}>
-            <Link href="/login" className={styles.authLogin}>
-              <LoginIcon classname={styles.iconWh} /> Login
-            </Link>
-            <Link href="/signup" className={styles.authSignup}>
-              Sign up
-            </Link>
-          </div>
-          <p className={styles.homeCopy}>&copy; 2024 NoteTaking ✌️</p>
+          <p className="text-gray-500">&copy; 2024 NoteTaking ✌️</p>
         </div>
       </div>
     </>
