@@ -3,60 +3,22 @@
 import Link from 'next/link';
 import { useState, useEffect, useRef, useContext } from 'react';
 import LogoIcon from './icons/logo';
-import { AuthContext } from '@/app/AuthContext';
-import { Button } from '@nextui-org/button';
+import { AuthContext } from '@/app/auth-context';
+import {
+  Button,
+  Dropdown,
+  DropdownTrigger,
+  DropdownMenu,
+  DropdownItem,
+  User,
+} from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
 
 export default function Navbar() {
-  const [isDarkTheme, setIsDarkTheme] = useState(() => {
-    if (typeof window !== 'undefined' && window.localStorage) {
-      return localStorage.getItem('isDarkTheme') === 'true';
-    }
-  });
-  const [showModalSettings, setShowModalSettings] = useState(false);
-  const modalRef = useRef(null);
-  const btnRef = useRef(null);
+  const { user, userSignOut } = useContext(AuthContext);
   const router = useRouter();
-
-  const { user, googleSignOut } = useContext(AuthContext);
+  const username = user?.email.slice(0, user?.email.indexOf('@'));
   console.log(user);
-
-  useEffect(() => {
-    function handleOutsideClick(e) {
-      if (
-        modalRef.current &&
-        !modalRef.current.contains(e.target) &&
-        !btnRef.current.contains(e.target)
-      ) {
-        setShowModalSettings(false);
-      }
-    }
-
-    document.addEventListener('mousedown', handleOutsideClick);
-
-    return () => {
-      document.removeEventListener('mousedown', handleOutsideClick);
-    };
-  }, [modalRef, showModalSettings, btnRef]);
-
-  useEffect(() => {
-    localStorage.setItem('isDarkTheme', isDarkTheme);
-
-    if (isDarkTheme) {
-      document.body.classList.add('dark');
-    } else {
-      document.body.classList.remove('dark');
-    }
-  }, [isDarkTheme]);
-
-  function handleThemeClick() {
-    setIsDarkTheme(!isDarkTheme);
-    setShowModalSettings(false);
-  }
-
-  function toggleModalSettings() {
-    setShowModalSettings(!showModalSettings);
-  }
 
   return (
     <nav className="bg-white border-b border-gray-200">
@@ -81,9 +43,10 @@ export default function Navbar() {
                 Log In
               </Button>
               <Button
-                color="primary"
+                color="warning"
                 variant="shadow"
                 radius="md"
+                className="font-medium"
                 onClick={() => router.push('/signup')}
               >
                 Sign Up
@@ -91,39 +54,46 @@ export default function Navbar() {
             </>
           ) : (
             <>
-              <p>{user?.displayName}</p>
-              <button onClick={() => googleSignOut()}>signout</button>
+              <Dropdown placement="bottom-start">
+                <DropdownTrigger>
+                  <User
+                    as="button"
+                    avatarProps={{
+                      isBordered: true,
+                      src: `${user?.photoURL}`,
+                    }}
+                    className="transition-transform"
+                    description={`@${username}`}
+                    name={`${user?.displayName}`}
+                  />
+                </DropdownTrigger>
+                <DropdownMenu aria-label="User Actions" variant="flat">
+                  <DropdownItem
+                    key="profile"
+                    className="h-14 gap-2"
+                    textValue="profile"
+                  >
+                    <p className="font-bold">Signed in as</p>
+                    <p className="font-bold">{`@${username}`}</p>
+                  </DropdownItem>
+                  <DropdownItem key="profile_page" textValue="profile_page">
+                    My Profile
+                  </DropdownItem>
+                  <DropdownItem key="dark_theme" textValue="dark_theme">
+                    Switch to Dark Theme
+                  </DropdownItem>
+                  <DropdownItem
+                    key="logout"
+                    color="danger"
+                    textValue="logout"
+                    onClick={() => userSignOut()}
+                  >
+                    Log Out
+                  </DropdownItem>
+                </DropdownMenu>
+              </Dropdown>
             </>
           )}
-          {/* <div className="nav-auth">
-            <Link href="/login" className="auth-login">
-              Login
-            </Link>
-            <Link href="/signup" className="auth-signup">
-              Sign up
-            </Link>
-          </div> */}
-          {/* <div className="notes-settings">
-            <Button secondary onClick={toggleModalSettings} ref={btnRef}>
-              <UserIcon classname="icon" />
-              Settings
-            </Button>
-            {showModalSettings && (
-              <div className="modal-settings" ref={modalRef}>
-                <div className="settings-auth">
-                  <p>Login</p>
-                </div>
-                <div className="settings-content">
-                  <p>Settings</p>
-                  <hr />
-                  <Button className="btn-appearance" onClick={handleThemeClick}>
-                    Switch appearance
-                    <Icon iconName="iconMoon" />
-                  </Button>
-                </div>
-              </div>
-            )}
-          </div> */}
         </div>
       </div>
     </nav>

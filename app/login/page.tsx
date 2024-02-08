@@ -2,12 +2,16 @@
 
 import Link from 'next/link';
 import GoogleIcon from '../../components/icons/google';
-import { useContext } from 'react';
-import { AuthContext } from '../AuthContext';
+import { useContext, useState } from 'react';
+import { AuthContext } from '../auth-context';
 import { useRouter } from 'next/navigation';
 import { Input, Button } from '@nextui-org/react';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '@/lib/firebase';
 
 export default function Login() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const { googleSignIn } = useContext(AuthContext);
   const router = useRouter();
 
@@ -22,28 +26,59 @@ export default function Login() {
             </p>
           </div>
           <div className="flex flex-col gap-4">
-            <form className="flex flex-col gap-2">
+            <form
+              className="flex flex-col gap-2"
+              onSubmit={async (event: React.FormEvent<HTMLFormElement>) => {
+                event.preventDefault();
+
+                try {
+                  const res = await signInWithEmailAndPassword(
+                    auth,
+                    email,
+                    password
+                  );
+
+                  if (res) {
+                    router.push('/');
+                  }
+
+                  setEmail('');
+                  setPassword('');
+                } catch (error: any) {
+                  if (error.message) {
+                    return;
+                  }
+                  console.error(error);
+                }
+              }}
+            >
               <Input
                 type="email"
                 variant="bordered"
-                label="Email"
+                label="Email Address"
                 placeholder="Enter your email"
                 radius="md"
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                  setEmail(event.target.value)
+                }
               />
               <Input
-                isClearable
                 type="password"
                 variant="bordered"
                 label="Password"
                 placeholder="Enter your password"
                 radius="md"
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                  setPassword(event.target.value)
+                }
               />
               <Button
                 type="submit"
-                color="primary"
+                color="default"
                 variant="shadow"
                 radius="md"
                 size="lg"
+                className="bg-black text-white"
               >
                 Log In
               </Button>

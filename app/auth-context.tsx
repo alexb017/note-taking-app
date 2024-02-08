@@ -15,7 +15,7 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState(null);
   const googleProvider = new GoogleAuthProvider();
   const googleSignIn = () => signInWithPopup(auth, googleProvider);
-  const googleSignOut = () => signOut(auth);
+  const userSignOut = () => signOut(auth);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user: any) => {
@@ -33,7 +33,7 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
       value={{
         user,
         googleSignIn,
-        googleSignOut,
+        userSignOut,
       }}
     >
       {children}

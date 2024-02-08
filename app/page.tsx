@@ -14,7 +14,7 @@ export default function Home() {
               <span className="text-violet-500">s</span>✨<br></br> to life
             </h1>
           </div>
-          <p className="text-gray-500">&copy; 2024 NoteTaking ✌️</p>
+          <p className="text-sm text-gray-500">&copy; 2024 NoteTaking ✌️</p>
         </div>
       </div>
     </>

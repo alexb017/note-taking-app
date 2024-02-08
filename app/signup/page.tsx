@@ -2,13 +2,19 @@
 
 import Link from 'next/link';
 import GoogleIcon from '../../components/icons/google';
-import ArrowLeftIcon from '@/components/icons/arrow-left';
-import { useContext } from 'react';
-import { AuthContext } from '../AuthContext';
+import { useContext, useState } from 'react';
+import { AuthContext } from '../auth-context';
 import { useRouter } from 'next/navigation';
 import { Input, Button } from '@nextui-org/react';
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { auth } from '@/lib/firebase';
 
 export default function Signup() {
+  const [displayName, setDisplayName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [errorConfirmPassword, setErrorConfirmPassword] = useState(false);
   const { googleSignIn } = useContext(AuthContext);
   const router = useRouter();
 
@@ -21,13 +27,61 @@ export default function Signup() {
             <p className="font-medium">Get started on the NoteTaking.</p>
           </div>
           <div className="flex flex-col gap-4">
-            <form className="flex flex-col gap-2">
+            <form
+              className="flex flex-col gap-2"
+              onSubmit={async (event: React.FormEvent<HTMLFormElement>) => {
+                event.preventDefault();
+
+                if (password !== confirmPassword) {
+                  setErrorConfirmPassword(true);
+                  return;
+                }
+
+                try {
+                  const { user } = await createUserWithEmailAndPassword(
+                    auth,
+                    email,
+                    password
+                  );
+
+                  await updateProfile(user, { displayName });
+
+                  if (user) {
+                    router.push('/');
+                  }
+
+                  setDisplayName('');
+                  setEmail('');
+                  setPassword('');
+                  setConfirmPassword('');
+                  setErrorConfirmPassword(false);
+                } catch (error: any) {
+                  if (error.message) {
+                    return;
+                  }
+                  console.error(error);
+                }
+              }}
+            >
+              <Input
+                type="text"
+                variant="bordered"
+                label="Username"
+                placeholder="Enter your username"
+                radius="md"
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                  setDisplayName(event.target.value)
+                }
+              />
               <Input
                 type="email"
                 variant="bordered"
-                label="Email"
+                label="Email Address"
                 placeholder="Enter your email"
                 radius="md"
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                  setEmail(event.target.value)
+                }
               />
               <Input
                 type="password"
@@ -35,6 +89,9 @@ export default function Signup() {
                 label="Password"
                 placeholder="Enter your password"
                 radius="md"
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                  setPassword(event.target.value)
+                }
               />
               <Input
                 type="password"
@@ -42,14 +99,22 @@ export default function Signup() {
                 label="Confirm Password"
                 placeholder="Confirm your password"
                 radius="md"
+                isInvalid={errorConfirmPassword ? true : false}
+                errorMessage={
+                  errorConfirmPassword ? "Passwords don't match" : null
+                }
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                  setConfirmPassword(event.target.value)
+                }
               />
 
               <Button
                 type="submit"
-                color="primary"
+                color="default"
                 variant="shadow"
                 radius="md"
                 size="lg"
+                className="bg-black text-white"
               >
                 Sign Up
               </Button>
