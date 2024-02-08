@@ -22,7 +22,7 @@ export default function Navbar() {
 
   return (
     <nav className="bg-white border-b border-gray-200">
-      <div className="flex items-center justify-between h-14 px-4">
+      <div className="flex items-center justify-between h-16 px-4">
         <Link
           href="/"
           className="flex items-center gap-1 text-gray-500 text-2xl font-medium"
@@ -44,7 +44,7 @@ export default function Navbar() {
               </Button>
               <Button
                 color="warning"
-                variant="shadow"
+                variant="flat"
                 radius="md"
                 className="font-medium"
                 onClick={() => router.push('/signup')}

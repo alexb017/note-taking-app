@@ -20,8 +20,8 @@ export default function Signup() {
 
   return (
     <>
-      <div className="flex justify-center items-center h-57px">
-        <div className="flex flex-col gap-6 w-[320px]">
+      <div className="flex justify-center items-center h-65px">
+        <div className="flex flex-col gap-6 w-80">
           <div className="flex flex-col">
             <h1 className="text-3xl font-semibold">Create account</h1>
             <p className="font-medium">Get started on the NoteTaking.</p>
