@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useState, useEffect, useRef, useContext } from 'react';
+import { useContext } from 'react';
 import LogoIcon from './icons/logo';
 import { AuthContext } from '@/app/auth-context';
 import {
@@ -21,11 +21,11 @@ export default function Navbar() {
   console.log(user);
 
   return (
-    <nav className="bg-white border-b border-gray-200">
-      <div className="flex items-center justify-between h-16 px-4">
+    <nav className="bg-white border-b border-gray-200 w-full">
+      <div className="flex items-center justify-between h-16 px-4 pl-3 w-full">
         <Link
           href="/"
-          className="flex items-center gap-1 text-gray-500 text-2xl font-medium"
+          className="flex items-center gap-1 text-gray-500 text-xl md:text-2xl font-medium"
         >
           <LogoIcon classname="h-10 text-yellow-500" />
           NoteTaking

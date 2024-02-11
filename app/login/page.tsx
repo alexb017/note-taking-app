@@ -17,7 +17,7 @@ export default function Login() {
 
   return (
     <>
-      <div className="flex justify-center items-center h-65px">
+      <div className="flex justify-center items-center h-[calc(100lvh-65px)]">
         <div className="flex flex-col gap-6 w-80">
           <div className="flex flex-col">
             <h1 className="text-3xl font-semibold">Login</h1>

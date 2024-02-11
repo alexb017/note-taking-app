@@ -12,9 +12,9 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex flex-row gap-12">
+    <div className="grid grid-cols-[56px,1fr] md:grid-cols-[288px,1fr] gap-2 md:gap-12">
       <Sidebar />
-      <div className="p-2">{children}</div>
+      <div className="p-4 w-full">{children}</div>
     </div>
   );
 }

@@ -7,6 +7,10 @@
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
-.h-65px {
-  height: calc(100vh - 65px);
+.react-datepicker-popper {
+  width: max-content;
+}
+
+input[type='file'] {
+  display: none;
 }
