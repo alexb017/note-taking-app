@@ -111,7 +111,7 @@ export default function CreateNote() {
             />
             <Button
               isIconOnly
-              aria-label="reminder"
+              aria-label="delete-image"
               radius="full"
               className="absolute right-1 bottom-1 z-10 bg-transparent hover:bg-gray-900/10"
               onClick={() => handleDeleteImageClick(imageURL)}
@@ -175,7 +175,33 @@ export default function CreateNote() {
             onArchiveNoteClick={handleArchiveNoteClick}
           />
         </div>
-        <Button color="default" variant="light" className="font-medium">
+        <Button
+          className="font-medium bg-transparent hover:bg-gray-900/10"
+          onClick={async () => {
+            await createNote(
+              {
+                content: contentNote,
+                bgColor: color,
+                imageSrc: {
+                  imageName,
+                  imageURL,
+                },
+                isArchived: isArchived,
+                isPinned: false,
+                isDeleted: false,
+              },
+
+              user?.uid
+            );
+
+            setContentNote('');
+            setColor('bg-white');
+            setImageName('');
+            setImageURL('');
+            setReminder('');
+            setIsArchived(false);
+          }}
+        >
           Save Note
         </Button>
       </CardFooter>
