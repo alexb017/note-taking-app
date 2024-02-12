@@ -2,8 +2,10 @@ import { Button, Tooltip, Checkbox } from '@nextui-org/react';
 import ArchiveIcon from './icons/archive';
 
 export default function AddToArchive({
+  isArchived,
   onArchiveNoteClick,
 }: {
+  isArchived: boolean;
   onArchiveNoteClick: () => void;
 }) {
   return (
@@ -18,6 +20,7 @@ export default function AddToArchive({
     <Checkbox
       color="default"
       className="px-5"
+      isSelected={isArchived}
       onClick={() => onArchiveNoteClick()}
     >
       Archive

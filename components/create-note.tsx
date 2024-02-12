@@ -12,23 +12,34 @@ import {
   Textarea,
   Image,
 } from '@nextui-org/react';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import {
+  getStorage,
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  deleteObject,
+} from 'firebase/storage';
 import AddColor from './add-color';
 import AddReminder from './add-reminder';
 import AddImage from './add-image';
 import ClockIcon from './icons/clock';
 import TrashIcon from './icons/trash';
 import AddToArchive from './add-to-archive';
+import { createNote } from '@/lib/actions';
+import { AuthContext } from '@/app/auth-context';
 
 export default function CreateNote() {
+  const { user } = useContext(AuthContext);
+  const [contentNote, setContentNote] = useState('');
   const [reminder, setReminder] = useState('');
   const [startDate, setStartDate] = useState(new Date());
   const [color, setColor] = useState('bg-white');
   const [imageURL, setImageURL] = useState('');
   const [imageName, setImageName] = useState('');
-  const [archiveNote, setArchiveNote] = useState(false);
+  const [isArchived, setIsArchived] = useState(false);
 
-  console.log(archiveNote);
+  console.log(isArchived);
 
   function handleReminderClick(date: string) {
     setReminder(date);
@@ -44,15 +55,47 @@ export default function CreateNote() {
 
   async function handleUploadImageChange(
     event: React.ChangeEvent<HTMLInputElement>
-  ) {}
+  ) {
+    // Get the file, with optional chaining to handle null
+    const file = event.target.files?.[0];
 
-  async function handleDeleteImageClick(filename: string) {}
+    if (!file) {
+      return;
+    }
+
+    // Get name of the image without the extention
+    const fileName = file.name.split('.')[0];
+    setImageName(fileName);
+
+    // Create a reference to the file to create
+    const storage = getStorage();
+    const storageRef = ref(storage, `/${fileName}`);
+
+    // Upload the file
+    await uploadBytes(storageRef, file);
+
+    // Get the download URL
+    const url = await getDownloadURL(storageRef);
+
+    setImageURL(url);
+  }
+
+  async function handleDeleteImageClick(filename: string) {
+    setImageURL('');
+
+    // Create a reference to the file to delete
+    const storage = getStorage();
+    const storageRef = ref(storage, filename);
+
+    // Delete the file
+    await deleteObject(storageRef);
+  }
 
   function handleArchiveNoteClick() {
-    if (!archiveNote) {
-      setArchiveNote(true);
+    if (!isArchived) {
+      setIsArchived(true);
     } else {
-      setArchiveNote(false);
+      setIsArchived(false);
     }
   }
 
@@ -99,6 +142,10 @@ export default function CreateNote() {
               'py-3',
             ],
           }}
+          value={contentNote}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+            setContentNote(event.target.value)
+          }
         />
       </CardBody>
       <div className="flex items-center px-3">
@@ -123,7 +170,10 @@ export default function CreateNote() {
           />
           <AddColor color={color} onColorChange={handleColorClick} />
           <AddImage onUploadImageChange={handleUploadImageChange} />
-          <AddToArchive onArchiveNoteClick={handleArchiveNoteClick} />
+          <AddToArchive
+            isArchived={isArchived}
+            onArchiveNoteClick={handleArchiveNoteClick}
+          />
         </div>
         <Button color="default" variant="light" className="font-medium">
           Save Note
