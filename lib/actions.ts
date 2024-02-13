@@ -9,6 +9,7 @@ import {
   onSnapshot,
   addDoc,
   deleteDoc,
+  updateDoc,
 } from 'firebase/firestore';
 import { db } from './firebase';
 
@@ -55,5 +56,18 @@ export async function deleteNote(uid: string, noteId: string) {
     await deleteDoc(noteRef);
   } catch (error) {
     console.error('Error deleting note: ', error);
+  }
+}
+
+export async function updateBgColor(
+  uid: string,
+  noteId: string,
+  color: string
+) {
+  try {
+    const colorRef = doc(db, 'users', uid, 'notes', noteId);
+    await updateDoc(colorRef, { bgColor: color });
+  } catch (error) {
+    console.error('Error to update bg color: ', error);
   }
 }

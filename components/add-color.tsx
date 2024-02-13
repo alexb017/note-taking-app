@@ -15,6 +15,18 @@ export default function AddColor({
   onColorChange: (color: string) => void;
   color: string;
 }) {
+  const bgColors = [
+    'bg-white',
+    'bg-red-100',
+    'bg-orange-100',
+    'bg-yellow-100',
+    'bg-green-100',
+    'bg-blue-100',
+    'bg-purple-100',
+    'bg-pink-100',
+    'bg-gray-100',
+  ];
+
   return (
     <Popover placement="bottom" offset={10}>
       <PopoverTrigger>
@@ -34,78 +46,17 @@ export default function AddColor({
           </div>
           <Divider />
           <div className="flex items-center gap-[2px] p-1 px-[10px]">
-            <Button
-              isIconOnly
-              radius="full"
-              className={`bg-white hover:bg-white border-2 border-gray-100 hover:border-gray-500 ${
-                color === 'bg-white' ? 'border-gray-500' : ''
-              }`}
-              onClick={() => onColorChange('bg-white')}
-            ></Button>
-            <Button
-              isIconOnly
-              radius="full"
-              className={`bg-red-100 hover:bg-red-100 border-2 border-white hover:border-gray-500 ${
-                color === 'bg-red-100' ? 'border-gray-500' : ''
-              }`}
-              onClick={() => onColorChange('bg-red-100')}
-            ></Button>
-            <Button
-              isIconOnly
-              radius="full"
-              className={`bg-orange-100 hover:bg-orange-100 border-2 border-white hover:border-gray-500 ${
-                color === 'bg-orange-100' ? 'border-gray-500' : ''
-              }`}
-              onClick={() => onColorChange('bg-orange-100')}
-            ></Button>
-            <Button
-              isIconOnly
-              radius="full"
-              className={`bg-yellow-100 hover:bg-yellow-100 border-2 border-white hover:border-gray-500 ${
-                color === 'bg-yellow-100' ? 'border-gray-500' : ''
-              }`}
-              onClick={() => onColorChange('bg-yellow-100')}
-            ></Button>
-            <Button
-              isIconOnly
-              radius="full"
-              className={`bg-green-100 hover:bg-green-100 border-2 border-white hover:border-gray-500 ${
-                color === 'bg-green-100' ? 'border-gray-500' : ''
-              }`}
-              onClick={() => onColorChange('bg-green-100')}
-            ></Button>
-            <Button
-              isIconOnly
-              radius="full"
-              className={`bg-blue-100 hover:bg-blue-100 border-2 border-white hover:border-gray-500 ${
-                color === 'bg-blue-100' ? 'border-gray-500' : ''
-              }`}
-              onClick={() => onColorChange('bg-blue-100')}
-            ></Button>
-            <Button
-              isIconOnly
-              radius="full"
-              className={`bg-purple-100 hover:bg-purple-100 border-2 border-white hover:border-gray-500 ${
-                color === 'bg-purple-100' ? 'border-gray-500' : ''
-              }`}
-              onClick={() => onColorChange('bg-purple-100')}
-            ></Button>
-            <Button
-              isIconOnly
-              radius="full"
-              className={`bg-pink-100 hover:bg-pink-100 border-2 border-white hover:border-gray-500 ${
-                color === 'bg-pink-100' ? 'border-gray-500' : ''
-              }`}
-              onClick={() => onColorChange('bg-pink-100')}
-            ></Button>
-            <Button
-              isIconOnly
-              radius="full"
-              className={`bg-gray-100 hover:bg-gray-100 border-2 border-white hover:border-gray-500 ${
-                color === 'bg-gray-100' ? 'border-gray-500' : ''
-              }`}
-              onClick={() => onColorChange('bg-gray-100')}
-            ></Button>
+            {bgColors.map((bgColor) => (
+              <Button
+                key={bgColor}
+                isIconOnly
+                radius="full"
+                className={`${bgColor} border-2 border-gray-100 hover:border-gray-500 ${
+                  bgColor === color ? 'border-gray-500' : ''
+                }`}
+                onClick={() => onColorChange(bgColor)}
+              ></Button>
+            ))}
           </div>
         </div>
       </PopoverContent>
