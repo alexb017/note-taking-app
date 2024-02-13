@@ -18,7 +18,6 @@ export default function Navbar() {
   const { user, userSignOut } = useContext(AuthContext);
   const router = useRouter();
   const username = user?.email.slice(0, user?.email.indexOf('@'));
-  console.log(user);
 
   return (
     <nav className="bg-white border-b border-gray-200 w-full">

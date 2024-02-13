@@ -13,21 +13,14 @@ import {
   Image,
 } from '@nextui-org/react';
 import { useContext, useState } from 'react';
-import {
-  getStorage,
-  ref,
-  uploadBytes,
-  getDownloadURL,
-  deleteObject,
-} from 'firebase/storage';
 import AddColor from './add-color';
 import AddReminder from './add-reminder';
-import AddImage from './add-image';
+import ImageUpload from './image-upload';
 import ClockIcon from './icons/clock';
-import TrashIcon from './icons/trash';
 import AddToArchive from './add-to-archive';
 import { createNote } from '@/lib/actions';
 import { AuthContext } from '@/app/auth-context';
+import RemoveImage from './remove-image';
 
 export default function CreateNote() {
   const { user } = useContext(AuthContext);
@@ -36,10 +29,7 @@ export default function CreateNote() {
   const [startDate, setStartDate] = useState(new Date());
   const [color, setColor] = useState('bg-white');
   const [imageURL, setImageURL] = useState('');
-  const [imageName, setImageName] = useState('');
   const [isArchived, setIsArchived] = useState(false);
-
-  console.log(isArchived);
 
   function handleReminderClick(date: string) {
     setReminder(date);
@@ -53,42 +43,8 @@ export default function CreateNote() {
     setColor(color);
   }
 
-  async function handleUploadImageChange(
-    event: React.ChangeEvent<HTMLInputElement>
-  ) {
-    // Get the file, with optional chaining to handle null
-    const file = event.target.files?.[0];
-
-    if (!file) {
-      return;
-    }
-
-    // Get name of the image without the extention
-    const fileName = file.name.split('.')[0];
-    setImageName(fileName);
-
-    // Create a reference to the file to create
-    const storage = getStorage();
-    const storageRef = ref(storage, `/${fileName}`);
-
-    // Upload the file
-    await uploadBytes(storageRef, file);
-
-    // Get the download URL
-    const url = await getDownloadURL(storageRef);
-
+  function handleImageUpload(url: string) {
     setImageURL(url);
-  }
-
-  async function handleDeleteImageClick(filename: string) {
-    setImageURL('');
-
-    // Create a reference to the file to delete
-    const storage = getStorage();
-    const storageRef = ref(storage, filename);
-
-    // Delete the file
-    await deleteObject(storageRef);
   }
 
   function handleArchiveNoteClick() {
@@ -109,15 +65,10 @@ export default function CreateNote() {
               src={imageURL}
               className="w-full h-auto rounded-b-none"
             />
-            <Button
-              isIconOnly
-              aria-label="delete-image"
-              radius="full"
-              className="absolute right-1 bottom-1 z-10 bg-transparent hover:bg-gray-900/10"
-              onClick={() => handleDeleteImageClick(imageURL)}
-            >
-              <TrashIcon classname="h-5" />
-            </Button>
+            <RemoveImage
+              onHandleImageUpload={handleImageUpload}
+              imageUrl={imageURL}
+            />
           </CardHeader>
         </>
       ) : null}
@@ -169,7 +120,7 @@ export default function CreateNote() {
             onStartDateChange={handleStartDateClick}
           />
           <AddColor color={color} onColorChange={handleColorClick} />
-          <AddImage onUploadImageChange={handleUploadImageChange} />
+          <ImageUpload uid={user?.uid} onUploadImage={handleImageUpload} />
           <AddToArchive
             isArchived={isArchived}
             onArchiveNoteClick={handleArchiveNoteClick}
@@ -182,21 +133,17 @@ export default function CreateNote() {
               {
                 content: contentNote,
                 bgColor: color,
-                imageSrc: {
-                  imageName,
-                  imageURL,
-                },
+                imageURL: imageURL,
                 isArchived: isArchived,
                 isPinned: false,
                 isDeleted: false,
+                uid: user?.uid,
               },
-
               user?.uid
             );
 
             setContentNote('');
             setColor('bg-white');
-            setImageName('');
             setImageURL('');
             setReminder('');
             setIsArchived(false);
