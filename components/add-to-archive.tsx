@@ -9,21 +9,16 @@ export default function AddToArchive({
   onArchiveNoteClick: () => void;
 }) {
   return (
-    // <Button
-    //   isIconOnly
-    //   aria-label="archive"
-    //   radius="full"
-    //   className="bg-transparent hover:bg-gray-900/10"
-    // >
-    //   <ArchiveIcon classname="h-5" />
-    // </Button>
-    <Checkbox
-      color="default"
-      className="px-5"
-      isSelected={isArchived}
+    <Button
+      isIconOnly
+      aria-label="archive"
+      radius="full"
+      className={`bg-transparent hover:bg-gray-900/10 ${
+        isArchived ? 'text-white bg-gray-900 hover:bg-gray-900/90' : ''
+      }`}
       onClick={() => onArchiveNoteClick()}
     >
-      Archive
-    </Checkbox>
+      <ArchiveIcon classname="h-5" />
+    </Button>
   );
 }

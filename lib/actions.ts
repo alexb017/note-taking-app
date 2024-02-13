@@ -16,11 +16,19 @@ import { db } from './firebase';
 type Note = {
   content: string;
   bgColor: string;
-  imageURL: string;
+  image: {
+    src: string;
+    altname: string;
+  };
   isArchived: boolean;
   isPinned: boolean;
   isDeleted: boolean;
   uid: string;
+};
+
+type ImageData = {
+  src: string;
+  altname: string;
 };
 
 export async function createNote(note: Note, uid: string) {
@@ -69,5 +77,20 @@ export async function updateBgColor(
     await updateDoc(colorRef, { bgColor: color });
   } catch (error) {
     console.error('Error to update bg color: ', error);
+  }
+}
+
+export async function updateImage(
+  uid: string,
+  noteId: string,
+  image: ImageData
+) {
+  try {
+    const imageRef = doc(db, 'users', uid, 'notes', noteId);
+    await updateDoc(imageRef, {
+      image: { src: image.src, altname: image.altname },
+    });
+  } catch (error) {
+    console.error('Error to update image: ', error);
   }
 }

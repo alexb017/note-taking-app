@@ -15,20 +15,25 @@ import {
 import { useContext, useState } from 'react';
 import AddColor from './add-color';
 import AddReminder from './add-reminder';
-import ImageUpload from './image-upload';
+import UploadImageToStorage from './upload-image';
 import ClockIcon from './icons/clock';
 import AddToArchive from './add-to-archive';
 import { createNote } from '@/lib/actions';
 import { AuthContext } from '@/app/auth-context';
-import RemoveImage from './remove-image';
+import DeleteImageFromStore from './detele-image';
+
+type ImageData = {
+  src: string;
+  altname: string;
+};
 
 export default function CreateNote() {
   const { user } = useContext(AuthContext);
-  const [contentNote, setContentNote] = useState('');
+  const [content, setContent] = useState('');
   const [reminder, setReminder] = useState('');
   const [startDate, setStartDate] = useState(new Date());
-  const [color, setColor] = useState('bg-white');
-  const [imageURL, setImageURL] = useState('');
+  const [backgroundColor, setBackgroundColor] = useState('bg-white');
+  const [imageURL, setImageURL] = useState<ImageData>({ src: '', altname: '' });
   const [isArchived, setIsArchived] = useState(false);
 
   function handleReminderClick(date: string) {
@@ -40,11 +45,11 @@ export default function CreateNote() {
   }
 
   function handleColorClick(color: string) {
-    setColor(color);
+    setBackgroundColor(color);
   }
 
-  function handleImageUpload(url: string) {
-    setImageURL(url);
+  function handleImageUpload(data: ImageData) {
+    setImageURL(data);
   }
 
   function handleArchiveNoteClick() {
@@ -56,18 +61,18 @@ export default function CreateNote() {
   }
 
   return (
-    <Card className={`w-full max-w-[512px] ${color}`}>
-      {imageURL ? (
+    <Card className={`w-full max-w-[512px] ${backgroundColor}`}>
+      {imageURL?.src ? (
         <>
           <CardHeader className="relative w-full max-w-[512px] p-0 rounded-b-none">
             <Image
-              alt="Picture note"
-              src={imageURL}
+              alt={imageURL?.altname}
+              src={imageURL?.src}
               className="w-full h-auto rounded-b-none"
             />
-            <RemoveImage
+            <DeleteImageFromStore
               onHandleImageUpload={handleImageUpload}
-              imageUrl={imageURL}
+              imageUrl={imageURL?.src}
             />
           </CardHeader>
         </>
@@ -93,9 +98,9 @@ export default function CreateNote() {
               'py-3',
             ],
           }}
-          value={contentNote}
+          value={content}
           onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-            setContentNote(event.target.value)
+            setContent(event.target.value)
           }
         />
       </CardBody>
@@ -119,8 +124,11 @@ export default function CreateNote() {
             onReminderChange={handleReminderClick}
             onStartDateChange={handleStartDateClick}
           />
-          <AddColor color={color} onColorChange={handleColorClick} />
-          <ImageUpload uid={user?.uid} onUploadImage={handleImageUpload} />
+          <AddColor color={backgroundColor} onColorChange={handleColorClick} />
+          <UploadImageToStorage
+            uid={user?.uid}
+            onHandleImageUpload={handleImageUpload}
+          />
           <AddToArchive
             isArchived={isArchived}
             onArchiveNoteClick={handleArchiveNoteClick}
@@ -131,9 +139,9 @@ export default function CreateNote() {
           onClick={async () => {
             await createNote(
               {
-                content: contentNote,
-                bgColor: color,
-                imageURL: imageURL,
+                content: content,
+                bgColor: backgroundColor,
+                image: imageURL,
                 isArchived: isArchived,
                 isPinned: false,
                 isDeleted: false,
@@ -142,9 +150,9 @@ export default function CreateNote() {
               user?.uid
             );
 
-            setContentNote('');
-            setColor('bg-white');
-            setImageURL('');
+            setContent('');
+            setBackgroundColor('bg-white');
+            setImageURL({ src: '', altname: '' });
             setReminder('');
             setIsArchived(false);
           }}
