@@ -21,6 +21,7 @@ import AddToArchive from './add-to-archive';
 import { createNote } from '@/lib/actions';
 import { AuthContext } from '@/app/auth-context';
 import DeleteImageFromStore from './detele-image';
+import ArchiveIcon from './icons/archive';
 
 type ImageData = {
   src: string;
@@ -129,10 +130,35 @@ export default function CreateNote() {
             uid={user?.uid}
             onHandleImageUpload={handleImageUpload}
           />
-          <AddToArchive
-            isArchived={isArchived}
-            onArchiveNoteClick={handleArchiveNoteClick}
-          />
+          <Button
+            isIconOnly
+            aria-label="archive"
+            radius="full"
+            className="bg-transparent hover:bg-gray-900/10"
+            onClick={async () => {
+              await createNote(
+                {
+                  content: content,
+                  bgColor: backgroundColor,
+                  image: imageURL,
+                  hasReminder: reminder,
+                  isArchived: true,
+                  isPinned: false,
+                  isDeleted: false,
+                  uid: user?.uid,
+                },
+                user?.uid
+              );
+
+              setContent('');
+              setBackgroundColor('bg-white');
+              setImageURL({ src: '', altname: '' });
+              setReminder('');
+              setIsArchived(false);
+            }}
+          >
+            <ArchiveIcon classname="h-5" />
+          </Button>
         </div>
         <Button
           className="font-medium bg-transparent hover:bg-gray-900/10"
@@ -142,6 +168,7 @@ export default function CreateNote() {
                 content: content,
                 bgColor: backgroundColor,
                 image: imageURL,
+                hasReminder: reminder,
                 isArchived: isArchived,
                 isPinned: false,
                 isDeleted: false,

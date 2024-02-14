@@ -11,7 +11,8 @@ import {
 import { useState } from 'react';
 import DeleteNote from './delete-note';
 import AddColor from './add-color';
-import { updateBgColor } from '@/lib/actions';
+import { updateBgColor, updateIsArchived } from '@/lib/actions';
+import AddToArchive from './add-to-archive';
 
 type Note = {
   id: string;
@@ -21,6 +22,7 @@ type Note = {
     src: string;
     altname: string;
   };
+  hasReminder: string;
   isArchived: boolean;
   isPinned: boolean;
   isDeleted: boolean;
@@ -35,6 +37,10 @@ type ImageData = {
 export default function Note({ note }: { note: Note }) {
   async function handleColorClick(color: string) {
     await updateBgColor(note.uid, note.id, color);
+  }
+
+  async function handleUpdateIsArchived() {
+    await updateIsArchived(note.uid, note.id);
   }
 
   return (
@@ -54,7 +60,7 @@ export default function Note({ note }: { note: Note }) {
       <CardFooter className="flex items-center justify-between pl-[2px] pb-[2px]">
         <div className="flex items-center gap-2">
           <AddColor color={note.bgColor} onColorChange={handleColorClick} />
-
+          <AddToArchive onArchiveNoteClick={handleUpdateIsArchived} />
           <DeleteNote uid={note.uid} noteId={note.id} />
         </div>
       </CardFooter>

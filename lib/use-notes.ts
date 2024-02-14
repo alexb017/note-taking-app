@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { onSnapshot, doc, query, collection } from 'firebase/firestore';
 import { db } from './firebase';
 
+// Custom hook to read real-time updates for notes
 export default function useNotes(uid: string) {
   const [notes, setNotes] = useState([]);
 
@@ -17,6 +18,8 @@ export default function useNotes(uid: string) {
         });
         setNotes(notes);
       });
+    } else {
+      setNotes([]);
     }
 
     return () => unsubscribe;

@@ -11,16 +11,18 @@ export default function Notes() {
   const { user } = useContext(AuthContext);
   const [notes] = useNotes(user?.uid);
 
+  const allNotes = notes.filter((note: any) => note?.isArchived !== true);
+
   return (
     <>
       <div className="flex flex-col gap-12">
         <div className="flex justify-center">
           <CreateNote />
         </div>
-        {notes.length > 0 ? (
+        {allNotes.length > 0 ? (
           <>
             <MasonryGrid>
-              {notes.map((note: any) => {
+              {allNotes.map((note: any) => {
                 return <Note key={note.id} note={note} />;
               })}
             </MasonryGrid>

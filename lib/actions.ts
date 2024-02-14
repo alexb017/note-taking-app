@@ -20,6 +20,7 @@ type Note = {
     src: string;
     altname: string;
   };
+  hasReminder: string;
   isArchived: boolean;
   isPinned: boolean;
   isDeleted: boolean;
@@ -92,5 +93,19 @@ export async function updateImage(
     });
   } catch (error) {
     console.error('Error to update image: ', error);
+  }
+}
+
+export async function updateIsArchived(uid: string, noteId: string) {
+  try {
+    const archiveRef = doc(db, 'users', uid, 'notes', noteId);
+    const archiveDoc = await getDoc(archiveRef);
+    const currentValue = archiveDoc.data()?.isArchived;
+
+    await updateDoc(archiveRef, {
+      isArchived: !currentValue,
+    });
+  } catch (error) {
+    console.error('Error to update isArchive: ', error);
   }
 }
