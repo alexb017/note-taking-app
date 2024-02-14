@@ -68,6 +68,20 @@ export async function deleteNote(uid: string, noteId: string) {
   }
 }
 
+export async function addNoteToTrash(uid: string, noteId: string) {
+  try {
+    const trashRef = doc(db, 'users', uid, 'notes', noteId);
+    const trashDoc = await getDoc(trashRef);
+    const currentValue = trashDoc.data()?.isDeleted;
+
+    await updateDoc(trashRef, {
+      isDeleted: !currentValue,
+    });
+  } catch (error) {
+    console.error('Error to add note to trash: ', error);
+  }
+}
+
 export async function updateBgColor(
   uid: string,
   noteId: string,

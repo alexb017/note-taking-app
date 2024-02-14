@@ -1,10 +1,13 @@
-import { Button, Tooltip, Checkbox } from '@nextui-org/react';
+import { Button } from '@nextui-org/react';
 import ArchiveIcon from './icons/archive';
+import { updateIsArchived } from '@/lib/actions';
 
-export default function AddToArchive({
-  onArchiveNoteClick,
+export default function AddToArchiveButton({
+  uid,
+  noteId,
 }: {
-  onArchiveNoteClick: () => void;
+  uid: string;
+  noteId: string;
 }) {
   return (
     <Button
@@ -12,7 +15,7 @@ export default function AddToArchive({
       aria-label="archive"
       radius="full"
       className="bg-transparent hover:bg-gray-900/10"
-      onClick={() => onArchiveNoteClick()}
+      onClick={async () => await updateIsArchived(uid, noteId)}
     >
       <ArchiveIcon classname="h-5" />
     </Button>

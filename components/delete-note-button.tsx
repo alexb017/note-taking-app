@@ -2,7 +2,7 @@ import { Button } from '@nextui-org/react';
 import TrashIcon from './icons/trash';
 import { deleteNote } from '@/lib/actions';
 
-export default function DeleteNote({
+export default function DeleteNoteButton({
   uid,
   noteId,
 }: {

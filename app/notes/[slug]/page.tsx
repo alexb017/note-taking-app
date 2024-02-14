@@ -6,18 +6,26 @@ import Note from '@/components/note';
 import useNotes from '@/lib/use-notes';
 import { useContext } from 'react';
 
-export default function Page({ params }: { params: { slug: string } }) {
+export default function NotesCategory({
+  params,
+}: {
+  params: { slug: string };
+}) {
   const { user } = useContext(AuthContext);
   const [notes] = useNotes(user?.uid);
 
   let filtered: any;
 
   if (params.slug === 'reminders') {
-    filtered = notes.filter((note: any) => note?.hasReminder !== '');
+    filtered = notes.filter(
+      (note: any) => note?.hasReminder !== '' && note?.isDeleted === false
+    );
   }
 
   if (params.slug === 'archive') {
-    filtered = notes.filter((note: any) => note?.isArchived === true);
+    filtered = notes.filter(
+      (note: any) => note?.isArchived === true && note?.isDeleted === false
+    );
   }
 
   if (params.slug === 'trash') {

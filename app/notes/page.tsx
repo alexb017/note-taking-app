@@ -11,7 +11,9 @@ export default function Notes() {
   const { user } = useContext(AuthContext);
   const [notes] = useNotes(user?.uid);
 
-  const allNotes = notes.filter((note: any) => note?.isArchived !== true);
+  const allNotes = notes.filter(
+    (note: any) => note?.isArchived !== true && note?.isDeleted !== true
+  );
 
   return (
     <>

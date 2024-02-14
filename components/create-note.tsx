@@ -17,7 +17,6 @@ import AddColor from './add-color';
 import AddReminder from './add-reminder';
 import UploadImageToStorage from './upload-image';
 import ClockIcon from './icons/clock';
-import AddToArchive from './add-to-archive';
 import { createNote } from '@/lib/actions';
 import { AuthContext } from '@/app/auth-context';
 import DeleteImageFromStore from './detele-image';
@@ -37,6 +36,17 @@ export default function CreateNote() {
   const [imageURL, setImageURL] = useState<ImageData>({ src: '', altname: '' });
   const [isArchived, setIsArchived] = useState(false);
 
+  console.log({
+    content: content,
+    bgColor: backgroundColor,
+    image: imageURL,
+    hasReminder: reminder,
+    isArchived: false,
+    isPinned: false,
+    isDeleted: false,
+    uid: user?.uid,
+  });
+
   function handleReminderClick(date: string) {
     setReminder(date);
   }
@@ -51,14 +61,6 @@ export default function CreateNote() {
 
   function handleImageUpload(data: ImageData) {
     setImageURL(data);
-  }
-
-  function handleArchiveNoteClick() {
-    if (!isArchived) {
-      setIsArchived(true);
-    } else {
-      setIsArchived(false);
-    }
   }
 
   return (
