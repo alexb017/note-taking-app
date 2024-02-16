@@ -19,8 +19,10 @@ import UploadImageToStorage from './upload-image';
 import ClockIcon from './icons/clock';
 import { createNote } from '@/lib/actions';
 import { AuthContext } from '@/app/auth-context';
-import DeleteImageFromStore from './detele-image';
+import DeleteImageFromStorage from './detele-image';
 import ArchiveIcon from './icons/archive';
+import UpdateDatePickerButton from './update-date-picker-button';
+import CloseIcon from './icons/close';
 
 type ImageData = {
   src: string;
@@ -31,7 +33,6 @@ export default function CreateNote() {
   const { user } = useContext(AuthContext);
   const [content, setContent] = useState('');
   const [reminder, setReminder] = useState('');
-  const [startDate, setStartDate] = useState(new Date());
   const [backgroundColor, setBackgroundColor] = useState('bg-white');
   const [imageURL, setImageURL] = useState<ImageData>({ src: '', altname: '' });
   const [isArchived, setIsArchived] = useState(false);
@@ -40,7 +41,7 @@ export default function CreateNote() {
     content: content,
     bgColor: backgroundColor,
     image: imageURL,
-    hasReminder: reminder,
+    reminder: reminder,
     isArchived: false,
     isPinned: false,
     isDeleted: false,
@@ -49,10 +50,6 @@ export default function CreateNote() {
 
   function handleReminderClick(date: string) {
     setReminder(date);
-  }
-
-  function handleStartDateClick(date: any) {
-    setStartDate(date);
   }
 
   function handleColorClick(color: string) {
@@ -64,7 +61,9 @@ export default function CreateNote() {
   }
 
   return (
-    <Card className={`w-full max-w-[512px] ${backgroundColor}`}>
+    <Card
+      className={`w-full max-w-[512px] overflow-visible ${backgroundColor}`}
+    >
       {imageURL?.src ? (
         <>
           <CardHeader className="relative w-full max-w-[512px] p-0 rounded-b-none">
@@ -73,7 +72,7 @@ export default function CreateNote() {
               src={imageURL?.src}
               className="w-full h-auto rounded-b-none"
             />
-            <DeleteImageFromStore
+            <DeleteImageFromStorage
               onHandleImageUpload={handleImageUpload}
               imageUrl={imageURL?.src}
             />
@@ -94,6 +93,7 @@ export default function CreateNote() {
           placeholder="Description"
           radius="none"
           classNames={{
+            input: 'text-base',
             inputWrapper: [
               'bg-transparent',
               'data-[hover=true]:bg-transparent',
@@ -107,26 +107,33 @@ export default function CreateNote() {
           }
         />
       </CardBody>
-      <div className="flex items-center px-3">
-        {reminder && (
+
+      {reminder && (
+        <div className="flex items-center px-3">
           <Chip
             size="sm"
             radius="full"
-            variant="flat"
+            className="cursor-pointer group/chip bg-gray-900/10 hover:bg-gray-900/15"
             startContent={<ClockIcon classname="h-4" />}
             onClose={() => handleReminderClick('')}
+            endContent={<CloseIcon classname="h-6" />}
+            classNames={{
+              closeButton:
+                'absolute right-0 rounded-full text-gray-900/60 bg-gray-100 opacity-0 group-hover/chip:opacity-100 transition-opacity ease-in-out',
+            }}
           >
             {reminder}
           </Chip>
-        )}
-      </div>
+          {/* <UpdateDatePickerButton
+            reminder={reminder}
+            onDateChange={handleReminderClick}
+          /> */}
+        </div>
+      )}
+
       <CardFooter className="flex items-center justify-between pl-[2px] pb-[2px]">
         <div className="flex items-center gap-2">
-          <AddReminder
-            startDate={startDate}
-            onReminderChange={handleReminderClick}
-            onStartDateChange={handleStartDateClick}
-          />
+          <AddReminder onReminderClick={handleReminderClick} />
           <AddColor color={backgroundColor} onColorChange={handleColorClick} />
           <UploadImageToStorage
             uid={user?.uid}
@@ -143,7 +150,7 @@ export default function CreateNote() {
                   content: content,
                   bgColor: backgroundColor,
                   image: imageURL,
-                  hasReminder: reminder,
+                  reminder: reminder,
                   isArchived: true,
                   isPinned: false,
                   isDeleted: false,
@@ -170,7 +177,7 @@ export default function CreateNote() {
                 content: content,
                 bgColor: backgroundColor,
                 image: imageURL,
-                hasReminder: reminder,
+                reminder: reminder,
                 isArchived: isArchived,
                 isPinned: false,
                 isDeleted: false,

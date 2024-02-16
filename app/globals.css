@@ -7,10 +7,22 @@
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
-.react-datepicker-popper {
-  width: max-content;
-}
-
 input[type='file'] {
   display: none;
+}
+
+input[type='text'] {
+  all: unset;
+}
+
+.react-datepicker {
+  border-radius: 14px !important;
+  border: none !important;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.03), 0 2px 30px rgba(0, 0, 0, 0.08),
+    0 0 1px rgba(0, 0, 0, 0.3);
+}
+
+.react-datepicker-popper {
+  width: max-content;
+  z-index: 99 !important;
 }

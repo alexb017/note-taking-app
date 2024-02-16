@@ -13,18 +13,32 @@ export default function DeleteUndoNoteButton({
   type: 'delete' | 'undo';
 }) {
   return (
-    <Button
-      isIconOnly
-      aria-label="color"
-      radius="full"
-      className="bg-transparent hover:bg-gray-900/10"
-      onClick={async () => await addNoteToTrash(uid, noteId)}
-    >
+    <>
       {type === 'delete' ? (
-        <TrashIcon classname="h-5" />
+        <>
+          <Button
+            isIconOnly
+            aria-label="delete"
+            radius="full"
+            className="bg-transparent hover:bg-gray-900/10"
+            onClick={async () => await addNoteToTrash(uid, noteId)}
+          >
+            <TrashIcon classname="h-5" />
+          </Button>
+        </>
       ) : (
-        <UndoIcon classname="h-5" />
+        <>
+          <Button
+            aria-label="undo"
+            radius="full"
+            className="gap-1 bg-transparent hover:bg-gray-900/10"
+            onClick={async () => await addNoteToTrash(uid, noteId)}
+          >
+            <UndoIcon classname="h-5" />
+            Restore
+          </Button>
+        </>
       )}
-    </Button>
+    </>
   );
 }

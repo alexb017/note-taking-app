@@ -18,7 +18,7 @@ export default function NotesCategory({
 
   if (params.slug === 'reminders') {
     filtered = notes.filter(
-      (note: any) => note?.hasReminder !== '' && note?.isDeleted === false
+      (note: any) => note?.reminder !== '' && note?.isDeleted === false
     );
   }
 

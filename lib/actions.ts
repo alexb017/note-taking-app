@@ -20,7 +20,7 @@ type Note = {
     src: string;
     altname: string;
   };
-  hasReminder: string;
+  reminder: string;
   isArchived: boolean;
   isPinned: boolean;
   isDeleted: boolean;
@@ -79,6 +79,28 @@ export async function addNoteToTrash(uid: string, noteId: string) {
     });
   } catch (error) {
     console.error('Error to add note to trash: ', error);
+  }
+}
+
+export async function updateContent(uid: string, noteId: string, text: string) {
+  try {
+    const contentRef = doc(db, 'users', uid, 'notes', noteId);
+    await updateDoc(contentRef, { content: text });
+  } catch (error) {
+    console.error('Error to update content: ', error);
+  }
+}
+
+export async function updateReminder(
+  uid: string,
+  noteId: string,
+  reminder: string
+) {
+  try {
+    const reminderRef = doc(db, 'users', uid, 'notes', noteId);
+    await updateDoc(reminderRef, { reminder: reminder });
+  } catch (error) {
+    console.error('Error to update reminder: ', error);
   }
 }
 
