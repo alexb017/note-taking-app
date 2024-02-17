@@ -37,16 +37,16 @@ export default function CreateNote() {
   const [imageURL, setImageURL] = useState<ImageData>({ src: '', altname: '' });
   const [isArchived, setIsArchived] = useState(false);
 
-  console.log({
-    content: content,
-    bgColor: backgroundColor,
-    image: imageURL,
-    reminder: reminder,
-    isArchived: false,
-    isPinned: false,
-    isDeleted: false,
-    uid: user?.uid,
-  });
+  // console.log({
+  //   content: content,
+  //   bgColor: backgroundColor,
+  //   image: imageURL,
+  //   reminder: reminder,
+  //   isArchived: false,
+  //   isPinned: false,
+  //   isDeleted: false,
+  //   uid: user?.uid,
+  // });
 
   function handleReminderClick(date: string) {
     setReminder(date);
@@ -119,7 +119,7 @@ export default function CreateNote() {
             endContent={<CloseIcon classname="h-6" />}
             classNames={{
               closeButton:
-                'absolute right-0 rounded-full text-gray-900/60 bg-gray-100 opacity-0 group-hover/chip:opacity-100 transition-opacity ease-in-out',
+                'absolute right-0 rounded-full text-gray-900/80 bg-gray-100 opacity-0 group-hover/chip:opacity-100 transition-opacity ease-in-out',
             }}
           >
             {reminder}
@@ -131,7 +131,7 @@ export default function CreateNote() {
         </div>
       )}
 
-      <CardFooter className="flex items-center justify-between pl-[2px] pb-[2px]">
+      <CardFooter className="flex items-center justify-between px-[8px] pb-[2px]">
         <div className="flex items-center gap-2">
           <AddReminder onReminderClick={handleReminderClick} />
           <AddColor color={backgroundColor} onColorChange={handleColorClick} />
@@ -143,7 +143,7 @@ export default function CreateNote() {
             isIconOnly
             aria-label="archive"
             radius="full"
-            className="bg-transparent hover:bg-gray-900/10"
+            className="min-w-unit-8 w-unit-8 h-8 bg-transparent hover:bg-gray-900/10"
             onClick={async () => {
               await createNote(
                 {
@@ -166,11 +166,11 @@ export default function CreateNote() {
               setIsArchived(false);
             }}
           >
-            <ArchiveIcon classname="h-5" />
+            <ArchiveIcon classname="h-4" />
           </Button>
         </div>
         <Button
-          className="font-medium bg-transparent hover:bg-gray-900/10"
+          className="font-medium bg-transparent hover:bg-gray-900/5"
           onClick={async () => {
             await createNote(
               {

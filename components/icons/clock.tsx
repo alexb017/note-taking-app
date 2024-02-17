@@ -5,8 +5,8 @@ export default function ClockIcon({ classname }: { classname?: string }) {
       className={classname}
       viewBox="0 0 24 24"
     >
-      <g fill="none" stroke="currentColor" strokeWidth="2">
-        <circle cx="12" cy="12" r="10" opacity=".5" />
+      <g fill="none" stroke="currentColor" strokeWidth="1.5">
+        <circle cx="12" cy="12" r="10" />
         <path
           strokeLinecap="round"
           strokeLinejoin="round"

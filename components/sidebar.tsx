@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import LampIcon from './icons/lamp';
+import NotesIcon from './icons/notes';
 import ArchiveIcon from './icons/archive';
 import BellIcon from './icons/bell';
 import TrashIcon from './icons/trash';
@@ -20,7 +20,7 @@ export default function Sidebar() {
               pathname === '/notes' ? 'bg-yellow-100' : 'hover:bg-gray-100'
             }`}
           >
-            <LampIcon classname="h-6" />
+            <NotesIcon classname="h-6" />
             <div className="hidden md:block">Notes</div>
           </Link>
         </li>

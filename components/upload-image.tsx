@@ -1,5 +1,5 @@
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import GalleryIcon from './icons/gallery';
-import { uploadImageToStorage } from '@/lib/utils';
 
 type ImageData = {
   src: string;
@@ -14,21 +14,37 @@ export default function UploadImageToStorage({
   uid: string;
 }) {
   return (
-    <label
-      htmlFor="image"
-      className="flex items-center justify-center rounded-full w-10 h-10 hover:bg-gray-900/10 cursor-pointer"
-    >
+    <label className="flex items-center justify-center rounded-full w-8 h-8 hover:bg-gray-900/10 cursor-pointer">
       <input
         type="file"
-        name="image"
-        id="image"
         accept="image/*"
-        onChange={async (e) => {
-          const imageData = await uploadImageToStorage(e, uid);
-          onHandleImageUpload(imageData as ImageData);
+        onChange={async (event: React.ChangeEvent<HTMLInputElement>) => {
+          // Get the file, with optional chaining to handle null
+          const file = event.target.files?.[0];
+          const filename = file?.name.split('.')[0] as string;
+          const extension = file?.type.split('/')[1];
+
+          if (!file) {
+            return;
+          }
+
+          // Create a reference to the file to create
+          const storage = getStorage();
+          const storageRef = ref(
+            storage,
+            `notes/${uid}/${Date.now()}.${extension}`
+          );
+
+          // Upload the file
+          await uploadBytes(storageRef, file);
+
+          // Get the download URL
+          const url = await getDownloadURL(storageRef);
+
+          onHandleImageUpload({ src: url, altname: filename });
         }}
       />
-      <GalleryIcon classname="h-5" />
+      <GalleryIcon classname="h-4" />
     </label>
   );
 }

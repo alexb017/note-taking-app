@@ -117,15 +117,11 @@ export async function updateBgColor(
   }
 }
 
-export async function updateImage(
-  uid: string,
-  noteId: string,
-  image: ImageData
-) {
+export async function updateImage(uid: string, noteId: string, img: ImageData) {
   try {
     const imageRef = doc(db, 'users', uid, 'notes', noteId);
     await updateDoc(imageRef, {
-      image: { src: image.src, altname: image.altname },
+      image: img,
     });
   } catch (error) {
     console.error('Error to update image: ', error);

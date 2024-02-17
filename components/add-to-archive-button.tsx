@@ -14,10 +14,10 @@ export default function AddToArchiveButton({
       isIconOnly
       aria-label="archive"
       radius="full"
-      className="bg-transparent hover:bg-gray-900/10"
+      className="min-w-unit-8 w-unit-8 h-8 bg-transparent hover:bg-gray-900/10"
       onClick={async () => await updateIsArchived(uid, noteId)}
     >
-      <ArchiveIcon classname="h-5" />
+      <ArchiveIcon classname="h-4" />
     </Button>
   );
 }

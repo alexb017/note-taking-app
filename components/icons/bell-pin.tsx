@@ -10,7 +10,6 @@ export default function BellBingIcon({ classname }: { classname?: string }) {
         <path
           strokeLinecap="round"
           d="M7.5 19c.655 1.748 2.422 3 4.5 3s3.845-1.252 4.5-3M12 6v4"
-          opacity=".5"
         />
       </g>
     </svg>

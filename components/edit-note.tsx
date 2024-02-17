@@ -21,6 +21,7 @@ import AddColor from './add-color';
 import AddToArchiveButton from './add-to-archive-button';
 import DeleteUndoNoteButton from './delete-undo-note-button';
 import CloseIcon from './icons/close';
+import UploadImageToStorage from './upload-image';
 
 type Note = {
   id: string;
@@ -42,26 +43,42 @@ type ImageData = {
   altname: string;
 };
 
-export default function EditNote({ note }: { note: Note }) {
-  const [imageURL, setImageURL] = useState<ImageData>({ src: '', altname: '' });
+export default function EditNote({
+  note,
+  onReminderClick,
+  onColorClick,
+  onUploadImage,
+  onContentChange,
+}: {
+  note: Note;
+  onReminderClick: (date: string) => void;
+  onColorClick: (color: string) => void;
+  onUploadImage: (img: ImageData) => void;
+  onContentChange: (text: string) => void;
+}) {
+  const [noteData, setNoteData] = useState(note);
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const router = useRouter();
   const pathname = usePathname();
 
   async function handleContentChange(text: string) {
-    await updateContent(note?.uid, note?.id, text);
+    setNoteData({ ...noteData, content: text });
+    onContentChange(text);
   }
 
-  function handleImageUpload(data: ImageData) {
-    setImageURL(data);
+  function handleReminderClick(date: string) {
+    setNoteData({ ...noteData, reminder: date });
+    onReminderClick(date);
   }
 
-  async function handleReminderClick(date: string) {
-    await updateReminder(note?.uid, note?.id, date);
+  function handleColorClick(color: string) {
+    setNoteData({ ...noteData, bgColor: color });
+    onColorClick(color);
   }
 
-  async function handleColorClick(color: string) {
-    await updateBgColor(note.uid, note.id, color);
+  function handleImageUpload(img: ImageData) {
+    setNoteData({ ...noteData, image: img });
+    onUploadImage(img);
   }
 
   return (
@@ -71,10 +88,10 @@ export default function EditNote({ note }: { note: Note }) {
         isIconOnly
         aria-label="color"
         radius="full"
-        className="bg-transparent hover:bg-gray-900/10"
-        onClick={() => router.push(`?=${note?.id}`)}
+        className="min-w-unit-8 w-unit-8 h-8 bg-transparent hover:bg-gray-900/10"
+        onClick={() => router.push(`?=${noteData?.id}`)}
       >
-        <EditIcon classname="h-5" />
+        <EditIcon classname="h-4" />
       </Button>
       <Modal
         isOpen={isOpen}
@@ -84,28 +101,28 @@ export default function EditNote({ note }: { note: Note }) {
         }}
         placement="center"
         backdrop="blur"
-        className={`${note?.bgColor}`}
+        className={`${noteData?.bgColor}`}
         classNames={{ closeButton: 'hidden' }}
       >
         <ModalContent>
           {(onClose) => (
             <>
-              {imageURL?.src ? (
+              {noteData?.image.src ? (
                 <>
                   <ModalHeader className="relative w-full max-w-[512px] p-0 rounded-b-none">
                     <Image
-                      alt={imageURL?.altname}
-                      src={imageURL?.src}
+                      alt={noteData?.image.altname}
+                      src={noteData?.image.src}
                       className="w-full h-auto rounded-b-none"
                     />
                     <DeleteImageFromStorage
                       onHandleImageUpload={handleImageUpload}
-                      imageUrl={imageURL?.src}
+                      imageUrl={noteData?.image.src}
                     />
                   </ModalHeader>
                 </>
               ) : null}
-              <ModalBody className="p-0">
+              <ModalBody className="p-0 py-2 px-2">
                 <Textarea
                   placeholder="Description"
                   radius="none"
@@ -119,14 +136,14 @@ export default function EditNote({ note }: { note: Note }) {
                       'shadow-none',
                     ],
                   }}
-                  value={note?.content}
+                  value={noteData?.content}
                   onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
                     handleContentChange(event.target.value)
                   }
                 />
               </ModalBody>
 
-              {note?.reminder && (
+              {noteData?.reminder && (
                 <div className="flex items-center px-3">
                   <Chip
                     size="sm"
@@ -140,27 +157,34 @@ export default function EditNote({ note }: { note: Note }) {
                         'absolute right-0 rounded-full text-gray-900/60 bg-gray-100 opacity-0 group-hover/chip:opacity-100 transition-opacity ease-in-out',
                     }}
                   >
-                    {note?.reminder}
+                    {noteData?.reminder}
                   </Chip>
                 </div>
               )}
 
-              <ModalFooter className="flex items-center justify-between pr-[12px] pl-[2px] pb-[2px]">
+              <ModalFooter className="flex items-center justify-between px-[8px] pb-[4px]">
                 <div className="flex items-center gap-2">
                   <AddReminder onReminderClick={handleReminderClick} />
                   <AddColor
-                    color={note?.bgColor}
+                    color={noteData?.bgColor}
                     onColorChange={handleColorClick}
                   />
-                  <AddToArchiveButton uid={note?.uid} noteId={note?.id} />
+                  <UploadImageToStorage
+                    uid={noteData?.uid}
+                    onHandleImageUpload={handleImageUpload}
+                  />
+                  <AddToArchiveButton
+                    uid={noteData?.uid}
+                    noteId={noteData?.id}
+                  />
                   <DeleteUndoNoteButton
-                    uid={note?.uid}
-                    noteId={note?.id}
+                    uid={noteData?.uid}
+                    noteId={noteData?.id}
                     type="delete"
                   />
                 </div>
                 <Button
-                  className="font-medium bg-transparent hover:bg-gray-900/10"
+                  className="font-medium bg-transparent hover:bg-gray-900/5"
                   onPress={onClose}
                 >
                   Close

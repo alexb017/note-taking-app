@@ -11,7 +11,12 @@ import {
 } from '@nextui-org/react';
 import { useState } from 'react';
 import AddColor from './add-color';
-import { updateBgColor, updateReminder } from '@/lib/actions';
+import {
+  updateBgColor,
+  updateContent,
+  updateImage,
+  updateReminder,
+} from '@/lib/actions';
 import AddToArchiveButton from './add-to-archive-button';
 import DeleteUndoNoteButton from './delete-undo-note-button';
 import DeleteNoteButton from './delete-note-button';
@@ -19,6 +24,8 @@ import ClockIcon from './icons/clock';
 import AddReminder from './add-reminder';
 import EditNote from './edit-note';
 import CloseIcon from './icons/close';
+import UploadImageToStorage from './upload-image';
+import DeleteImageFromStorage from './detele-image';
 
 type Note = {
   id: string;
@@ -41,33 +48,50 @@ type ImageData = {
 };
 
 export default function Note({ note }: { note: Note }) {
-  //const [reminder, setReminder] = useState(note?.reminder);
+  const [noteData, setNoteData] = useState(note);
+
+  async function handleContentChange(text: string) {
+    setNoteData({ ...noteData, content: text });
+    await updateContent(note?.uid, note?.id, text);
+  }
 
   async function handleReminderClick(date: string) {
-    //setReminder(date);
-    await updateReminder(note?.uid, note?.id, date);
+    setNoteData({ ...noteData, reminder: date });
+    await updateReminder(noteData?.uid, noteData?.id, date);
   }
 
   async function handleColorClick(color: string) {
-    await updateBgColor(note?.uid, note?.id, color);
+    setNoteData({ ...noteData, bgColor: color });
+    await updateBgColor(noteData?.uid, noteData?.id, color);
+  }
+
+  async function handleImageUpload(img: ImageData) {
+    setNoteData({ ...noteData, image: img });
+    await updateImage(noteData?.uid, noteData?.id, img);
   }
 
   return (
-    <Card className={`w-full max-w-[240px] mb-4 group ${note?.bgColor}`}>
-      {note?.image.src ? (
+    <Card
+      className={`w-full max-w-[240px] mb-4 shadow group ${noteData?.bgColor}`}
+    >
+      {noteData?.image.src ? (
         <CardHeader className="relative w-full max-w-[240px] p-0 rounded-b-none">
           <Image
-            alt={note?.image.altname}
-            src={note?.image.src}
+            alt={noteData?.image.altname}
+            src={noteData?.image.src}
             className="w-full h-auto rounded-b-none"
+          />
+          <DeleteImageFromStorage
+            imageUrl={noteData?.image.src}
+            onHandleImageUpload={handleImageUpload}
           />
         </CardHeader>
       ) : null}
       <CardBody className="overflow-visible py-2 px-5 cursor-default">
-        <p className="text-lg">{note?.content}</p>
+        <p className="text-lg">{noteData?.content}</p>
       </CardBody>
 
-      {note?.reminder && (
+      {noteData?.reminder && (
         <div className="flex items-center px-3">
           <Chip
             size="sm"
@@ -78,31 +102,41 @@ export default function Note({ note }: { note: Note }) {
             endContent={<CloseIcon classname="h-6" />}
             classNames={{
               closeButton:
-                'absolute right-0 rounded-full text-gray-900/60 bg-gray-100 opacity-0 group-hover/chip:opacity-100 transition-opacity ease-in-out',
+                'absolute right-0 rounded-full text-gray-900/80 bg-gray-100 opacity-0 group-hover/chip:opacity-100 transition-opacity ease-in-out',
             }}
           >
-            {note?.reminder}
+            {noteData?.reminder}
           </Chip>
         </div>
       )}
 
-      <CardFooter className="flex items-center justify-between pl-[2px] pb-[2px] opacity-0 group-hover:opacity-100 transition-opacity ease-in-out">
-        {!note?.isDeleted ? (
+      <CardFooter className="flex items-center justify-between pl-[4px] pb-[4px] opacity-0 group-hover:opacity-100 transition-opacity ease-in-out">
+        {!noteData?.isDeleted ? (
           <>
             <div className="flex items-center gap-2">
-              <EditNote note={note} />
+              <EditNote
+                note={noteData}
+                onReminderClick={handleReminderClick}
+                onColorClick={handleColorClick}
+                onUploadImage={handleImageUpload}
+                onContentChange={handleContentChange}
+              />
               <AddReminder
-                reminder={note?.reminder}
+                reminder={noteData?.reminder}
                 onReminderClick={handleReminderClick}
               />
               <AddColor
-                color={note?.bgColor}
+                color={noteData?.bgColor}
                 onColorChange={handleColorClick}
               />
-              <AddToArchiveButton uid={note?.uid} noteId={note?.id} />
+              <UploadImageToStorage
+                uid={noteData?.uid}
+                onHandleImageUpload={handleImageUpload}
+              />
+              <AddToArchiveButton uid={noteData?.uid} noteId={noteData?.id} />
               <DeleteUndoNoteButton
-                uid={note?.uid}
-                noteId={note?.id}
+                uid={noteData?.uid}
+                noteId={noteData?.id}
                 type="delete"
               />
             </div>
@@ -111,13 +145,13 @@ export default function Note({ note }: { note: Note }) {
           <>
             <div className="flex items-center justify-between w-full">
               <DeleteNoteButton
-                uid={note?.uid}
-                noteId={note?.id}
-                imageURL={note?.image.src}
+                uid={noteData?.uid}
+                noteId={noteData?.id}
+                imageURL={noteData?.image.src}
               />
               <DeleteUndoNoteButton
-                uid={note?.uid}
-                noteId={note?.id}
+                uid={noteData?.uid}
+                noteId={noteData?.id}
                 type="undo"
               />
             </div>

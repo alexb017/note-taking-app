@@ -132,9 +132,9 @@ export default function AddReminder({
           isIconOnly
           aria-label="reminder"
           radius="full"
-          className="bg-transparent hover:bg-gray-900/10"
+          className="min-w-unit-8 w-unit-8 h-8 bg-transparent hover:bg-gray-900/10"
         >
-          <BellBingIcon classname="h-5" />
+          <BellBingIcon classname="h-4" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-[240px] p-0 items-start justify-start">
