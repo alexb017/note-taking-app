@@ -23,30 +23,17 @@ import DeleteImageFromStorage from './detele-image';
 import ArchiveIcon from './icons/archive';
 import UpdateDatePickerButton from './update-date-picker-button';
 import CloseIcon from './icons/close';
-
-type ImageData = {
-  src: string;
-  altname: string;
-};
+import { ImageData } from '@/lib/types';
+import PinIcon from './icons/pin';
 
 export default function CreateNote() {
   const { user } = useContext(AuthContext);
   const [content, setContent] = useState('');
   const [reminder, setReminder] = useState('');
   const [backgroundColor, setBackgroundColor] = useState('bg-white');
-  const [imageURL, setImageURL] = useState<ImageData>({ src: '', altname: '' });
+  const [imageURL, setImageURL] = useState<ImageData>({ src: '', altName: '' });
   const [isArchived, setIsArchived] = useState(false);
-
-  // console.log({
-  //   content: content,
-  //   bgColor: backgroundColor,
-  //   image: imageURL,
-  //   reminder: reminder,
-  //   isArchived: false,
-  //   isPinned: false,
-  //   isDeleted: false,
-  //   uid: user?.uid,
-  // });
+  const [isPinned, setIsPinned] = useState(false);
 
   function handleReminderClick(date: string) {
     setReminder(date);
@@ -62,20 +49,54 @@ export default function CreateNote() {
 
   return (
     <Card
-      className={`w-full max-w-[512px] overflow-visible ${backgroundColor}`}
+      className={`relative w-full max-w-[512px] overflow-visible ${backgroundColor}`}
     >
+      <div className="absolute right-2 top-2 z-20">
+        <Button
+          isIconOnly
+          aria-label="pin"
+          radius="full"
+          className="min-w-unit-6 w-unit-6 h-6 text-gray-900/60 bg-gray-100/95 hover:bg-gray-200/95"
+          onClick={async () => {
+            await createNote(
+              {
+                content: content,
+                bgColor: backgroundColor,
+                image: imageURL,
+                reminder: reminder,
+                isArchived: false,
+                isPinned: true,
+                isDeleted: false,
+                uid: user?.uid,
+              },
+              user?.uid
+            );
+
+            setContent('');
+            setBackgroundColor('bg-white');
+            setImageURL({ src: '', altName: '' });
+            setReminder('');
+            setIsPinned(false);
+          }}
+        >
+          <PinIcon classname="h-6" />
+        </Button>
+      </div>
+
       {imageURL?.src ? (
         <>
           <CardHeader className="relative w-full max-w-[512px] p-0 rounded-b-none">
             <Image
-              alt={imageURL?.altname}
+              alt={imageURL?.altName}
               src={imageURL?.src}
               className="w-full h-auto rounded-b-none"
             />
-            <DeleteImageFromStorage
-              onHandleImageUpload={handleImageUpload}
-              imageUrl={imageURL?.src}
-            />
+            <div className="absolute right-1 bottom-1 z-10">
+              <DeleteImageFromStorage
+                onHandleImageUpload={handleImageUpload}
+                imageUrl={imageURL?.src}
+              />
+            </div>
           </CardHeader>
         </>
       ) : null}
@@ -161,7 +182,7 @@ export default function CreateNote() {
 
               setContent('');
               setBackgroundColor('bg-white');
-              setImageURL({ src: '', altname: '' });
+              setImageURL({ src: '', altName: '' });
               setReminder('');
               setIsArchived(false);
             }}
@@ -188,7 +209,7 @@ export default function CreateNote() {
 
             setContent('');
             setBackgroundColor('bg-white');
-            setImageURL({ src: '', altname: '' });
+            setImageURL({ src: '', altName: '' });
             setReminder('');
             setIsArchived(false);
           }}

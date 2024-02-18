@@ -1,10 +1,6 @@
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import GalleryIcon from './icons/gallery';
-
-type ImageData = {
-  src: string;
-  altname: string;
-};
+import { ImageData } from '@/lib/types';
 
 export default function UploadImageToStorage({
   onHandleImageUpload,
@@ -41,7 +37,7 @@ export default function UploadImageToStorage({
           // Get the download URL
           const url = await getDownloadURL(storageRef);
 
-          onHandleImageUpload({ src: url, altname: filename });
+          onHandleImageUpload({ src: url, altName: filename });
         }}
       />
       <GalleryIcon classname="h-4" />

@@ -12,25 +12,7 @@ import {
   updateDoc,
 } from 'firebase/firestore';
 import { db } from './firebase';
-
-type Note = {
-  content: string;
-  bgColor: string;
-  image: {
-    src: string;
-    altname: string;
-  };
-  reminder: string;
-  isArchived: boolean;
-  isPinned: boolean;
-  isDeleted: boolean;
-  uid: string;
-};
-
-type ImageData = {
-  src: string;
-  altname: string;
-};
+import { Note, ImageData } from './types';
 
 export async function createNote(note: Note, uid: string) {
   try {
@@ -139,5 +121,19 @@ export async function updateIsArchived(uid: string, noteId: string) {
     });
   } catch (error) {
     console.error('Error to update isArchive: ', error);
+  }
+}
+
+export async function updateIsPinned(uid: string, noteId: string) {
+  try {
+    const pinRef = doc(db, 'users', uid, 'notes', noteId);
+    const pinDoc = await getDoc(pinRef);
+    const currentValue = pinDoc.data()?.isPinned;
+
+    await updateDoc(pinRef, {
+      isPinned: !currentValue,
+    });
+  } catch (error) {
+    console.error('Error to update isPinned: ', error);
   }
 }

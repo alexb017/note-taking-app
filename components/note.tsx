@@ -26,28 +26,10 @@ import EditNote from './edit-note';
 import CloseIcon from './icons/close';
 import UploadImageToStorage from './upload-image';
 import DeleteImageFromStorage from './detele-image';
+import { Notes, ImageData } from '@/lib/types';
+import AddToPinButton from './add-to-pin-button';
 
-type Note = {
-  id: string;
-  content: string;
-  bgColor: string;
-  image: {
-    src: string;
-    altname: string;
-  };
-  reminder: string;
-  isArchived: boolean;
-  isPinned: boolean;
-  isDeleted: boolean;
-  uid: string;
-};
-
-type ImageData = {
-  src: string;
-  altname: string;
-};
-
-export default function Note({ note }: { note: Note }) {
+export default function Note({ note }: { note: Notes }) {
   const [noteData, setNoteData] = useState(note);
 
   async function handleContentChange(text: string) {
@@ -72,19 +54,29 @@ export default function Note({ note }: { note: Note }) {
 
   return (
     <Card
-      className={`w-full max-w-[240px] mb-4 shadow group ${noteData?.bgColor}`}
+      className={`relative w-full max-w-[240px] mb-4 shadow group ${noteData?.bgColor}`}
     >
+      {!noteData?.isDeleted ? (
+        <>
+          <div className="absolute right-2 top-2 z-20 opacity-0 group-hover:opacity-100 transition-opacity ease-in-out">
+            <AddToPinButton uid={noteData?.uid} noteId={noteData?.id} />
+          </div>
+        </>
+      ) : null}
+
       {noteData?.image.src ? (
         <CardHeader className="relative w-full max-w-[240px] p-0 rounded-b-none">
           <Image
-            alt={noteData?.image.altname}
+            alt={noteData?.image.altName}
             src={noteData?.image.src}
             className="w-full h-auto rounded-b-none"
           />
-          <DeleteImageFromStorage
-            imageUrl={noteData?.image.src}
-            onHandleImageUpload={handleImageUpload}
-          />
+          <div className="absolute right-1 bottom-1 z-10 opacity-0 group-hover:opacity-100 transition-opacity ease-in-out">
+            <DeleteImageFromStorage
+              imageUrl={noteData?.image.src}
+              onHandleImageUpload={handleImageUpload}
+            />
+          </div>
         </CardHeader>
       ) : null}
       <CardBody className="overflow-visible py-2 px-5 cursor-default">
@@ -102,7 +94,7 @@ export default function Note({ note }: { note: Note }) {
             endContent={<CloseIcon classname="h-6" />}
             classNames={{
               closeButton:
-                'absolute right-0 rounded-full text-gray-900/80 bg-gray-100 opacity-0 group-hover/chip:opacity-100 transition-opacity ease-in-out',
+                'absolute right-0 rounded-full text-gray-900/60 bg-gray-100/95 hover:bg-gray-200/95 opacity-0 group-hover/chip:opacity-100 transition-opacity ease-in-out',
             }}
           >
             {noteData?.reminder}
