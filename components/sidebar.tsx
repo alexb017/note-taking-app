@@ -17,7 +17,9 @@ export default function Sidebar() {
           <Link
             href="/notes"
             className={`flex items-center justify-center md:justify-start gap-6 rounded-full md:rounded-l-none w-12 md:w-full h-12 md:px-4 text-sm font-semibold ${
-              pathname === '/notes' ? 'bg-yellow-100' : 'hover:bg-gray-100'
+              pathname === '/notes'
+                ? 'bg-yellow-100 dark:bg-yellow-950'
+                : 'hover:bg-zinc-100 dark:hover:bg-zinc-800'
             }`}
           >
             <NotesIcon classname="h-6" />
@@ -29,8 +31,8 @@ export default function Sidebar() {
             href="/notes/reminders"
             className={`flex items-center justify-center md:justify-start gap-6 rounded-full md:rounded-l-none w-12 md:w-full h-12 md:px-4 text-sm font-semibold ${
               pathname === '/notes/reminders'
-                ? 'bg-yellow-100 '
-                : 'hover:bg-gray-100'
+                ? 'bg-yellow-100 dark:bg-yellow-950 '
+                : 'hover:bg-zinc-100 dark:hover:bg-zinc-800'
             }`}
           >
             <BellIcon classname="h-6" />
@@ -42,8 +44,8 @@ export default function Sidebar() {
             href="/notes/archive"
             className={`flex items-center justify-center md:justify-start gap-6 rounded-full md:rounded-l-none w-12 md:w-full h-12 md:px-4 text-sm font-semibold ${
               pathname === '/notes/archive'
-                ? 'bg-yellow-100'
-                : 'hover:bg-gray-100'
+                ? 'bg-yellow-100 dark:bg-yellow-950'
+                : 'hover:bg-zinc-100 dark:hover:bg-zinc-800'
             }`}
           >
             <ArchiveIcon classname="h-6" />
@@ -55,8 +57,8 @@ export default function Sidebar() {
             href="/notes/trash"
             className={`flex items-center justify-center md:justify-start gap-6 rounded-full md:rounded-l-none w-12 md:w-full h-12 md:px-4 text-sm font-semibold ${
               pathname === '/notes/trash'
-                ? 'bg-yellow-100'
-                : 'hover:bg-gray-100'
+                ? 'bg-yellow-100 dark:bg-yellow-950'
+                : 'hover:bg-zinc-100 dark:hover:bg-zinc-800'
             }`}
           >
             <TrashIcon classname="h-6" />

@@ -12,7 +12,7 @@ import {
   updateDoc,
 } from 'firebase/firestore';
 import { db } from './firebase';
-import { Note, ImageData } from './types';
+import { Note, ImageData, BgColor } from './types';
 
 export async function createNote(note: Note, uid: string) {
   try {
@@ -89,11 +89,11 @@ export async function updateReminder(
 export async function updateBgColor(
   uid: string,
   noteId: string,
-  color: string
+  colors: BgColor
 ) {
   try {
     const colorRef = doc(db, 'users', uid, 'notes', noteId);
-    await updateDoc(colorRef, { bgColor: color });
+    await updateDoc(colorRef, { bgColor: colors });
   } catch (error) {
     console.error('Error to update bg color: ', error);
   }

@@ -14,7 +14,7 @@ export default function AddToPinButton({
       isIconOnly
       aria-label="pin"
       radius="full"
-      className="min-w-unit-6 w-unit-6 h-6 text-gray-900/60 bg-gray-100/95 hover:bg-gray-200/95"
+      className="min-w-unit-6 w-unit-6 h-6 text-gray-900/60 bg-gray-100/95 hover:bg-gray-200/95 dark:text-zinc-100/80 dark:bg-zinc-700/95"
       onClick={async () => await updateIsPinned(uid, noteId)}
     >
       <PinIcon classname="h-6" />

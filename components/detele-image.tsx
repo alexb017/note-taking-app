@@ -15,7 +15,7 @@ export default function DeleteImageFromStorage({
       isIconOnly
       aria-label="delete-image"
       radius="sm"
-      className="min-w-unit-8 w-unit-8 h-8 text-white bg-gray-900/40 hover:bg-gray-900/35"
+      className="min-w-unit-8 w-unit-8 h-8 text-white bg-zinc-900/40 hover:bg-zinc-900/35 dark:hover:bg-zinc-100/10"
       onClick={async () => {
         await deleteImageFromStorage(imageUrl);
 

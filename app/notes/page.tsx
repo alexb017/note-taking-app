@@ -33,7 +33,9 @@ export default function Notes() {
         </div>
         {pinNotes.length > 0 ? (
           <div className="flex flex-col gap-4">
-            <h3 className="text-sm uppercase font-medium">pinned</h3>
+            <h3 className="text-xs uppercase font-medium text-zinc-500">
+              pinned
+            </h3>
             <MasonryGrid>
               {pinNotes.map((note: any) => {
                 return <Note key={note.id} note={note} />;
@@ -45,7 +47,9 @@ export default function Notes() {
         {allNotes.length > 0 ? (
           <div className="flex flex-col gap-4">
             {pinNotes.length > 0 && allNotes.length > 0 && (
-              <h3 className="text-sm uppercase font-medium">others</h3>
+              <h3 className="text-xs uppercase font-medium text-zinc-500">
+                others
+              </h3>
             )}
             <MasonryGrid>
               {allNotes.map((note: any) => {

@@ -1,7 +1,10 @@
 export type Notes = {
   id: string;
   content: string;
-  bgColor: string;
+  bgColor: {
+    light: string;
+    dark: string;
+  };
   image: {
     src: string;
     altName: string;
@@ -20,7 +23,10 @@ export type ImageData = {
 
 export type Note = {
   content: string;
-  bgColor: string;
+  bgColor: {
+    light: string;
+    dark: string;
+  };
   image: {
     src: string;
     altName: string;
@@ -30,4 +36,9 @@ export type Note = {
   isPinned: boolean;
   isDeleted: boolean;
   uid: string;
+};
+
+export type BgColor = {
+  light: string;
+  dark: string;
 };

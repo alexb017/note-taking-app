@@ -17,7 +17,7 @@ export default function DeleteNoteButton({
       isIconOnly
       aria-label="color"
       radius="full"
-      className="min-w-unit-8 w-unit-8 h-8 bg-transparent hover:bg-gray-900/10"
+      className="min-w-unit-8 w-unit-8 h-8 bg-transparent hover:bg-zinc-900/10 dark:hover:bg-zinc-100/10"
       onClick={async () => {
         await deleteNote(uid, noteId);
 

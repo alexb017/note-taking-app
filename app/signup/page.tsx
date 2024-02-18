@@ -114,7 +114,7 @@ export default function Signup() {
                 variant="shadow"
                 radius="md"
                 size="lg"
-                className="bg-black text-white"
+                className="bg-zinc-900 text-white dark:bg-blue-500"
               >
                 Sign Up
               </Button>

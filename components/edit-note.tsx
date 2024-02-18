@@ -22,7 +22,7 @@ import AddToArchiveButton from './add-to-archive-button';
 import DeleteUndoNoteButton from './delete-undo-note-button';
 import CloseIcon from './icons/close';
 import UploadImageToStorage from './upload-image';
-import { Notes, ImageData } from '@/lib/types';
+import { Notes, ImageData, BgColor } from '@/lib/types';
 import AddToPinButton from './add-to-pin-button';
 
 export default function EditNote({
@@ -34,7 +34,7 @@ export default function EditNote({
 }: {
   note: Notes;
   onReminderClick: (date: string) => void;
-  onColorClick: (color: string) => void;
+  onColorClick: (colors: BgColor) => void;
   onUploadImage: (img: ImageData) => void;
   onContentChange: (text: string) => void;
 }) {
@@ -49,7 +49,7 @@ export default function EditNote({
         isIconOnly
         aria-label="color"
         radius="full"
-        className="min-w-unit-8 w-unit-8 h-8 bg-transparent hover:bg-gray-900/10"
+        className="min-w-unit-8 w-unit-8 h-8 bg-transparent hover:bg-zinc-900/10 dark:hover:bg-zinc-100/10"
         onClick={() => router.push(`?=${note?.id}`)}
       >
         <EditIcon classname="h-4" />
@@ -62,7 +62,7 @@ export default function EditNote({
         }}
         placement="center"
         backdrop="blur"
-        className={`${note?.bgColor}`}
+        className={`${note?.bgColor.light} ${note?.bgColor.dark}`}
         classNames={{ closeButton: 'hidden' }}
       >
         <ModalContent>
@@ -115,13 +115,13 @@ export default function EditNote({
                   <Chip
                     size="sm"
                     radius="full"
-                    className="cursor-pointer group/chip bg-gray-900/10 hover:bg-gray-900/15"
+                    className="cursor-pointer group/chip bg-zinc-900/10 hover:bg-zinc-900/15 dark:bg-zinc-100/10 dark:hover:bg-zinc-100/15"
                     startContent={<ClockIcon classname="h-4" />}
                     onClose={() => onReminderClick('')}
                     endContent={<CloseIcon classname="h-6" />}
                     classNames={{
                       closeButton:
-                        'absolute right-0 rounded-full text-gray-900/60 bg-gray-100 opacity-0 group-hover/chip:opacity-100 transition-opacity ease-in-out',
+                        'absolute right-0 rounded-full text-zinc-900/60 bg-zinc-100 dark:text-zinc-100/80 dark:bg-zinc-700/95 opacity-0 group-hover/chip:opacity-100 transition-opacity ease-in-out',
                     }}
                   >
                     {note?.reminder}
@@ -133,7 +133,7 @@ export default function EditNote({
                 <div className="flex items-center gap-2">
                   <AddReminder onReminderClick={onReminderClick} />
                   <AddColor
-                    color={note?.bgColor}
+                    colors={note?.bgColor}
                     onColorChange={onColorClick}
                   />
                   <UploadImageToStorage
@@ -148,7 +148,7 @@ export default function EditNote({
                   />
                 </div>
                 <Button
-                  className="font-medium bg-transparent hover:bg-gray-900/5"
+                  className="font-medium bg-transparent hover:bg-zinc-900/5 dark:hover:bg-zinc-100/5"
                   onPress={onClose}
                 >
                   Close

@@ -25,7 +25,7 @@ export default function UpdateDatePickerButton({
     <Chip
       size="sm"
       radius="full"
-      className="cursor-pointer bg-gray-900/10 hover:bg-gray-900/15"
+      className="cursor-pointer bg-zinc-900/10 hover:bg-zinc-900/15"
       startContent={<ClockIcon classname="h-4" />}
       onClose={() => onDateChange('')}
     >
@@ -40,7 +40,7 @@ export default function UpdateDatePickerButton({
         id="updateDatePicker"
         name="updateDatePicker"
         placeholderText={reminder}
-        className="h-10 placeholder:text-black font-medium bg-transparent cursor-pointer focus-visible:outline-none"
+        className="h-10 placeholder:text-zinc-900 font-medium bg-transparent cursor-pointer focus-visible:outline-none"
       />
     </Chip>
   );

@@ -23,14 +23,17 @@ import DeleteImageFromStorage from './detele-image';
 import ArchiveIcon from './icons/archive';
 import UpdateDatePickerButton from './update-date-picker-button';
 import CloseIcon from './icons/close';
-import { ImageData } from '@/lib/types';
+import { ImageData, BgColor } from '@/lib/types';
 import PinIcon from './icons/pin';
 
 export default function CreateNote() {
   const { user } = useContext(AuthContext);
   const [content, setContent] = useState('');
   const [reminder, setReminder] = useState('');
-  const [backgroundColor, setBackgroundColor] = useState('bg-white');
+  const [backgroundColor, setBackgroundColor] = useState<BgColor>({
+    light: 'bg-white',
+    dark: 'dark:bg-zinc-800',
+  });
   const [imageURL, setImageURL] = useState<ImageData>({ src: '', altName: '' });
   const [isArchived, setIsArchived] = useState(false);
   const [isPinned, setIsPinned] = useState(false);
@@ -39,8 +42,8 @@ export default function CreateNote() {
     setReminder(date);
   }
 
-  function handleColorClick(color: string) {
-    setBackgroundColor(color);
+  function handleColorClick(colors: BgColor) {
+    setBackgroundColor(colors);
   }
 
   function handleImageUpload(data: ImageData) {
@@ -49,14 +52,14 @@ export default function CreateNote() {
 
   return (
     <Card
-      className={`relative w-full max-w-[512px] overflow-visible ${backgroundColor}`}
+      className={`relative w-full max-w-[512px] overflow-visible ${backgroundColor.light} ${backgroundColor.dark}`}
     >
       <div className="absolute right-2 top-2 z-20">
         <Button
           isIconOnly
           aria-label="pin"
           radius="full"
-          className="min-w-unit-6 w-unit-6 h-6 text-gray-900/60 bg-gray-100/95 hover:bg-gray-200/95"
+          className="min-w-unit-6 w-unit-6 h-6 text-zinc-900/60 bg-zinc-100/95 dark:text-zinc-100/80 dark:bg-zinc-700/95 hover:bg-zinc-200/95"
           onClick={async () => {
             await createNote(
               {
@@ -73,7 +76,7 @@ export default function CreateNote() {
             );
 
             setContent('');
-            setBackgroundColor('bg-white');
+            setBackgroundColor({ light: 'bg-white', dark: 'dark:bg-zinc-900' });
             setImageURL({ src: '', altName: '' });
             setReminder('');
             setIsPinned(false);
@@ -134,13 +137,13 @@ export default function CreateNote() {
           <Chip
             size="sm"
             radius="full"
-            className="cursor-pointer group/chip bg-gray-900/10 hover:bg-gray-900/15"
+            className="cursor-pointer group/chip bg-zinc-900/10 hover:bg-zinc-900/15 dark:bg-zinc-100/10 dark:hover:bg-zinc-100/15"
             startContent={<ClockIcon classname="h-4" />}
             onClose={() => handleReminderClick('')}
             endContent={<CloseIcon classname="h-6" />}
             classNames={{
               closeButton:
-                'absolute right-0 rounded-full text-gray-900/80 bg-gray-100 opacity-0 group-hover/chip:opacity-100 transition-opacity ease-in-out',
+                'absolute right-0 rounded-full text-zinc-900/80 bg-zinc-100 dark:text-zinc-100/80 dark:bg-zinc-700/95 opacity-0 group-hover/chip:opacity-100 transition-opacity ease-in-out',
             }}
           >
             {reminder}
@@ -155,7 +158,7 @@ export default function CreateNote() {
       <CardFooter className="flex items-center justify-between px-[8px] pb-[2px]">
         <div className="flex items-center gap-2">
           <AddReminder onReminderClick={handleReminderClick} />
-          <AddColor color={backgroundColor} onColorChange={handleColorClick} />
+          <AddColor colors={backgroundColor} onColorChange={handleColorClick} />
           <UploadImageToStorage
             uid={user?.uid}
             onHandleImageUpload={handleImageUpload}
@@ -164,7 +167,7 @@ export default function CreateNote() {
             isIconOnly
             aria-label="archive"
             radius="full"
-            className="min-w-unit-8 w-unit-8 h-8 bg-transparent hover:bg-gray-900/10"
+            className="min-w-unit-8 w-unit-8 h-8 bg-transparent hover:bg-zinc-900/10 dark:hover:bg-zinc-100/10"
             onClick={async () => {
               await createNote(
                 {
@@ -173,7 +176,7 @@ export default function CreateNote() {
                   image: imageURL,
                   reminder: reminder,
                   isArchived: true,
-                  isPinned: false,
+                  isPinned: isPinned,
                   isDeleted: false,
                   uid: user?.uid,
                 },
@@ -181,7 +184,10 @@ export default function CreateNote() {
               );
 
               setContent('');
-              setBackgroundColor('bg-white');
+              setBackgroundColor({
+                light: 'bg-white',
+                dark: 'dark:bg-zinc-900',
+              });
               setImageURL({ src: '', altName: '' });
               setReminder('');
               setIsArchived(false);
@@ -191,7 +197,7 @@ export default function CreateNote() {
           </Button>
         </div>
         <Button
-          className="font-medium bg-transparent hover:bg-gray-900/5"
+          className="font-medium bg-transparent hover:bg-zinc-900/5 dark:hover:bg-zinc-100/5"
           onClick={async () => {
             await createNote(
               {
@@ -200,7 +206,7 @@ export default function CreateNote() {
                 image: imageURL,
                 reminder: reminder,
                 isArchived: isArchived,
-                isPinned: false,
+                isPinned: isPinned,
                 isDeleted: false,
                 uid: user?.uid,
               },
@@ -208,10 +214,11 @@ export default function CreateNote() {
             );
 
             setContent('');
-            setBackgroundColor('bg-white');
+            setBackgroundColor({ light: 'bg-white', dark: 'dark:bg-zinc-900' });
             setImageURL({ src: '', altName: '' });
             setReminder('');
             setIsArchived(false);
+            setIsPinned(false);
           }}
         >
           Save Note

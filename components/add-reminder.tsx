@@ -29,10 +29,7 @@ function DateTimePicker({
   }
 
   return (
-    <label
-      htmlFor="datePicker"
-      className="flex items-center gap-1 w-full h-10 px-3 hover:bg-gray-100 rounded-b-[14px] cursor-pointer"
-    >
+    <label className="flex items-center gap-1 w-full h-10 px-3 bg-white hover:bg-zinc-100 rounded-b-[14px] cursor-pointer dark:bg-zinc-900 dark:hover:bg-zinc-800">
       <ClockIcon classname="h-4" />
       <DatePicker
         showTimeSelect
@@ -42,10 +39,8 @@ function DateTimePicker({
         timeFormat="HH:mm"
         timeCaption="time"
         dateFormat="MMM d, h:mm a"
-        id="datePicker"
-        name="datePicker"
         placeholderText="Pick date & time"
-        className="h-10 w-full placeholder:text-black font-medium bg-transparent"
+        className="h-10 w-full placeholder:text-zinc-900 font-medium bg-transparent dark:placeholder:text-white"
       />
     </label>
   );
@@ -73,7 +68,7 @@ function SetTodayDate({
   return (
     <Button
       radius="none"
-      className="bg-white hover:bg-gray-100 justify-between px-3 font-medium"
+      className="bg-white hover:bg-zinc-100 justify-between px-3 font-medium dark:bg-zinc-900 dark:hover:bg-zinc-800"
       onClick={() => handle(`Today, ${formattedTimeToday}`)}
     >
       <span>Today</span>
@@ -107,7 +102,7 @@ function SetTomorrowDate({
 
   return (
     <Button
-      className="bg-white hover:bg-gray-100 rounded-t-none justify-between px-3 font-medium"
+      className="bg-white hover:bg-zinc-100 rounded-none justify-between px-3 font-medium dark:bg-zinc-900 dark:hover:bg-zinc-800"
       onClick={() => handle(`Tomorrow, ${formattedTimeTomorrow}`)}
     >
       <span>Tomorrow</span>
@@ -132,7 +127,7 @@ export default function AddReminder({
           isIconOnly
           aria-label="reminder"
           radius="full"
-          className="min-w-unit-8 w-unit-8 h-8 bg-transparent hover:bg-gray-900/10"
+          className="min-w-unit-8 w-unit-8 h-8 bg-transparent hover:bg-zinc-900/10 dark:hover:bg-zinc-100/10"
         >
           <BellBingIcon classname="h-4" />
         </Button>

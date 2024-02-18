@@ -26,7 +26,7 @@ import EditNote from './edit-note';
 import CloseIcon from './icons/close';
 import UploadImageToStorage from './upload-image';
 import DeleteImageFromStorage from './detele-image';
-import { Notes, ImageData } from '@/lib/types';
+import { Notes, ImageData, BgColor } from '@/lib/types';
 import AddToPinButton from './add-to-pin-button';
 
 export default function Note({ note }: { note: Notes }) {
@@ -42,9 +42,9 @@ export default function Note({ note }: { note: Notes }) {
     await updateReminder(noteData?.uid, noteData?.id, date);
   }
 
-  async function handleColorClick(color: string) {
-    setNoteData({ ...noteData, bgColor: color });
-    await updateBgColor(noteData?.uid, noteData?.id, color);
+  async function handleColorClick(colors: BgColor) {
+    setNoteData({ ...noteData, bgColor: colors });
+    await updateBgColor(noteData?.uid, noteData?.id, colors);
   }
 
   async function handleImageUpload(img: ImageData) {
@@ -54,7 +54,7 @@ export default function Note({ note }: { note: Notes }) {
 
   return (
     <Card
-      className={`relative w-full max-w-[240px] mb-4 shadow group ${noteData?.bgColor}`}
+      className={`relative w-full max-w-[240px] mb-4 shadow group ${noteData?.bgColor.light} ${noteData?.bgColor.dark}`}
     >
       {!noteData?.isDeleted ? (
         <>
@@ -88,13 +88,13 @@ export default function Note({ note }: { note: Notes }) {
           <Chip
             size="sm"
             radius="full"
-            className="cursor-pointer group/chip bg-gray-900/10 hover:bg-gray-900/15"
+            className="cursor-pointer group/chip bg-zinc-900/10 hover:bg-zinc-900/15 dark:bg-zinc-100/10 dark:hover:bg-zinc-100/15"
             startContent={<ClockIcon classname="h-4" />}
             onClose={() => handleReminderClick('')}
             endContent={<CloseIcon classname="h-6" />}
             classNames={{
               closeButton:
-                'absolute right-0 rounded-full text-gray-900/60 bg-gray-100/95 hover:bg-gray-200/95 opacity-0 group-hover/chip:opacity-100 transition-opacity ease-in-out',
+                'absolute right-0 rounded-full text-zinc-900/60 bg-zinc-100/95 hover:bg-zinc-200/95 dark:text-zinc-100/80 dark:bg-zinc-700/95 opacity-0 group-hover/chip:opacity-100 transition-opacity ease-in-out',
             }}
           >
             {noteData?.reminder}
@@ -118,7 +118,7 @@ export default function Note({ note }: { note: Notes }) {
                 onReminderClick={handleReminderClick}
               />
               <AddColor
-                color={noteData?.bgColor}
+                colors={noteData?.bgColor}
                 onColorChange={handleColorClick}
               />
               <UploadImageToStorage

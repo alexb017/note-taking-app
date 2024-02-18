@@ -10,7 +10,7 @@ export default function UploadImageToStorage({
   uid: string;
 }) {
   return (
-    <label className="flex items-center justify-center rounded-full w-8 h-8 hover:bg-gray-900/10 cursor-pointer">
+    <label className="flex items-center justify-center rounded-full w-8 h-8 hover:bg-zinc-900/10 cursor-pointer dark:hover:bg-zinc-100/10">
       <input
         type="file"
         accept="image/*"

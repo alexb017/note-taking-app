@@ -20,7 +20,7 @@ export default function DeleteUndoNoteButton({
             isIconOnly
             aria-label="delete"
             radius="full"
-            className="min-w-unit-8 w-unit-8 h-8 bg-transparent hover:bg-gray-900/10"
+            className="min-w-unit-8 w-unit-8 h-8 bg-transparent hover:bg-zinc-900/10 dark:hover:bg-zinc-100/10"
             onClick={async () => await addNoteToTrash(uid, noteId)}
           >
             <TrashIcon classname="h-4" />
@@ -31,7 +31,7 @@ export default function DeleteUndoNoteButton({
           <Button
             aria-label="undo"
             radius="full"
-            className="gap-1 h-8 bg-transparent hover:bg-gray-900/10"
+            className="gap-1 h-8 bg-transparent hover:bg-zinc-900/10 dark:hover:bg-zinc-100/10"
             onClick={async () => await addNoteToTrash(uid, noteId)}
           >
             <UndoIcon classname="h-4" />
