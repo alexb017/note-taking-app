@@ -14,6 +14,10 @@ import {
 } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
 import { useTheme } from 'next-themes';
+import UserIcon from './icons/user';
+import SunIcon from './icons/sun';
+import MoonIcon from './icons/moon';
+import LogoutIcon from './icons/logout';
 
 export default function Navbar() {
   const { user, userSignOut } = useContext(AuthContext);
@@ -30,7 +34,7 @@ export default function Navbar() {
   if (!mounted) return null;
 
   return (
-    <nav className="bg-white border-b border-zinc-200 w-full dark:bg-zinc-900 dark:border-zinc-800">
+    <nav className="fixed top-0 left-0 z-50 shadow-sm bg-white border-b border-zinc-200 w-full dark:bg-zinc-900 dark:border-zinc-800">
       <div className="flex items-center justify-between h-16 px-4 pl-3 w-full">
         <Link
           href="/"
@@ -85,12 +89,23 @@ export default function Navbar() {
                     <p className="font-bold">Signed in as</p>
                     <p className="font-bold">{`@${username}`}</p>
                   </DropdownItem>
-                  <DropdownItem key="profile_page" textValue="profile_page">
-                    My Profile
+                  <DropdownItem
+                    key="profile_page"
+                    textValue="profile_page"
+                    startContent={<UserIcon classname="h-4" />}
+                  >
+                    My profile
                   </DropdownItem>
                   <DropdownItem
                     key="dark_theme"
                     textValue="dark_theme"
+                    startContent={
+                      theme === 'light' ? (
+                        <SunIcon classname="h-4" />
+                      ) : (
+                        <MoonIcon classname="h-4" />
+                      )
+                    }
                     onClick={() => {
                       if (theme === 'light') {
                         setTheme('dark');
@@ -99,18 +114,19 @@ export default function Navbar() {
                       }
                     }}
                   >
-                    Switch to {theme === 'light' ? 'dark' : 'light'} mode
+                    Switch to {theme === 'light' ? 'dark' : 'light'} theme
                   </DropdownItem>
                   <DropdownItem
                     key="logout"
                     color="danger"
                     textValue="logout"
+                    startContent={<LogoutIcon classname="h-4" />}
                     onClick={() => {
                       userSignOut();
                       router.push('/');
                     }}
                   >
-                    Log Out
+                    Log out
                   </DropdownItem>
                 </DropdownMenu>
               </Dropdown>

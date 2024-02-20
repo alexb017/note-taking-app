@@ -18,15 +18,15 @@ export default function AddColor({
 }) {
   const bgColors = [
     { light: 'bg-white', dark: 'dark:bg-zinc-900' },
-    { light: 'bg-red-200', dark: 'dark:bg-red-800' },
-    { light: 'bg-orange-200', dark: 'dark:bg-orange-800' },
-    { light: 'bg-yellow-200', dark: 'dark:bg-yellow-800' },
-    { light: 'bg-green-200', dark: 'dark:bg-green-800' },
-    { light: 'bg-teal-200', dark: 'dark:bg-teal-800' },
-    { light: 'bg-sky-200', dark: 'dark:bg-sky-800' },
-    { light: 'bg-indigo-200', dark: 'dark:bg-indigo-800' },
-    { light: 'bg-purple-200', dark: 'dark:bg-purple-800' },
-    { light: 'bg-pink-200', dark: 'dark:bg-pink-800' },
+    { light: 'bg-red-200', dark: 'dark:bg-red-900' },
+    { light: 'bg-orange-200', dark: 'dark:bg-orange-900' },
+    { light: 'bg-yellow-200', dark: 'dark:bg-yellow-900' },
+    { light: 'bg-green-200', dark: 'dark:bg-green-900' },
+    { light: 'bg-teal-200', dark: 'dark:bg-teal-900' },
+    { light: 'bg-sky-200', dark: 'dark:bg-sky-900' },
+    { light: 'bg-indigo-200', dark: 'dark:bg-indigo-900' },
+    { light: 'bg-purple-200', dark: 'dark:bg-purple-900' },
+    { light: 'bg-pink-200', dark: 'dark:bg-pink-900' },
     { light: 'bg-zinc-200', dark: 'dark:bg-zinc-800' },
   ];
 

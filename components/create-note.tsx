@@ -32,7 +32,7 @@ export default function CreateNote() {
   const [reminder, setReminder] = useState('');
   const [backgroundColor, setBackgroundColor] = useState<BgColor>({
     light: 'bg-white',
-    dark: 'dark:bg-zinc-800',
+    dark: 'dark:bg-zinc-900',
   });
   const [imageURL, setImageURL] = useState<ImageData>({ src: '', altName: '' });
   const [isArchived, setIsArchived] = useState(false);

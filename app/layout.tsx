@@ -23,7 +23,7 @@ export default async function RootLayout({
         <AuthProvider>
           <Providers>
             <Navbar />
-            <main className="main">{children}</main>
+            <main className="main mt-[65px]">{children}</main>
           </Providers>
         </AuthProvider>
       </body>

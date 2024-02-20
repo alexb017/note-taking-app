@@ -33,19 +33,21 @@ export default function NotesCategory({
   }
 
   return (
-    <>
-      <div className="flex flex-col gap-12">
-        <div>My {params.slug}</div>
+    <div className="sm:my-0 sm:mx-auto">
+      <div className="flex flex-col gap-4">
+        <h3 className="text-xs uppercase font-medium text-zinc-500">
+          {params.slug}
+        </h3>
         {filtered?.length > 0 ? (
-          <>
+          <div className="w-full sm:w-[512px] lg:w-[768px] xl:w-[1024px] 3xl:w-[1280px] 4xl:w-[1536px] 5xl:w-[1792px] 6xl:w-[2048px]">
             <MasonryGrid>
               {filtered.map((note: any) => {
                 return <Note key={note.id} note={note} />;
               })}
             </MasonryGrid>
-          </>
+          </div>
         ) : null}
       </div>
-    </>
+    </div>
   );
 }

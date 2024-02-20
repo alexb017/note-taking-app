@@ -54,7 +54,7 @@ export default function Note({ note }: { note: Notes }) {
 
   return (
     <Card
-      className={`relative w-full max-w-[240px] mb-4 shadow group ${noteData?.bgColor.light} ${noteData?.bgColor.dark}`}
+      className={`relative w-full md:w-[240px] mb-4 shadow group ${noteData?.bgColor.light} ${noteData?.bgColor.dark}`}
     >
       {!noteData?.isDeleted ? (
         <>
@@ -65,7 +65,7 @@ export default function Note({ note }: { note: Notes }) {
       ) : null}
 
       {noteData?.image.src ? (
-        <CardHeader className="relative w-full max-w-[240px] p-0 rounded-b-none">
+        <CardHeader className="relative w-full md:w-[240px] p-0 rounded-b-none">
           <Image
             alt={noteData?.image.altName}
             src={noteData?.image.src}

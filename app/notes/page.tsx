@@ -32,30 +32,38 @@ export default function Notes() {
           <CreateNote />
         </div>
         {pinNotes.length > 0 ? (
-          <div className="flex flex-col gap-4">
-            <h3 className="text-xs uppercase font-medium text-zinc-500">
-              pinned
-            </h3>
-            <MasonryGrid>
-              {pinNotes.map((note: any) => {
-                return <Note key={note.id} note={note} />;
-              })}
-            </MasonryGrid>
+          <div className="sm:my-0 sm:mx-auto">
+            <div className="flex flex-col gap-4">
+              <h3 className="text-xs uppercase font-medium text-zinc-500">
+                pinned
+              </h3>
+              <div className="w-full sm:w-[512px] lg:w-[768px] xl:w-[1024px] 3xl:w-[1280px] 4xl:w-[1536px] 5xl:w-[1792px] 6xl:w-[2048px]">
+                <MasonryGrid>
+                  {pinNotes.map((note: any) => {
+                    return <Note key={note.id} note={note} />;
+                  })}
+                </MasonryGrid>
+              </div>
+            </div>
           </div>
         ) : null}
 
         {allNotes.length > 0 ? (
-          <div className="flex flex-col gap-4">
-            {pinNotes.length > 0 && allNotes.length > 0 && (
-              <h3 className="text-xs uppercase font-medium text-zinc-500">
-                others
-              </h3>
-            )}
-            <MasonryGrid>
-              {allNotes.map((note: any) => {
-                return <Note key={note.id} note={note} />;
-              })}
-            </MasonryGrid>
+          <div className="sm:my-0 sm:mx-auto">
+            <div className="flex flex-col gap-4">
+              {pinNotes.length > 0 && allNotes.length > 0 && (
+                <h3 className="text-xs uppercase font-medium text-zinc-500">
+                  others
+                </h3>
+              )}
+              <div className="w-full sm:w-[512px] lg:w-[768px] xl:w-[1024px] 3xl:w-[1280px] 4xl:w-[1536px] 5xl:w-[1792px] 6xl:w-[2048px]">
+                <MasonryGrid>
+                  {allNotes.map((note: any) => {
+                    return <Note key={note.id} note={note} />;
+                  })}
+                </MasonryGrid>
+              </div>
+            </div>
           </div>
         ) : null}
       </div>
