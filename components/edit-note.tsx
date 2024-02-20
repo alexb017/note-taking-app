@@ -10,6 +10,7 @@ import {
   Textarea,
   Image,
   Chip,
+  Tooltip,
 } from '@nextui-org/react';
 import EditIcon from './icons/edit';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
@@ -44,16 +45,28 @@ export default function EditNote({
 
   return (
     <>
-      <Button
-        onPress={onOpen}
-        isIconOnly
-        aria-label="color"
-        radius="full"
-        className="min-w-unit-8 w-unit-8 h-8 bg-transparent hover:bg-zinc-900/10 dark:hover:bg-zinc-100/10"
-        onClick={() => router.push(`?=${note?.id}`)}
+      <Tooltip
+        placement="bottom"
+        radius="sm"
+        size="sm"
+        offset={0}
+        delay={350}
+        content="Edit note"
       >
-        <EditIcon classname="h-4" />
-      </Button>
+        <div>
+          <Button
+            onPress={onOpen}
+            isIconOnly
+            aria-label="color"
+            radius="full"
+            className="min-w-unit-8 w-unit-8 h-8 bg-transparent hover:bg-zinc-900/10 dark:hover:bg-zinc-100/10"
+            onClick={() => router.push(`?=${note?.id}`)}
+          >
+            <EditIcon classname="h-4" />
+          </Button>
+        </div>
+      </Tooltip>
+
       <Modal
         isOpen={isOpen}
         onOpenChange={() => {
@@ -69,7 +82,12 @@ export default function EditNote({
           {(onClose) => (
             <>
               <div className="absolute right-2 top-2 z-20">
-                <AddToPinButton uid={note?.uid} noteId={note?.id} />
+                <AddToPinButton
+                  uid={note?.uid}
+                  noteId={note?.id}
+                  isPinned={note?.isPinned}
+                  hasImage={note?.image.src}
+                />
               </div>
 
               {note?.image.src ? (
@@ -94,7 +112,7 @@ export default function EditNote({
                   placeholder="Description"
                   radius="none"
                   classNames={{
-                    input: 'text-lg',
+                    input: 'text-base',
                     inputWrapper: [
                       'bg-transparent',
                       'data-[hover=true]:bg-transparent',
@@ -140,11 +158,15 @@ export default function EditNote({
                     uid={note?.uid}
                     onHandleImageUpload={onUploadImage}
                   />
-                  <AddToArchiveButton uid={note?.uid} noteId={note?.id} />
+                  <AddToArchiveButton
+                    uid={note?.uid}
+                    noteId={note?.id}
+                    isArchived={note?.isArchived}
+                  />
                   <DeleteUndoNoteButton
                     uid={note?.uid}
                     noteId={note?.id}
-                    type="delete"
+                    isDeleted={note?.isDeleted}
                   />
                 </div>
                 <Button

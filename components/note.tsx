@@ -59,7 +59,12 @@ export default function Note({ note }: { note: Notes }) {
       {!noteData?.isDeleted ? (
         <>
           <div className="absolute right-2 top-2 z-20 opacity-0 group-hover:opacity-100 transition-opacity ease-in-out">
-            <AddToPinButton uid={noteData?.uid} noteId={noteData?.id} />
+            <AddToPinButton
+              uid={noteData?.uid}
+              noteId={noteData?.id}
+              isPinned={noteData?.isPinned}
+              hasImage={noteData?.image.src}
+            />
           </div>
         </>
       ) : null}
@@ -80,7 +85,7 @@ export default function Note({ note }: { note: Notes }) {
         </CardHeader>
       ) : null}
       <CardBody className="overflow-visible py-2 px-5 cursor-default">
-        <p className="text-lg">{noteData?.content}</p>
+        <p className="text-base">{noteData?.content}</p>
       </CardBody>
 
       {noteData?.reminder && (
@@ -125,17 +130,21 @@ export default function Note({ note }: { note: Notes }) {
                 uid={noteData?.uid}
                 onHandleImageUpload={handleImageUpload}
               />
-              <AddToArchiveButton uid={noteData?.uid} noteId={noteData?.id} />
+              <AddToArchiveButton
+                uid={noteData?.uid}
+                noteId={noteData?.id}
+                isArchived={noteData?.isArchived}
+              />
               <DeleteUndoNoteButton
                 uid={noteData?.uid}
                 noteId={noteData?.id}
-                type="delete"
+                isDeleted={noteData?.isDeleted}
               />
             </div>
           </>
         ) : (
           <>
-            <div className="flex items-center justify-between w-full">
+            <div className="flex items-center gap-2 w-full">
               <DeleteNoteButton
                 uid={noteData?.uid}
                 noteId={noteData?.id}
@@ -144,7 +153,7 @@ export default function Note({ note }: { note: Notes }) {
               <DeleteUndoNoteButton
                 uid={noteData?.uid}
                 noteId={noteData?.id}
-                type="undo"
+                isDeleted={noteData?.isDeleted}
               />
             </div>
           </>

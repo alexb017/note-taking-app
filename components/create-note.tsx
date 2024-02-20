@@ -11,6 +11,7 @@ import {
   Input,
   Textarea,
   Image,
+  Tooltip,
 } from '@nextui-org/react';
 import { useContext, useState } from 'react';
 import AddColor from './add-color';
@@ -55,35 +56,49 @@ export default function CreateNote() {
       className={`relative w-full max-w-[512px] overflow-visible ${backgroundColor.light} ${backgroundColor.dark}`}
     >
       <div className="absolute right-2 top-2 z-20">
-        <Button
-          isIconOnly
-          aria-label="pin"
-          radius="full"
-          className="min-w-unit-6 w-unit-6 h-6 text-zinc-900/60 bg-zinc-100/95 dark:text-zinc-100/80 dark:bg-zinc-700/95 hover:bg-zinc-200/95"
-          onClick={async () => {
-            await createNote(
-              {
-                content: content,
-                bgColor: backgroundColor,
-                image: imageURL,
-                reminder: reminder,
-                isArchived: false,
-                isPinned: true,
-                isDeleted: false,
-                uid: user?.uid,
-              },
-              user?.uid
-            );
-
-            setContent('');
-            setBackgroundColor({ light: 'bg-white', dark: 'dark:bg-zinc-900' });
-            setImageURL({ src: '', altName: '' });
-            setReminder('');
-            setIsPinned(false);
-          }}
+        <Tooltip
+          placement="bottom"
+          radius="sm"
+          size="sm"
+          offset={0}
+          delay={350}
+          content="Pin note"
         >
-          <PinIcon classname="h-6" />
-        </Button>
+          <div>
+            <Button
+              isIconOnly
+              aria-label="pin"
+              radius="full"
+              className="min-w-unit-8 w-unit-8 h-8 text-zinc-900 bg-transparent hover:bg-zinc-900/10 dark:text-white dark:hover:bg-zinc-100/10"
+              onClick={async () => {
+                await createNote(
+                  {
+                    content: content,
+                    bgColor: backgroundColor,
+                    image: imageURL,
+                    reminder: reminder,
+                    isArchived: false,
+                    isPinned: true,
+                    isDeleted: false,
+                    uid: user?.uid,
+                  },
+                  user?.uid
+                );
+
+                setContent('');
+                setBackgroundColor({
+                  light: 'bg-white',
+                  dark: 'dark:bg-zinc-900',
+                });
+                setImageURL({ src: '', altName: '' });
+                setReminder('');
+                setIsPinned(false);
+              }}
+            >
+              <PinIcon classname="h-4" />
+            </Button>
+          </div>
+        </Tooltip>
       </div>
 
       {imageURL?.src ? (
@@ -163,38 +178,49 @@ export default function CreateNote() {
             uid={user?.uid}
             onHandleImageUpload={handleImageUpload}
           />
-          <Button
-            isIconOnly
-            aria-label="archive"
-            radius="full"
-            className="min-w-unit-8 w-unit-8 h-8 bg-transparent hover:bg-zinc-900/10 dark:hover:bg-zinc-100/10"
-            onClick={async () => {
-              await createNote(
-                {
-                  content: content,
-                  bgColor: backgroundColor,
-                  image: imageURL,
-                  reminder: reminder,
-                  isArchived: true,
-                  isPinned: isPinned,
-                  isDeleted: false,
-                  uid: user?.uid,
-                },
-                user?.uid
-              );
-
-              setContent('');
-              setBackgroundColor({
-                light: 'bg-white',
-                dark: 'dark:bg-zinc-900',
-              });
-              setImageURL({ src: '', altName: '' });
-              setReminder('');
-              setIsArchived(false);
-            }}
+          <Tooltip
+            placement="bottom"
+            radius="sm"
+            size="sm"
+            offset={0}
+            delay={350}
+            content="Archive"
           >
-            <ArchiveIcon classname="h-4" />
-          </Button>
+            <div>
+              <Button
+                isIconOnly
+                aria-label="archive"
+                radius="full"
+                className="min-w-unit-8 w-unit-8 h-8 bg-transparent hover:bg-zinc-900/10 dark:hover:bg-zinc-100/10"
+                onClick={async () => {
+                  await createNote(
+                    {
+                      content: content,
+                      bgColor: backgroundColor,
+                      image: imageURL,
+                      reminder: reminder,
+                      isArchived: true,
+                      isPinned: isPinned,
+                      isDeleted: false,
+                      uid: user?.uid,
+                    },
+                    user?.uid
+                  );
+
+                  setContent('');
+                  setBackgroundColor({
+                    light: 'bg-white',
+                    dark: 'dark:bg-zinc-900',
+                  });
+                  setImageURL({ src: '', altName: '' });
+                  setReminder('');
+                  setIsArchived(false);
+                }}
+              >
+                <ArchiveIcon classname="h-4" />
+              </Button>
+            </div>
+          </Tooltip>
         </div>
         <Button
           className="font-medium bg-transparent hover:bg-zinc-900/5 dark:hover:bg-zinc-100/5"
