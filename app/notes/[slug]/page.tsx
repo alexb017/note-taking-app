@@ -8,8 +8,10 @@ import { useContext } from 'react';
 
 export default function NotesCategory({
   params,
+  searchParams,
 }: {
   params: { slug: string };
+  searchParams: { q: string };
 }) {
   const { user } = useContext(AuthContext);
   const [notes] = useNotes(user?.uid);
@@ -30,6 +32,12 @@ export default function NotesCategory({
 
   if (params.slug === 'trash') {
     filtered = notes.filter((note: any) => note?.isDeleted === true);
+  }
+
+  if (searchParams.q) {
+    filtered = notes.filter((note: any) =>
+      note?.content.toLowerCase().includes(searchParams.q?.toLowerCase())
+    );
   }
 
   return (

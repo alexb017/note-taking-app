@@ -17,7 +17,7 @@ export default function Sidebar() {
           <Link
             href="/notes"
             className={`flex items-center justify-center xl:justify-start gap-6 rounded-full xl:rounded-l-none w-12 xl:w-full h-12 xl:px-4 text-sm font-semibold ${
-              pathname === '/notes'
+              pathname === '/notes' || pathname === '/notes/search'
                 ? 'bg-yellow-100 dark:bg-yellow-950'
                 : 'hover:bg-zinc-100 dark:hover:bg-zinc-800'
             }`}

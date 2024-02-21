@@ -18,6 +18,7 @@ import UserIcon from './icons/user';
 import SunIcon from './icons/sun';
 import MoonIcon from './icons/moon';
 import LogoutIcon from './icons/logout';
+import SearchNote from './search-note';
 
 export default function Navbar() {
   const { user, userSignOut } = useContext(AuthContext);
@@ -36,13 +37,16 @@ export default function Navbar() {
   return (
     <nav className="fixed top-0 left-0 z-50 shadow-sm bg-white border-b border-zinc-200 w-full dark:bg-zinc-900 dark:border-zinc-800">
       <div className="flex items-center justify-between h-16 px-4 pl-3 w-full">
-        <Link
-          href="/"
-          className="flex items-center gap-1 text-zinc-600 text-xl md:text-2xl font-medium dark:text-zinc-200"
-        >
-          <LogoIcon classname="h-10 text-yellow-500" />
-          NoteTaking
-        </Link>
+        <div className="flex items-center gap-4">
+          <Link
+            href="/"
+            className="flex items-center gap-1 text-zinc-600 text-xl md:text-2xl font-medium dark:text-zinc-200"
+          >
+            <LogoIcon classname="h-10 text-yellow-500" />
+            NoteTaking
+          </Link>
+          {user && <SearchNote />}
+        </div>
         <div className="flex items-center gap-2">
           {!user ? (
             <>
