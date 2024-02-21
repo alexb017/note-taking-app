@@ -136,10 +136,10 @@ export default function EditNote({
                     className="cursor-pointer group/chip bg-zinc-900/10 hover:bg-zinc-900/15 dark:bg-zinc-100/10 dark:hover:bg-zinc-100/15"
                     startContent={<ClockIcon classname="h-4" />}
                     onClose={() => onReminderClick('')}
-                    endContent={<CloseIcon classname="h-6" />}
+                    endContent={<CloseIcon classname="h-4" />}
                     classNames={{
                       closeButton:
-                        'absolute right-0 rounded-full text-zinc-900/60 bg-zinc-100 dark:text-zinc-100/80 dark:bg-zinc-700/95 opacity-0 group-hover/chip:opacity-100 transition-opacity ease-in-out',
+                        'absolute right-0 rounded-full p-1 backdrop-blur-lg text-zinc-900/60 bg-gray-900/10 hover:bg-zinc-900/15 dark:text-white dark:bg-zinc-100/10 dark:hover:bg-zinc-100/20 opacity-0 group-hover/chip:opacity-100 transition-opacity ease-in-out',
                     }}
                   >
                     {note?.reminder}

@@ -3,12 +3,12 @@ export default function CloseIcon({ classname }: { classname?: string }) {
     <svg
       xmlns="http://www.w3.org/2000/svg"
       className={classname}
-      viewBox="0 0 24 24"
+      viewBox="0 0 256 256"
     >
-      <g fill="none" stroke="currentColor" strokeWidth="1.5">
-        <circle cx="12" cy="12" r="10" />
-        <path strokeLinecap="round" d="m14.5 9.5l-5 5m0-5l5 5" />
-      </g>
+      <path
+        fill="currentColor"
+        d="M205.66 194.34a8 8 0 0 1-11.32 11.32L128 139.31l-66.34 66.35a8 8 0 0 1-11.32-11.32L116.69 128L50.34 61.66a8 8 0 0 1 11.32-11.32L128 116.69l66.34-66.35a8 8 0 0 1 11.32 11.32L139.31 128Z"
+      />
     </svg>
   );
 }

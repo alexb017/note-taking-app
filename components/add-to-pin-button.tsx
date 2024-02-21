@@ -30,7 +30,7 @@ export default function AddToPinButton({
           className={`min-w-unit-8 w-unit-8 h-8 ${
             !hasImage
               ? 'text-zinc-900 bg-transparent hover:bg-zinc-900/10 dark:text-white dark:hover:bg-zinc-100/10'
-              : 'text-white bg-zinc-900/50 hover:bg-zinc-900/45'
+              : 'backdrop-blur-lg text-white bg-zinc-900/50 hover:bg-zinc-900/60'
           }`}
           onClick={async () => await updateIsPinned(uid, noteId)}
         >
