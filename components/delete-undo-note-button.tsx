@@ -19,6 +19,7 @@ export default function DeleteUndoNoteButton({
       size="sm"
       offset={0}
       delay={350}
+      closeDelay={0}
       content={!isDeleted ? 'Delete note' : 'Restore'}
     >
       <div>

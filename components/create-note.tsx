@@ -62,6 +62,7 @@ export default function CreateNote() {
           size="sm"
           offset={0}
           delay={350}
+          closeDelay={0}
           content="Pin note"
         >
           <div>
@@ -73,7 +74,7 @@ export default function CreateNote() {
               onClick={async () => {
                 await createNote(
                   {
-                    content: content,
+                    content: content || 'Empty note',
                     bgColor: backgroundColor,
                     image: imageURL,
                     reminder: reminder,
@@ -184,6 +185,7 @@ export default function CreateNote() {
             size="sm"
             offset={0}
             delay={350}
+            closeDelay={0}
             content="Archive"
           >
             <div>
@@ -195,7 +197,7 @@ export default function CreateNote() {
                 onClick={async () => {
                   await createNote(
                     {
-                      content: content,
+                      content: content || 'Empty note',
                       bgColor: backgroundColor,
                       image: imageURL,
                       reminder: reminder,
@@ -227,7 +229,7 @@ export default function CreateNote() {
           onClick={async () => {
             await createNote(
               {
-                content: content,
+                content: content || 'Empty note',
                 bgColor: backgroundColor,
                 image: imageURL,
                 reminder: reminder,

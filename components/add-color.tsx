@@ -17,10 +17,11 @@ export default function AddColor({
   colors: BgColor;
 }) {
   const bgColors = [
-    { light: 'bg-white', dark: 'dark:bg-zinc-900', tooltip: 'White' },
+    { light: 'bg-white', dark: 'dark:bg-zinc-900', tooltip: 'Default' },
     { light: 'bg-red-200', dark: 'dark:bg-red-900', tooltip: 'Red' },
     { light: 'bg-orange-200', dark: 'dark:bg-orange-900', tooltip: 'Orange' },
     { light: 'bg-yellow-200', dark: 'dark:bg-yellow-900', tooltip: 'Yellow' },
+    { light: 'bg-lime-200', dark: 'dark:bg-lime-900', tooltip: 'Lime' },
     { light: 'bg-green-200', dark: 'dark:bg-green-900', tooltip: 'Green' },
     { light: 'bg-teal-200', dark: 'dark:bg-teal-900', tooltip: 'Teal' },
     { light: 'bg-sky-200', dark: 'dark:bg-sky-900', tooltip: 'Sky' },
@@ -38,6 +39,7 @@ export default function AddColor({
         size="sm"
         offset={0}
         delay={350}
+        closeDelay={0}
         content="Background options"
       >
         <div>
@@ -53,13 +55,13 @@ export default function AddColor({
           </PopoverTrigger>
         </div>
       </Tooltip>
-      <PopoverContent className="w-[390px] p-0 items-start justify-start">
+      <PopoverContent className="w-[224px] md:w-[424px] p-0 items-start justify-start">
         <div className="flex flex-col w-full">
           <div className="p-3">
             <p>Choose background color:</p>
           </div>
           <Divider />
-          <div className="flex items-center gap-[2px] p-2 px-[10px]">
+          <div className="flex items-center flex-wrap md:flex-nowrap gap-[2px] p-2 px-[10px]">
             {bgColors.map((bgColor, index) => (
               <Tooltip
                 key={index}
@@ -68,6 +70,7 @@ export default function AddColor({
                 size="sm"
                 offset={0}
                 delay={350}
+                closeDelay={0}
                 content={bgColor.tooltip}
               >
                 <div>

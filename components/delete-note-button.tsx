@@ -19,6 +19,7 @@ export default function DeleteNoteButton({
       size="sm"
       offset={0}
       delay={350}
+      closeDelay={0}
       content="Delete forever"
     >
       <div>

@@ -20,6 +20,7 @@ export default function AddToArchiveButton({
         size="sm"
         offset={0}
         delay={350}
+        closeDelay={0}
         content={!isArchived ? 'Archive' : 'Unarchive'}
       >
         <div>

@@ -12,8 +12,10 @@ import {
   useRouter,
   useSearchParams,
 } from 'next/navigation';
+import { useState } from 'react';
 
 export default function SearchNote() {
+  const [searchValue, setSearchValue] = useState('');
   const router = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname();
@@ -29,11 +31,14 @@ export default function SearchNote() {
   }
 
   function handleSearchChange(event: React.ChangeEvent<HTMLInputElement>) {
+    const searchValueInput = event.target.value;
+    setSearchValue(searchValueInput);
+
     const newParams = new URLSearchParams(searchParams.toString());
     let path;
 
-    if (event.target.value) {
-      newParams.set('q', event.target.value);
+    if (searchValueInput) {
+      newParams.set('q', searchValueInput);
       path = pathname === '/notes' ? `${pathname}/search` : pathname;
     } else {
       newParams.delete('q');
@@ -51,6 +56,7 @@ export default function SearchNote() {
             onChange={handleSearchChange}
             label="Search"
             placeholder="Search note..."
+            value={pathname !== '/notes/search' ? '' : searchValue}
             size="sm"
             variant="flat"
             className="text-xs"
@@ -63,7 +69,7 @@ export default function SearchNote() {
           <PopoverTrigger>
             <Button
               isIconOnly
-              className="min-w-unit-8 w-unit-8 h-8 bg-zinc-900/10 hover:bg-zinc-900/10 dark:hover:bg-zinc-100/10"
+              className="min-w-unit-8 w-unit-8 h-8 bg-zinc-900/10 hover:bg-zinc-900/10 dark:bg-zinc-100/10"
             >
               <MagnifyingIcon classname="h-4" />
             </Button>

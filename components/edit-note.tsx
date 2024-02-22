@@ -13,7 +13,12 @@ import {
   Tooltip,
 } from '@nextui-org/react';
 import EditIcon from './icons/edit';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import {
+  ReadonlyURLSearchParams,
+  usePathname,
+  useRouter,
+  useSearchParams,
+} from 'next/navigation';
 import DeleteImageFromStorage from './detele-image';
 import { updateBgColor, updateContent, updateReminder } from '@/lib/actions';
 import ClockIcon from './icons/clock';
@@ -41,7 +46,20 @@ export default function EditNote({
 }) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const router = useRouter();
+  const searchParams = useSearchParams();
   const pathname = usePathname();
+
+  console.log();
+
+  function createUrl(
+    pathname: string,
+    params: URLSearchParams | ReadonlyURLSearchParams
+  ) {
+    const paramsString = params.toString();
+    const queryString = `${paramsString.length ? '?' : ''}${paramsString}`;
+
+    return `${pathname}${queryString}`;
+  }
 
   return (
     <>
@@ -51,6 +69,7 @@ export default function EditNote({
         size="sm"
         offset={0}
         delay={350}
+        closeDelay={0}
         content="Edit note"
       >
         <div>
@@ -60,7 +79,17 @@ export default function EditNote({
             aria-label="color"
             radius="full"
             className="min-w-unit-8 w-unit-8 h-8 bg-transparent hover:bg-zinc-900/10 dark:hover:bg-zinc-100/10"
-            onClick={() => router.push(`?=${note?.id}`)}
+            onClick={() => {
+              const optionSearchParams = new URLSearchParams(
+                searchParams.toString()
+              );
+
+              optionSearchParams.set('id', note?.id);
+
+              const optionUrl = createUrl(pathname, optionSearchParams);
+
+              router.replace(optionUrl);
+            }}
           >
             <EditIcon classname="h-4" />
           </Button>
@@ -71,7 +100,7 @@ export default function EditNote({
         isOpen={isOpen}
         onOpenChange={() => {
           onOpenChange();
-          router.push(`${pathname}`);
+          router.replace(`${pathname}?q=${searchParams.get('q')}`);
         }}
         placement="center"
         backdrop="blur"

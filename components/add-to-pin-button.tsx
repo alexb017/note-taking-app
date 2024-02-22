@@ -20,6 +20,7 @@ export default function AddToPinButton({
       size="sm"
       offset={0}
       delay={350}
+      closeDelay={0}
       content={!isPinned ? 'Pin note' : 'Unpin note'}
     >
       <div>

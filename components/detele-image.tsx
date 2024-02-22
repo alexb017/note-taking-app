@@ -17,6 +17,7 @@ export default function DeleteImageFromStorage({
       size="sm"
       offset={0}
       delay={350}
+      closeDelay={0}
       content="Remove"
     >
       <div>
