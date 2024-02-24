@@ -69,6 +69,7 @@ export default function SearchNote() {
           <PopoverTrigger>
             <Button
               isIconOnly
+              size="sm"
               className="min-w-unit-8 w-unit-8 h-8 bg-zinc-900/10 hover:bg-zinc-900/10 dark:bg-zinc-100/10"
             >
               <MagnifyingIcon classname="h-4" />

@@ -7,6 +7,7 @@ import {
   signInWithPopup,
   signOut,
   GoogleAuthProvider,
+  GithubAuthProvider,
 } from 'firebase/auth';
 
 const AuthContext = createContext<any>(null);
@@ -14,7 +15,9 @@ const AuthContext = createContext<any>(null);
 function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState(null);
   const googleProvider = new GoogleAuthProvider();
+  const githubProvider = new GithubAuthProvider();
   const googleSignIn = () => signInWithPopup(auth, googleProvider);
+  const githubSignIn = () => signInWithPopup(auth, githubProvider);
   const userSignOut = () => signOut(auth);
 
   useEffect(() => {
@@ -33,6 +36,7 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
       value={{
         user,
         googleSignIn,
+        githubSignIn,
         userSignOut,
       }}
     >

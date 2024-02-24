@@ -100,7 +100,11 @@ export default function EditNote({
         isOpen={isOpen}
         onOpenChange={() => {
           onOpenChange();
-          router.replace(`${pathname}?q=${searchParams.get('q')}`);
+          if (!searchParams.get('q')) {
+            router.replace(`${pathname}`);
+          } else {
+            router.replace(`${pathname}?q=${searchParams.get('q')}`);
+          }
         }}
         placement="center"
         backdrop="blur"

@@ -1,6 +1,7 @@
 import { Button, Tooltip } from '@nextui-org/react';
 import PinIcon from './icons/pin';
 import { updateIsPinned } from '@/lib/actions';
+import PinBoldIcon from './icons/pin-bold';
 
 export default function AddToPinButton({
   uid,
@@ -35,7 +36,11 @@ export default function AddToPinButton({
           }`}
           onClick={async () => await updateIsPinned(uid, noteId)}
         >
-          <PinIcon classname="h-4" />
+          {!isPinned ? (
+            <PinIcon classname="h-4" />
+          ) : (
+            <PinBoldIcon classname="h-4" />
+          )}
         </Button>
       </div>
     </Tooltip>

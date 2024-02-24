@@ -12,7 +12,8 @@ import {
   updateDoc,
 } from 'firebase/firestore';
 import { db } from './firebase';
-import { Note, ImageData, BgColor } from './types';
+import { Note, ImageData, BgColor, UserProfile } from './types';
+import { deleteUser } from 'firebase/auth';
 
 export async function createNote(note: Note, uid: string) {
   try {
@@ -135,5 +136,64 @@ export async function updateIsPinned(uid: string, noteId: string) {
     });
   } catch (error) {
     console.error('Error to update isPinned: ', error);
+  }
+}
+
+export async function createUserProfile(user: UserProfile, data: object) {
+  if (!user) {
+    return;
+  }
+
+  const { displayName, email, uid, photoURL } = user;
+  const userRef = doc(db, 'users', uid);
+  const userSnapshot = await getDoc(userRef);
+
+  if (!userSnapshot.exists()) {
+    try {
+      await setDoc(userRef, {
+        uid,
+        displayName,
+        email,
+        photoURL,
+        ...data,
+      });
+    } catch (error) {
+      console.error('Error to add user profile: ', error);
+    }
+  }
+
+  return userRef;
+}
+
+export async function deleteUserNotesFromDatabase(uid: string) {
+  try {
+    // Makes a reference to the notes subcollection
+    const querySnapshot = await getDocs(collection(db, 'users', uid, 'notes'));
+
+    // Delete all the notes from subcollection
+    await Promise.all(
+      querySnapshot.docs.map(async (doc) => {
+        return await deleteDoc(doc.ref);
+      })
+    );
+  } catch (error) {
+    console.error('Error deleting the notes: ', error);
+  }
+}
+
+export async function deleteUserFromDatabase(uid: string) {
+  try {
+    const userRef = doc(db, 'users', uid);
+    await deleteDoc(userRef);
+  } catch (error) {
+    console.error('Error deleting the user: ', error);
+  }
+}
+
+export async function deleteUserFromFirebase(user: any) {
+  try {
+    await deleteUser(user);
+  } catch (error) {
+    console.error('Error deleting the user: ', error);
   }
 }

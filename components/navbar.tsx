@@ -11,6 +11,7 @@ import {
   DropdownMenu,
   DropdownItem,
   User,
+  Avatar,
 } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
 import { useTheme } from 'next-themes';
@@ -19,11 +20,20 @@ import SunIcon from './icons/sun';
 import MoonIcon from './icons/moon';
 import LogoutIcon from './icons/logout';
 import SearchNote from './search-note';
+import useUserProfile from '@/lib/use-user-profile';
+import { UserProfile } from '@/lib/types';
+import NotesIcon from './icons/notes';
+import BellIcon from './icons/bell';
+import ArchiveIcon from './icons/archive';
+import TrashIcon from './icons/trash';
 
 export default function Navbar() {
   const { user, userSignOut } = useContext(AuthContext);
+  const userProfile = useUserProfile(user?.uid) as UserProfile;
   const router = useRouter();
-  const username = user?.email.slice(0, user?.email.indexOf('@'));
+
+  console.log(user);
+  console.log(userProfile);
 
   const [mounted, setMounted] = useState(false);
   const { theme, setTheme } = useTheme();
@@ -48,18 +58,38 @@ export default function Navbar() {
           {user && <SearchNote />}
         </div>
         <div className="flex items-center gap-2">
+          <Button
+            isIconOnly
+            size="sm"
+            radius="md"
+            className="bg-zinc-900/10 dark:bg-zinc-100/10"
+            onClick={() => {
+              if (theme === 'light') {
+                setTheme('dark');
+              } else {
+                setTheme('light');
+              }
+            }}
+          >
+            {theme === 'light' ? (
+              <SunIcon classname="h-4" />
+            ) : (
+              <MoonIcon classname="h-4" />
+            )}
+          </Button>
           {!user ? (
             <>
               <Button
                 color="default"
-                variant="light"
+                variant="flat"
                 radius="md"
+                size="sm"
                 className="font-medium"
                 onClick={() => router.push('/login')}
               >
                 Log In
               </Button>
-              <Button
+              {/* <Button
                 color="warning"
                 variant="flat"
                 radius="md"
@@ -67,73 +97,158 @@ export default function Navbar() {
                 onClick={() => router.push('/signup')}
               >
                 Sign Up
-              </Button>
+              </Button> */}
             </>
           ) : (
             <>
-              <Dropdown placement="bottom-start">
-                <DropdownTrigger>
-                  <User
-                    as="button"
-                    avatarProps={{
-                      isBordered: true,
-                      src: `${user?.photoURL}`,
-                    }}
-                    className="transition-transform"
-                    description={`@${username}`}
-                    name={`${user?.displayName}`}
-                  />
-                </DropdownTrigger>
-                <DropdownMenu aria-label="User Actions" variant="flat">
-                  <DropdownItem
-                    key="profile"
-                    className="h-14 gap-2"
-                    textValue="profile"
-                  >
-                    <p className="font-bold">Signed in as</p>
-                    <p className="font-bold">{`@${username}`}</p>
-                  </DropdownItem>
-                  <DropdownItem
-                    key="profile_page"
-                    textValue="profile_page"
-                    startContent={<UserIcon classname="h-4" />}
-                  >
-                    My profile
-                  </DropdownItem>
-                  <DropdownItem
-                    key="dark_theme"
-                    textValue="dark_theme"
-                    startContent={
-                      theme === 'light' ? (
-                        <SunIcon classname="h-4" />
-                      ) : (
-                        <MoonIcon classname="h-4" />
-                      )
-                    }
-                    onClick={() => {
-                      if (theme === 'light') {
-                        setTheme('dark');
-                      } else {
-                        setTheme('light');
+              <div className="hidden md:block">
+                <Dropdown placement="bottom-start">
+                  <DropdownTrigger>
+                    <User
+                      as="button"
+                      avatarProps={{
+                        isBordered: true,
+                        src: `${userProfile?.photoURL}`,
+                      }}
+                      className="transition-transform"
+                      description={userProfile?.email}
+                      name={userProfile?.displayName}
+                    />
+                  </DropdownTrigger>
+                  <DropdownMenu aria-label="User Actions" variant="flat">
+                    <DropdownItem
+                      key="profile"
+                      className="h-14 gap-2"
+                      textValue="profile"
+                    >
+                      <p className="font-bold">Signed in as</p>
+                      <p className="font-bold">{`${userProfile?.email}`}</p>
+                    </DropdownItem>
+                    <DropdownItem
+                      key="profile_page"
+                      textValue="profile_page"
+                      onClick={() => router.push('/profile')}
+                      startContent={<UserIcon classname="h-4" />}
+                    >
+                      My Profile
+                    </DropdownItem>
+                    <DropdownItem
+                      key="my_notes"
+                      textValue="my_notes"
+                      onClick={() => router.push('/notes')}
+                      startContent={<NotesIcon classname="h-4" />}
+                    >
+                      Notes
+                    </DropdownItem>
+                    <DropdownItem
+                      key="logout"
+                      color="danger"
+                      textValue="logout"
+                      startContent={<LogoutIcon classname="h-4" />}
+                      onClick={() => {
+                        userSignOut();
+                        router.push('/');
+                      }}
+                    >
+                      Log Out
+                    </DropdownItem>
+                  </DropdownMenu>
+                </Dropdown>
+              </div>
+              <div className="block md:hidden">
+                <Dropdown placement="bottom-start">
+                  <DropdownTrigger>
+                    <Avatar
+                      isBordered
+                      as="button"
+                      className="transition-transform"
+                      src={userProfile?.photoURL}
+                    />
+                  </DropdownTrigger>
+                  <DropdownMenu aria-label="User Actions" variant="flat">
+                    <DropdownItem
+                      key="profile"
+                      className="h-14 gap-2"
+                      textValue="profile"
+                    >
+                      <p className="font-bold">Signed in as</p>
+                      <p className="font-bold">{`${userProfile?.email}`}</p>
+                    </DropdownItem>
+                    <DropdownItem
+                      key="profile_page"
+                      textValue="profile_page"
+                      onClick={() => router.push('/profile')}
+                      startContent={<UserIcon classname="h-4" />}
+                    >
+                      My Profile
+                    </DropdownItem>
+                    <DropdownItem
+                      key="my_notes"
+                      textValue="my_notes"
+                      onClick={() => router.push('/notes')}
+                      startContent={<NotesIcon classname="h-4" />}
+                    >
+                      Notes
+                    </DropdownItem>
+                    <DropdownItem
+                      key="my_reminders"
+                      textValue="my_reminders"
+                      onClick={() => router.push('/notes/reminders')}
+                      startContent={<BellIcon classname="h-4" />}
+                    >
+                      Reminders
+                    </DropdownItem>
+                    <DropdownItem
+                      key="my_archive"
+                      textValue="my_archive"
+                      onClick={() => router.push('/notes/archive')}
+                      startContent={<ArchiveIcon classname="h-4" />}
+                    >
+                      Archive
+                    </DropdownItem>
+                    <DropdownItem
+                      key="my_trash"
+                      textValue="my_trash"
+                      onClick={() => router.push('/notes/trash')}
+                      startContent={<TrashIcon classname="h-4" />}
+                    >
+                      Trash
+                    </DropdownItem>
+                    {/* <DropdownItem
+                      key="dark_theme"
+                      textValue="dark_theme"
+                      startContent={
+                        theme === 'light' ? (
+                          <SunIcon classname="h-4" />
+                        ) : (
+                          <MoonIcon classname="h-4" />
+                        )
                       }
-                    }}
-                  >
-                    Switch to {theme === 'light' ? 'dark' : 'light'} theme
-                  </DropdownItem>
-                  <DropdownItem
-                    key="logout"
-                    color="danger"
-                    textValue="logout"
-                    startContent={<LogoutIcon classname="h-4" />}
-                    onClick={() => {
-                      userSignOut();
-                      router.push('/');
-                    }}
-                  >
-                    Log out
-                  </DropdownItem>
-                </DropdownMenu>
-              </Dropdown>
+                      onClick={() => {
+                        if (theme === 'light') {
+                          setTheme('dark');
+                        } else {
+                          setTheme('light');
+                        }
+                      }}
+                    >
+                      Switch to {theme === 'light' ? 'Dark' : 'Light'} Mode
+                    </DropdownItem> */}
+                    <DropdownItem
+                      key="logout"
+                      color="danger"
+                      textValue="logout"
+                      startContent={<LogoutIcon classname="h-4" />}
+                      onClick={() => {
+                        userSignOut();
+                        router.push('/');
+                      }}
+                    >
+                      Log Out
+                    </DropdownItem>
+                  </DropdownMenu>
+                </Dropdown>
+              </div>
             </>
           )}
         </div>

@@ -42,3 +42,10 @@ export type BgColor = {
   light: string;
   dark: string;
 };
+
+export type UserProfile = {
+  displayName: string;
+  email: string;
+  uid: string;
+  photoURL: string;
+};

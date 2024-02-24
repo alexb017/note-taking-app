@@ -8,11 +8,13 @@ import { useRouter } from 'next/navigation';
 import { Input, Button } from '@nextui-org/react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
+import { createUserProfile } from '@/lib/actions';
+import GithubIcon from '@/components/icons/github';
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { googleSignIn } = useContext(AuthContext);
+  const { googleSignIn, githubSignIn } = useContext(AuthContext);
   const router = useRouter();
 
   return (
@@ -21,9 +23,7 @@ export default function Login() {
         <div className="flex flex-col gap-6 w-80">
           <div className="flex flex-col">
             <h1 className="text-3xl font-semibold">Login</h1>
-            <p className="font-medium">
-              Welcome back! Please enter your details.
-            </p>
+            <p>Welcome back! Please enter your details.</p>
           </div>
           <div className="flex flex-col gap-4">
             <form
@@ -39,7 +39,7 @@ export default function Login() {
                   );
 
                   if (res) {
-                    router.push('/');
+                    router.push('/notes');
                   }
 
                   setEmail('');
@@ -88,9 +88,12 @@ export default function Login() {
               radius="md"
               size="lg"
               className="font-medium"
+              startContent={<GoogleIcon classname="h-5" />}
               onClick={async () => {
                 try {
                   const res = await googleSignIn();
+
+                  await createUserProfile(res.user, {});
 
                   if (res) {
                     router.push('/notes');
@@ -103,11 +106,37 @@ export default function Login() {
                 }
               }}
             >
-              <GoogleIcon classname="h-5" />
               Continue with Google
             </Button>
+            <Button
+              variant="bordered"
+              radius="md"
+              size="lg"
+              className="font-medium"
+              startContent={<GithubIcon classname="h-5" />}
+              onClick={async () => {
+                try {
+                  const res = await githubSignIn();
+
+                  console.log(res.user);
+
+                  await createUserProfile(res.user, {});
+
+                  if (res) {
+                    router.push('/notes');
+                  }
+                } catch (error: any) {
+                  if (error.code === 'auth/user-cancelled') {
+                    return;
+                  }
+                  throw new Error(error);
+                }
+              }}
+            >
+              Continue with GitHub
+            </Button>
           </div>
-          <p className="text-center">
+          <p className="text-center text-sm">
             Don't have an account?{' '}
             <Link href="/signup" className="text-blue-500">
               Sign up
