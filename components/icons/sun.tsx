@@ -5,7 +5,7 @@ export default function SunIcon({ classname }: { classname?: string }) {
       className={classname}
       viewBox="0 0 24 24"
     >
-      <g fill="none" stroke="currentColor" strokeWidth="1.5">
+      <g fill="none" stroke="currentColor" strokeWidth="2">
         <circle cx="12" cy="12" r="5" />
         <path
           strokeLinecap="round"

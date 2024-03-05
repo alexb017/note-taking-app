@@ -96,7 +96,7 @@ export default function CreateNote() {
                 setIsPinned(false);
               }}
             >
-              <PinIcon classname="h-4" />
+              <PinIcon classname="h-5 -rotate-45" />
             </Button>
           </div>
         </Tooltip>
@@ -172,7 +172,7 @@ export default function CreateNote() {
       )}
 
       <CardFooter className="flex items-center justify-between px-[8px] pb-[2px]">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-4">
           <AddReminder onReminderClick={handleReminderClick} />
           <AddColor colors={backgroundColor} onColorChange={handleColorClick} />
           <UploadImageToStorage

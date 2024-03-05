@@ -26,6 +26,7 @@ import NotesIcon from './icons/notes';
 import BellIcon from './icons/bell';
 import ArchiveIcon from './icons/archive';
 import TrashIcon from './icons/trash';
+import LoginIcon from './icons/login';
 
 export default function Navbar() {
   const { user, userSignOut } = useContext(AuthContext);
@@ -57,7 +58,7 @@ export default function Navbar() {
           </Link>
           {user && <SearchNote />}
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 md:gap-4">
           <Button
             isIconOnly
             size="sm"
@@ -85,6 +86,7 @@ export default function Navbar() {
                 radius="md"
                 size="sm"
                 className="font-medium"
+                startContent={<LoginIcon classname="h-4" />}
                 onClick={() => router.push('/login')}
               >
                 Log In
@@ -101,7 +103,7 @@ export default function Navbar() {
             </>
           ) : (
             <>
-              <div className="hidden md:block">
+              <div className="hidden md:flex">
                 <Dropdown placement="bottom-start">
                   <DropdownTrigger>
                     <User
@@ -141,6 +143,30 @@ export default function Navbar() {
                       Notes
                     </DropdownItem>
                     <DropdownItem
+                      key="my_reminders"
+                      textValue="my_reminders"
+                      onClick={() => router.push('/notes/reminders')}
+                      startContent={<BellIcon classname="h-4" />}
+                    >
+                      Reminders
+                    </DropdownItem>
+                    <DropdownItem
+                      key="my_archive"
+                      textValue="my_archive"
+                      onClick={() => router.push('/notes/archive')}
+                      startContent={<ArchiveIcon classname="h-4" />}
+                    >
+                      Archive
+                    </DropdownItem>
+                    <DropdownItem
+                      key="my_trash"
+                      textValue="my_trash"
+                      onClick={() => router.push('/notes/trash')}
+                      startContent={<TrashIcon classname="h-4" />}
+                    >
+                      Trash
+                    </DropdownItem>
+                    <DropdownItem
                       key="logout"
                       color="danger"
                       textValue="logout"
@@ -155,7 +181,7 @@ export default function Navbar() {
                   </DropdownMenu>
                 </Dropdown>
               </div>
-              <div className="block md:hidden">
+              <div className="flex md:hidden">
                 <Dropdown placement="bottom-start">
                   <DropdownTrigger>
                     <Avatar

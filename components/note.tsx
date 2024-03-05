@@ -84,8 +84,8 @@ export default function Note({ note }: { note: Notes }) {
           </div>
         </CardHeader>
       ) : null}
-      <CardBody className="overflow-visible py-2 px-5 cursor-default">
-        <p className="text-base">{noteData?.content}</p>
+      <CardBody className="py-2 px-5 cursor-default">
+        <p className=" text-base">{noteData?.content}</p>
       </CardBody>
 
       {noteData?.reminder && (

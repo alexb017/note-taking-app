@@ -27,7 +27,7 @@ export default function Signup() {
             <h1 className="text-3xl font-semibold">Create account</h1>
             <p>Get started on the NoteTaking.</p>
           </div>
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-2">
             <form
               className="flex flex-col gap-2"
               onSubmit={async (event: React.FormEvent<HTMLFormElement>) => {
@@ -99,7 +99,7 @@ export default function Signup() {
                 variant="shadow"
                 radius="md"
                 size="lg"
-                className="bg-zinc-900 text-white dark:bg-blue-500"
+                className="bg-blue-500 text-white font-medium"
               >
                 Sign Up
               </Button>
@@ -108,7 +108,7 @@ export default function Signup() {
               variant="bordered"
               radius="md"
               size="lg"
-              className="font-medium"
+              className="font-medium text-sm"
               startContent={<GoogleIcon classname="h-5" />}
               onClick={async () => {
                 try {
@@ -133,7 +133,7 @@ export default function Signup() {
               variant="bordered"
               radius="md"
               size="lg"
-              className="font-medium"
+              className="font-medium text-sm"
               startContent={<GithubIcon classname="h-5" />}
               onClick={async () => {
                 try {

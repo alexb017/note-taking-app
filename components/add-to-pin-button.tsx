@@ -37,9 +37,9 @@ export default function AddToPinButton({
           onClick={async () => await updateIsPinned(uid, noteId)}
         >
           {!isPinned ? (
-            <PinIcon classname="h-4" />
+            <PinIcon classname="h-5 -rotate-45" />
           ) : (
-            <PinBoldIcon classname="h-4" />
+            <PinBoldIcon classname="h-5 -rotate-45" />
           )}
         </Button>
       </div>

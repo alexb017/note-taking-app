@@ -16,52 +16,52 @@ export default function Sidebar() {
         <li className="flex">
           <Link
             href="/notes"
-            className={`flex items-center justify-center xl:justify-start gap-6 rounded-full xl:rounded-l-none w-12 xl:w-full h-12 xl:px-4 text-sm font-semibold ${
+            className={`flex items-center justify-center xl:justify-start gap-6 rounded-full xl:rounded-l-none w-12 xl:w-full h-12 xl:px-4 text-sm font-medium ${
               pathname === '/notes' || pathname === '/notes/search'
                 ? 'bg-yellow-100 dark:bg-yellow-950'
                 : 'hover:bg-zinc-100 dark:hover:bg-zinc-800'
             }`}
           >
-            <NotesIcon classname="h-6" />
+            <NotesIcon classname="h-5" />
             <div className="hidden xl:block">Notes</div>
           </Link>
         </li>
         <li className="flex">
           <Link
             href="/notes/reminders"
-            className={`flex items-center justify-center xl:justify-start gap-6 rounded-full xl:rounded-l-none w-12 xl:w-full h-12 xl:px-4 text-sm font-semibold ${
+            className={`flex items-center justify-center xl:justify-start gap-6 rounded-full xl:rounded-l-none w-12 xl:w-full h-12 xl:px-4 text-sm font-medium ${
               pathname === '/notes/reminders'
                 ? 'bg-yellow-100 dark:bg-yellow-950 '
                 : 'hover:bg-zinc-100 dark:hover:bg-zinc-800'
             }`}
           >
-            <BellIcon classname="h-6" />
+            <BellIcon classname="h-5" />
             <div className="hidden xl:block">Reminders</div>
           </Link>
         </li>
         <li className="flex">
           <Link
             href="/notes/archive"
-            className={`flex items-center justify-center xl:justify-start gap-6 rounded-full xl:rounded-l-none w-12 xl:w-full h-12 xl:px-4 text-sm font-semibold ${
+            className={`flex items-center justify-center xl:justify-start gap-6 rounded-full xl:rounded-l-none w-12 xl:w-full h-12 xl:px-4 text-sm font-medium ${
               pathname === '/notes/archive'
                 ? 'bg-yellow-100 dark:bg-yellow-950'
                 : 'hover:bg-zinc-100 dark:hover:bg-zinc-800'
             }`}
           >
-            <ArchiveIcon classname="h-6" />
+            <ArchiveIcon classname="h-5" />
             <div className="hidden xl:block">Archive</div>
           </Link>
         </li>
         <li className="flex">
           <Link
             href="/notes/trash"
-            className={`flex items-center justify-center xl:justify-start gap-6 rounded-full xl:rounded-l-none w-12 xl:w-full h-12 xl:px-4 text-sm font-semibold ${
+            className={`flex items-center justify-center xl:justify-start gap-6 rounded-full xl:rounded-l-none w-12 xl:w-full h-12 xl:px-4 text-sm font-medium ${
               pathname === '/notes/trash'
                 ? 'bg-yellow-100 dark:bg-yellow-950'
                 : 'hover:bg-zinc-100 dark:hover:bg-zinc-800'
             }`}
           >
-            <TrashIcon classname="h-6" />
+            <TrashIcon classname="h-5" />
             <div className="hidden xl:block">Trash</div>
           </Link>
         </li>

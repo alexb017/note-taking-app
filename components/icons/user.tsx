@@ -5,7 +5,7 @@ export default function UserIcon({ classname }: { classname?: string }) {
       className={classname}
       viewBox="0 0 24 24"
     >
-      <g fill="none" stroke="currentColor" strokeWidth="1.5">
+      <g fill="none" stroke="currentColor" strokeWidth="2">
         <circle cx="12" cy="6" r="4" />
         <ellipse cx="12" cy="17" rx="7" ry="4" />
       </g>
