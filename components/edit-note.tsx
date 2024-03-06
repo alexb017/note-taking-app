@@ -49,7 +49,8 @@ export default function EditNote({
   const searchParams = useSearchParams();
   const pathname = usePathname();
 
-  console.log();
+  // console.log(searchParams.get('q'));
+  // console.log(pathname);
 
   function createUrl(
     pathname: string,
@@ -76,7 +77,7 @@ export default function EditNote({
           <Button
             onPress={onOpen}
             isIconOnly
-            aria-label="color"
+            aria-label="edit"
             radius="full"
             className="min-w-unit-8 w-unit-8 h-8 bg-transparent hover:bg-zinc-900/10 dark:hover:bg-zinc-100/10"
             onClick={() => {
@@ -98,6 +99,8 @@ export default function EditNote({
 
       <Modal
         isOpen={isOpen}
+        shouldBlockScroll
+        isDismissable
         onOpenChange={() => {
           onOpenChange();
           if (!searchParams.get('q')) {

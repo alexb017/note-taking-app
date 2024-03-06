@@ -26,6 +26,7 @@ export default function Login() {
             <p>Welcome back!</p>
           </div>
           <div className="flex flex-col gap-2">
+            {/** 
             <form
               className="flex flex-col gap-2"
               onSubmit={async (event: React.FormEvent<HTMLFormElement>) => {
@@ -82,7 +83,7 @@ export default function Login() {
               >
                 Log In
               </Button>
-            </form>
+            </form>*/}
             <Button
               variant="bordered"
               radius="md"

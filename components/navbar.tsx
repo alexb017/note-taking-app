@@ -33,8 +33,8 @@ export default function Navbar() {
   const userProfile = useUserProfile(user?.uid) as UserProfile;
   const router = useRouter();
 
-  console.log(user);
-  console.log(userProfile);
+  // console.log(user);
+  // console.log(userProfile);
 
   const [mounted, setMounted] = useState(false);
   const { theme, setTheme } = useTheme();

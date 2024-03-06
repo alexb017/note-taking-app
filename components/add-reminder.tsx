@@ -29,7 +29,7 @@ function DateTimePicker({
   }
 
   return (
-    <label className="flex items-center gap-1 w-full h-10 px-3 bg-white hover:bg-zinc-100 rounded-b-[14px] cursor-pointer dark:bg-zinc-900 dark:hover:bg-zinc-800">
+    <label className="flex items-center gap-1 w-full h-10 px-3 bg-white font-medium caret-transparent hover:bg-zinc-100 rounded-b-[14px] cursor-pointer dark:bg-zinc-900 dark:hover:bg-zinc-800">
       <ClockIcon classname="h-4" />
       <DatePicker
         showTimeSelect
@@ -40,7 +40,7 @@ function DateTimePicker({
         timeCaption="time"
         dateFormat="MMM d, h:mm a"
         placeholderText="Pick date & time"
-        className="h-10 w-full placeholder:text-zinc-900 font-medium bg-transparent dark:placeholder:text-white"
+        className="h-10 w-full placeholder:text-zinc-900 font-medium placeholder:font-medium bg-transparent dark:placeholder:text-white"
       />
     </label>
   );

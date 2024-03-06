@@ -28,6 +28,7 @@ export default function Signup() {
             <p>Get started on the NoteTaking.</p>
           </div>
           <div className="flex flex-col gap-2">
+            {/** 
             <form
               className="flex flex-col gap-2"
               onSubmit={async (event: React.FormEvent<HTMLFormElement>) => {
@@ -103,7 +104,7 @@ export default function Signup() {
               >
                 Sign Up
               </Button>
-            </form>
+            </form>*/}
             <Button
               variant="bordered"
               radius="md"
