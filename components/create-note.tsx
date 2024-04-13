@@ -132,6 +132,7 @@ export default function CreateNote() {
           label="What would you like to do?"
           placeholder="Description"
           radius="none"
+          className="whitespace-pre-wrap"
           classNames={{
             input: 'text-base',
             inputWrapper: [

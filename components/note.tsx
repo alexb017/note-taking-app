@@ -85,7 +85,7 @@ export default function Note({ note }: { note: Notes }) {
         </CardHeader>
       ) : null}
       <CardBody className="py-2 px-5 cursor-default">
-        <p className=" text-base">{noteData?.content}</p>
+        <p className="whitespace-pre-wrap text-base">{noteData?.content}</p>
       </CardBody>
 
       {noteData?.reminder && (

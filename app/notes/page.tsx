@@ -12,17 +12,11 @@ export default function Notes() {
   const [notes] = useNotes(user?.uid);
 
   const allNotes = notes.filter(
-    (note: any) =>
-      note?.isArchived !== true &&
-      note?.isDeleted !== true &&
-      note?.isPinned !== true
+    (note: any) => !note?.isArchived && !note?.isDeleted && !note?.isPinned
   );
 
   const pinNotes = notes.filter(
-    (note: any) =>
-      note?.isPinned === true &&
-      note?.isDeleted !== true &&
-      note?.isArchived !== true
+    (note: any) => note?.isPinned && !note?.isDeleted && !note?.isArchived
   );
 
   return (

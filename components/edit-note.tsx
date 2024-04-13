@@ -89,7 +89,7 @@ export default function EditNote({
 
               const optionUrl = createUrl(pathname, optionSearchParams);
 
-              router.replace(optionUrl);
+              router.push(optionUrl, { scroll: false });
             }}
           >
             <EditIcon classname="h-4" />
@@ -99,14 +99,16 @@ export default function EditNote({
 
       <Modal
         isOpen={isOpen}
-        shouldBlockScroll
-        isDismissable
+        isDismissable={false}
+        isKeyboardDismissDisabled={true}
         onOpenChange={() => {
           onOpenChange();
           if (!searchParams.get('q')) {
-            router.replace(`${pathname}`);
+            router.push(`${pathname}`, { scroll: false });
           } else {
-            router.replace(`${pathname}?q=${searchParams.get('q')}`);
+            router.push(`${pathname}?q=${searchParams.get('q')}`, {
+              scroll: false,
+            });
           }
         }}
         placement="center"

@@ -20,18 +20,18 @@ export default function NotesCategory({
 
   if (params.slug === 'reminders') {
     filtered = notes.filter(
-      (note: any) => note?.reminder !== '' && note?.isDeleted === false
+      (note: any) => note?.reminder !== '' && !note?.isDeleted
     );
   }
 
   if (params.slug === 'archive') {
     filtered = notes.filter(
-      (note: any) => note?.isArchived === true && note?.isDeleted === false
+      (note: any) => note?.isArchived && !note?.isDeleted
     );
   }
 
   if (params.slug === 'trash') {
-    filtered = notes.filter((note: any) => note?.isDeleted === true);
+    filtered = notes.filter((note: any) => note?.isDeleted);
   }
 
   if (searchParams.q) {
