@@ -27,6 +27,7 @@ import BellIcon from './icons/bell';
 import ArchiveIcon from './icons/archive';
 import TrashIcon from './icons/trash';
 import LoginIcon from './icons/login';
+import DropdownUser from './dropdown-user';
 
 export default function Navbar() {
   const { user, userSignOut } = useContext(AuthContext);
@@ -91,189 +92,14 @@ export default function Navbar() {
               >
                 Log In
               </Button>
-              {/* <Button
-                color="warning"
-                variant="flat"
-                radius="md"
-                className="font-medium"
-                onClick={() => router.push('/signup')}
-              >
-                Sign Up
-              </Button> */}
             </>
           ) : (
             <>
               <div className="hidden md:flex">
-                <Dropdown placement="bottom-start">
-                  <DropdownTrigger>
-                    <User
-                      as="button"
-                      avatarProps={{
-                        isBordered: true,
-                        src: `${userProfile?.photoURL}`,
-                      }}
-                      className="transition-transform"
-                      description={userProfile?.email}
-                      name={userProfile?.displayName}
-                    />
-                  </DropdownTrigger>
-                  <DropdownMenu aria-label="User Actions" variant="flat">
-                    <DropdownItem
-                      key="profile"
-                      className="h-14 gap-2"
-                      textValue="profile"
-                    >
-                      <p className="font-bold">Signed in as</p>
-                      <p className="font-bold">{`${userProfile?.email}`}</p>
-                    </DropdownItem>
-                    <DropdownItem
-                      key="profile_page"
-                      textValue="profile_page"
-                      onClick={() => router.push('/profile')}
-                      startContent={<UserIcon classname="h-4" />}
-                    >
-                      My Profile
-                    </DropdownItem>
-                    <DropdownItem
-                      key="my_notes"
-                      textValue="my_notes"
-                      onClick={() => router.push('/notes')}
-                      startContent={<NotesIcon classname="h-4" />}
-                    >
-                      Notes
-                    </DropdownItem>
-                    <DropdownItem
-                      key="my_reminders"
-                      textValue="my_reminders"
-                      onClick={() => router.push('/notes/reminders')}
-                      startContent={<BellIcon classname="h-4" />}
-                    >
-                      Reminders
-                    </DropdownItem>
-                    <DropdownItem
-                      key="my_archive"
-                      textValue="my_archive"
-                      onClick={() => router.push('/notes/archive')}
-                      startContent={<ArchiveIcon classname="h-4" />}
-                    >
-                      Archive
-                    </DropdownItem>
-                    <DropdownItem
-                      key="my_trash"
-                      textValue="my_trash"
-                      onClick={() => router.push('/notes/trash')}
-                      startContent={<TrashIcon classname="h-4" />}
-                    >
-                      Trash
-                    </DropdownItem>
-                    <DropdownItem
-                      key="logout"
-                      color="danger"
-                      textValue="logout"
-                      startContent={<LogoutIcon classname="h-4" />}
-                      onClick={() => {
-                        userSignOut();
-                        router.push('/');
-                      }}
-                    >
-                      Log Out
-                    </DropdownItem>
-                  </DropdownMenu>
-                </Dropdown>
+                <DropdownUser user={userProfile} screen="desktop" />
               </div>
               <div className="flex md:hidden">
-                <Dropdown placement="bottom-start">
-                  <DropdownTrigger>
-                    <Avatar
-                      isBordered
-                      as="button"
-                      className="transition-transform"
-                      src={userProfile?.photoURL}
-                    />
-                  </DropdownTrigger>
-                  <DropdownMenu aria-label="User Actions" variant="flat">
-                    <DropdownItem
-                      key="profile"
-                      className="h-14 gap-2"
-                      textValue="profile"
-                    >
-                      <p className="font-bold">Signed in as</p>
-                      <p className="font-bold">{`${userProfile?.email}`}</p>
-                    </DropdownItem>
-                    <DropdownItem
-                      key="profile_page"
-                      textValue="profile_page"
-                      onClick={() => router.push('/profile')}
-                      startContent={<UserIcon classname="h-4" />}
-                    >
-                      My Profile
-                    </DropdownItem>
-                    <DropdownItem
-                      key="my_notes"
-                      textValue="my_notes"
-                      onClick={() => router.push('/notes')}
-                      startContent={<NotesIcon classname="h-4" />}
-                    >
-                      Notes
-                    </DropdownItem>
-                    <DropdownItem
-                      key="my_reminders"
-                      textValue="my_reminders"
-                      onClick={() => router.push('/notes/reminders')}
-                      startContent={<BellIcon classname="h-4" />}
-                    >
-                      Reminders
-                    </DropdownItem>
-                    <DropdownItem
-                      key="my_archive"
-                      textValue="my_archive"
-                      onClick={() => router.push('/notes/archive')}
-                      startContent={<ArchiveIcon classname="h-4" />}
-                    >
-                      Archive
-                    </DropdownItem>
-                    <DropdownItem
-                      key="my_trash"
-                      textValue="my_trash"
-                      onClick={() => router.push('/notes/trash')}
-                      startContent={<TrashIcon classname="h-4" />}
-                    >
-                      Trash
-                    </DropdownItem>
-                    {/* <DropdownItem
-                      key="dark_theme"
-                      textValue="dark_theme"
-                      startContent={
-                        theme === 'light' ? (
-                          <SunIcon classname="h-4" />
-                        ) : (
-                          <MoonIcon classname="h-4" />
-                        )
-                      }
-                      onClick={() => {
-                        if (theme === 'light') {
-                          setTheme('dark');
-                        } else {
-                          setTheme('light');
-                        }
-                      }}
-                    >
-                      Switch to {theme === 'light' ? 'Dark' : 'Light'} Mode
-                    </DropdownItem> */}
-                    <DropdownItem
-                      key="logout"
-                      color="danger"
-                      textValue="logout"
-                      startContent={<LogoutIcon classname="h-4" />}
-                      onClick={() => {
-                        userSignOut();
-                        router.push('/');
-                      }}
-                    >
-                      Log Out
-                    </DropdownItem>
-                  </DropdownMenu>
-                </Dropdown>
+                <DropdownUser user={userProfile} screen="mobile" />
               </div>
             </>
           )}
