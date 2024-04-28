@@ -12,10 +12,10 @@ import {
   updateDoc,
 } from 'firebase/firestore';
 import { db } from './firebase';
-import { Note, ImageData, BgColor, UserProfile } from './types';
+import { Note, CreateNote, ImageData, BgColor, UserProfile } from './types';
 import { deleteUser } from 'firebase/auth';
 
-export async function createNote(note: Note, uid: string) {
+export async function createNote(note: CreateNote, uid: string) {
   try {
     // Add a new document in subcollection notes
     const docRef = collection(db, 'users', uid, 'notes');
@@ -148,10 +148,12 @@ export async function createUserProfile(user: UserProfile, data: object) {
   const userRef = doc(db, 'users', uid);
   const userSnapshot = await getDoc(userRef);
 
+  const userId = uid;
+
   if (!userSnapshot.exists()) {
     try {
       await setDoc(userRef, {
-        uid,
+        userId,
         displayName,
         email,
         photoURL,

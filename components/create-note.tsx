@@ -81,7 +81,7 @@ export default function CreateNote() {
                     isArchived: false,
                     isPinned: true,
                     isDeleted: false,
-                    uid: user?.uid,
+                    userId: user?.uid,
                   },
                   user?.uid
                 );
@@ -205,7 +205,7 @@ export default function CreateNote() {
                       isArchived: true,
                       isPinned: isPinned,
                       isDeleted: false,
-                      uid: user?.uid,
+                      userId: user?.uid,
                     },
                     user?.uid
                   );
@@ -237,7 +237,7 @@ export default function CreateNote() {
                 isArchived: isArchived,
                 isPinned: isPinned,
                 isDeleted: false,
-                uid: user?.uid,
+                userId: user?.uid,
               },
               user?.uid
             );

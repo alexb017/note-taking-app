@@ -1,5 +1,4 @@
-export type Notes = {
-  id: string;
+export type CreateNote = {
   content: string;
   bgColor: {
     light: string;
@@ -13,7 +12,7 @@ export type Notes = {
   isArchived: boolean;
   isPinned: boolean;
   isDeleted: boolean;
-  uid: string;
+  userId: string;
 };
 
 export type ImageData = {
@@ -22,6 +21,7 @@ export type ImageData = {
 };
 
 export type Note = {
+  noteId: string;
   content: string;
   bgColor: {
     light: string;
@@ -35,7 +35,7 @@ export type Note = {
   isArchived: boolean;
   isPinned: boolean;
   isDeleted: boolean;
-  uid: string;
+  userId: string;
 };
 
 export type BgColor = {

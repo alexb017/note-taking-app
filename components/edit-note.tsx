@@ -28,7 +28,7 @@ import AddToArchiveButton from './add-to-archive-button';
 import DeleteUndoNoteButton from './delete-undo-note-button';
 import CloseIcon from './icons/close';
 import UploadImageToStorage from './upload-image';
-import { Notes, ImageData, BgColor } from '@/lib/types';
+import { Note, ImageData, BgColor } from '@/lib/types';
 import AddToPinButton from './add-to-pin-button';
 
 export default function EditNote({
@@ -38,7 +38,7 @@ export default function EditNote({
   onUploadImage,
   onContentChange,
 }: {
-  note: Notes;
+  note: Note;
   onReminderClick: (date: string) => void;
   onColorClick: (colors: BgColor) => void;
   onUploadImage: (img: ImageData) => void;
@@ -85,7 +85,7 @@ export default function EditNote({
                 searchParams.toString()
               );
 
-              optionSearchParams.set('id', note?.id);
+              optionSearchParams.set('id', note?.noteId);
 
               const optionUrl = createUrl(pathname, optionSearchParams);
 
@@ -121,8 +121,8 @@ export default function EditNote({
             <>
               <div className="absolute right-2 top-2 z-20">
                 <AddToPinButton
-                  uid={note?.uid}
-                  noteId={note?.id}
+                  uid={note?.userId}
+                  noteId={note?.noteId}
                   isPinned={note?.isPinned}
                   hasImage={note?.image.src}
                 />
@@ -193,17 +193,17 @@ export default function EditNote({
                     onColorChange={onColorClick}
                   />
                   <UploadImageToStorage
-                    uid={note?.uid}
+                    uid={note?.userId}
                     onHandleImageUpload={onUploadImage}
                   />
                   <AddToArchiveButton
-                    uid={note?.uid}
-                    noteId={note?.id}
+                    uid={note?.userId}
+                    noteId={note?.noteId}
                     isArchived={note?.isArchived}
                   />
                   <DeleteUndoNoteButton
-                    uid={note?.uid}
-                    noteId={note?.id}
+                    uid={note?.userId}
+                    noteId={note?.noteId}
                     isDeleted={note?.isDeleted}
                   />
                 </div>

@@ -26,30 +26,31 @@ import EditNote from './edit-note';
 import CloseIcon from './icons/close';
 import UploadImageToStorage from './upload-image';
 import DeleteImageFromStorage from './detele-image';
-import { Notes, ImageData, BgColor } from '@/lib/types';
+import type { Note, ImageData, BgColor } from '@/lib/types';
 import AddToPinButton from './add-to-pin-button';
 
-export default function Note({ note }: { note: Notes }) {
+export default function Note({ note }: { note: Note }) {
   const [noteData, setNoteData] = useState(note);
+  console.log(noteData);
 
   async function handleContentChange(text: string) {
     setNoteData({ ...noteData, content: text });
-    await updateContent(note?.uid, note?.id, text);
+    await updateContent(note?.userId, note?.noteId, text);
   }
 
   async function handleReminderClick(date: string) {
     setNoteData({ ...noteData, reminder: date });
-    await updateReminder(noteData?.uid, noteData?.id, date);
+    await updateReminder(noteData?.userId, noteData?.noteId, date);
   }
 
   async function handleColorClick(colors: BgColor) {
     setNoteData({ ...noteData, bgColor: colors });
-    await updateBgColor(noteData?.uid, noteData?.id, colors);
+    await updateBgColor(noteData?.userId, noteData?.noteId, colors);
   }
 
   async function handleImageUpload(img: ImageData) {
     setNoteData({ ...noteData, image: img });
-    await updateImage(noteData?.uid, noteData?.id, img);
+    await updateImage(noteData?.userId, noteData?.noteId, img);
   }
 
   return (
@@ -60,8 +61,8 @@ export default function Note({ note }: { note: Notes }) {
         <>
           <div className="absolute right-2 top-2 z-20 opacity-0 group-hover:opacity-100 transition-opacity ease-in-out">
             <AddToPinButton
-              uid={noteData?.uid}
-              noteId={noteData?.id}
+              uid={noteData?.userId}
+              noteId={noteData?.noteId}
               isPinned={noteData?.isPinned}
               hasImage={noteData?.image.src}
             />
@@ -127,17 +128,17 @@ export default function Note({ note }: { note: Notes }) {
                 onColorChange={handleColorClick}
               />
               <UploadImageToStorage
-                uid={noteData?.uid}
+                uid={noteData?.userId}
                 onHandleImageUpload={handleImageUpload}
               />
               <AddToArchiveButton
-                uid={noteData?.uid}
-                noteId={noteData?.id}
+                uid={noteData?.userId}
+                noteId={noteData?.noteId}
                 isArchived={noteData?.isArchived}
               />
               <DeleteUndoNoteButton
-                uid={noteData?.uid}
-                noteId={noteData?.id}
+                uid={noteData?.userId}
+                noteId={noteData?.noteId}
                 isDeleted={noteData?.isDeleted}
               />
             </div>
@@ -146,13 +147,13 @@ export default function Note({ note }: { note: Notes }) {
           <>
             <div className="flex items-center gap-2 w-full">
               <DeleteNoteButton
-                uid={noteData?.uid}
-                noteId={noteData?.id}
+                uid={noteData?.userId}
+                noteId={noteData?.noteId}
                 imageURL={noteData?.image.src}
               />
               <DeleteUndoNoteButton
-                uid={noteData?.uid}
-                noteId={noteData?.id}
+                uid={noteData?.userId}
+                noteId={noteData?.noteId}
                 isDeleted={noteData?.isDeleted}
               />
             </div>

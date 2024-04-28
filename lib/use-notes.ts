@@ -14,7 +14,7 @@ export default function useNotes(uid: string) {
       unsubscribe = onSnapshot(q, (querySnapshot) => {
         const notes: any = [];
         querySnapshot.forEach((doc) => {
-          notes.push({ id: doc.id, ...doc.data() });
+          notes.push({ noteId: doc.id, ...doc.data() });
         });
         setNotes(notes);
       });
