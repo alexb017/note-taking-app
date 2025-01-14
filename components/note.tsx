@@ -31,7 +31,7 @@ import AddToPinButton from './add-to-pin-button';
 
 export default function Note({ note }: { note: Note }) {
   const [noteData, setNoteData] = useState(note);
-  console.log(noteData);
+  // console.log(noteData);
 
   async function handleContentChange(text: string) {
     setNoteData({ ...noteData, content: text });
