@@ -3,7 +3,7 @@
 import useUserProfile from '@/lib/use-user-profile';
 import { useContext } from 'react';
 import { AuthContext } from '../auth-context';
-import { UserProfile } from '@/lib/types';
+import { type UserProfile } from '@/lib/types';
 import { Avatar, Button } from '@nextui-org/react';
 import {
   deleteUserFromDatabase,
