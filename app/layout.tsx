@@ -19,11 +19,13 @@ export default async function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.className} dark:bg-zinc-950 dark:text-white`}>
+      <body
+        className={`${inter.className} bg-neutral-50 dark:bg-zinc-900 min-h-[calc(100vh-65px)]`}
+      >
         <AuthProvider>
           <Providers>
             <Navbar />
-            <main className="main mt-[65px]">{children}</main>
+            <main className="main mt-[65px] h-full ">{children}</main>
           </Providers>
         </AuthProvider>
       </body>
