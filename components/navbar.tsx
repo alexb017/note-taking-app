@@ -41,7 +41,7 @@ export default function Navbar() {
             size="sm"
             radius="md"
             className="bg-zinc-900/10 dark:bg-zinc-100/10"
-            onClick={() => {
+            onPress={() => {
               if (theme === 'light') {
                 setTheme('dark');
               } else {
@@ -64,7 +64,7 @@ export default function Navbar() {
                 size="sm"
                 className="font-medium"
                 startContent={<LoginIcon classname="h-4" />}
-                onClick={() => router.push('/login')}
+                onPress={() => router.push('/login')}
               >
                 Log In
               </Button>

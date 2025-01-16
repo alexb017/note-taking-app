@@ -86,7 +86,7 @@ export default function AddColor({
                         ? 'border-zinc-500 dark:border-zinc-300'
                         : ''
                     }`}
-                    onClick={() => onColorChange(bgColor)}
+                    onPress={() => onColorChange(bgColor)}
                   ></Button>
                 </div>
               </Tooltip>

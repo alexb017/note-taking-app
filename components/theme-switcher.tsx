@@ -20,7 +20,7 @@ export function ThemeSwitcher() {
       size="sm"
       radius="md"
       className="bg-zinc-900/10 dark:bg-zinc-100/10"
-      onClick={() => {
+      onPress={() => {
         if (theme === 'light') {
           setTheme('dark');
         } else {

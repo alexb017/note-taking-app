@@ -34,7 +34,7 @@ export default function AddToPinButton({
               ? 'text-zinc-900 bg-transparent hover:bg-zinc-900/10 dark:text-white dark:hover:bg-zinc-100/10'
               : 'backdrop-blur-lg text-white bg-zinc-900/50 hover:bg-zinc-900/60'
           }`}
-          onClick={async () => await updateIsPinned(uid, noteId)}
+          onPress={async () => await updateIsPinned(uid, noteId)}
         >
           {!isPinned ? (
             <PinIcon classname="h-5 -rotate-45" />

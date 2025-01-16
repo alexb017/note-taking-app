@@ -27,7 +27,7 @@ export default function UserProfile() {
       <Button
         color="danger"
         variant="light"
-        onClick={async () => {
+        onPress={async () => {
           try {
             await deleteUserNotesFromDatabase(user?.uid);
             await deleteUserFromDatabase(user?.uid);

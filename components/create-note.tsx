@@ -71,7 +71,7 @@ export default function CreateNote() {
               aria-label="pin"
               radius="full"
               className="min-w-unit-8 w-unit-8 h-8 text-zinc-900 bg-transparent hover:bg-zinc-900/10 dark:text-white dark:hover:bg-zinc-100/10"
-              onClick={async () => {
+              onPress={async () => {
                 await createNote(
                   {
                     content: content || 'Empty note',
@@ -195,7 +195,7 @@ export default function CreateNote() {
                 aria-label="archive"
                 radius="full"
                 className="min-w-unit-8 w-unit-8 h-8 bg-transparent hover:bg-zinc-900/10 dark:hover:bg-zinc-100/10"
-                onClick={async () => {
+                onPress={async () => {
                   await createNote(
                     {
                       content: content || 'Empty note',

@@ -111,7 +111,7 @@ export default function Signup() {
               size="lg"
               className="font-medium text-sm"
               startContent={<GoogleIcon classname="h-5" />}
-              onClick={async () => {
+              onPress={async () => {
                 try {
                   const res = await googleSignIn();
 
@@ -136,7 +136,7 @@ export default function Signup() {
               size="lg"
               className="font-medium text-sm"
               startContent={<GithubIcon classname="h-5" />}
-              onClick={async () => {
+              onPress={async () => {
                 try {
                   const res = await githubSignIn();
 

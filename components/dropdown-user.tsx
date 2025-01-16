@@ -114,7 +114,7 @@ export default function DropdownUser({
                   key={link.key}
                   textValue={link.textvalue}
                   startContent={<Icon classname="h-4" />}
-                  onClick={() => router.push(link.url)}
+                  onPress={() => router.push(link.url)}
                 >
                   {link.name}
                 </DropdownItem>
@@ -128,7 +128,7 @@ export default function DropdownUser({
               color="danger"
               textValue="logout"
               startContent={<LogoutIcon classname="h-4" />}
-              onClick={() => {
+              onPress={() => {
                 userSignOut();
                 router.push('/');
               }}

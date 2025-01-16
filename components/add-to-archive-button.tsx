@@ -29,7 +29,7 @@ export default function AddToArchiveButton({
             aria-label="archive"
             radius="full"
             className="min-w-unit-8 w-unit-8 h-8 bg-transparent hover:bg-gray-900/10 dark:hover:bg-zinc-100/10"
-            onClick={async () => await updateIsArchived(uid, noteId)}
+            onPress={async () => await updateIsArchived(uid, noteId)}
           >
             {!isArchived ? (
               <ArchiveIcon classname="h-4" />
