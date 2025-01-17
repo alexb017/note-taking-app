@@ -20,7 +20,7 @@ export default async function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${inter.className} bg-neutral-50 dark:bg-zinc-900 min-h-[calc(100vh-65px)]`}
+        className={`${inter.className} dark:bg-zinc-900 min-h-[calc(100vh-65px)]`}
       >
         <AuthProvider>
           <ThemeProvider>
