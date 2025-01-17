@@ -27,7 +27,7 @@ export default function HomePage() {
               <Button asChild className="rounded-full">
                 <Link href="/login">Get Started</Link>
               </Button>
-              <Button asChild variant="outline" className="rounded-full">
+              <Button asChild variant="secondary" className="rounded-full">
                 <Link href="/signup">Sign Up</Link>
               </Button>
             </div>

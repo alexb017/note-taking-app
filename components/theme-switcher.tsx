@@ -18,6 +18,7 @@ export function ThemeSwitcher() {
       variant="secondary"
       aria-label="Toggle Dark Mode"
       size="icon"
+      className="rounded-full"
       onClick={() => {
         if (theme === 'light') {
           setTheme('dark');
