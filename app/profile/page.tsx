@@ -4,7 +4,8 @@ import useUserProfile from '@/lib/use-user-profile';
 import { useContext } from 'react';
 import { AuthContext } from '../auth-context';
 import { type UserProfile } from '@/lib/types';
-import { Avatar, Button } from '@nextui-org/react';
+import { Button } from '@/components/ui/button';
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import {
   deleteUserFromDatabase,
   deleteUserFromFirebase,
@@ -19,15 +20,19 @@ export default function UserProfile() {
 
   return (
     <div className="flex flex-col items-center gap-2">
-      <Avatar src={userProfile?.photoURL} className="w-20 h-20" />
+      <Avatar>
+        <AvatarImage
+          src={userProfile?.photoURL}
+          alt={userProfile?.displayName}
+        />
+        <AvatarFallback>{userProfile?.displayName}</AvatarFallback>
+      </Avatar>
       <div className="flex flex-col items-center">
         <h3 className="text-2xl font-semibold">{userProfile?.displayName}</h3>
         <p className="text-base text-zinc-500">{userProfile?.email}</p>
       </div>
       <Button
-        color="danger"
-        variant="light"
-        onPress={async () => {
+        onClick={async () => {
           try {
             await deleteUserNotesFromDatabase(user?.uid);
             await deleteUserFromDatabase(user?.uid);

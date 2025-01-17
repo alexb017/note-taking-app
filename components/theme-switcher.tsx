@@ -1,8 +1,7 @@
 import { useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
-import { Button } from '@nextui-org/react';
-import SunIcon from './icons/sun';
-import MoonIcon from './icons/moon';
+import { Button } from '@/components/ui/button';
+import { MoonIcon, SunIcon } from '@heroicons/react/24/outline';
 
 export function ThemeSwitcher() {
   const [mounted, setMounted] = useState(false);
@@ -16,11 +15,10 @@ export function ThemeSwitcher() {
 
   return (
     <Button
-      isIconOnly
-      size="sm"
-      radius="md"
-      className="bg-zinc-900/10 dark:bg-zinc-100/10"
-      onPress={() => {
+      variant="secondary"
+      aria-label="Toggle Dark Mode"
+      size="icon"
+      onClick={() => {
         if (theme === 'light') {
           setTheme('dark');
         } else {
@@ -28,11 +26,7 @@ export function ThemeSwitcher() {
         }
       }}
     >
-      {theme === 'light' ? (
-        <SunIcon classname="h-4" />
-      ) : (
-        <MoonIcon classname="h-4" />
-      )}
+      {theme === 'light' ? <SunIcon /> : <MoonIcon />}
     </Button>
   );
 }

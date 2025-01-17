@@ -1,12 +1,3 @@
-import {
-  Avatar,
-  Dropdown,
-  DropdownItem,
-  DropdownMenu,
-  DropdownSection,
-  DropdownTrigger,
-  User,
-} from '@nextui-org/react';
 import UserIcon from './icons/user';
 import NotesIcon from './icons/notes';
 import BellIcon from './icons/bell';
@@ -66,78 +57,5 @@ export default function DropdownUser({
     },
   ];
 
-  return (
-    <>
-      <Dropdown placement="bottom-start">
-        {screen === 'desktop' ? (
-          <>
-            <DropdownTrigger>
-              <User
-                as="button"
-                avatarProps={{
-                  src: `${user?.photoURL}`,
-                }}
-                className="transition-transform"
-                description={user?.email}
-                name={user?.displayName}
-              />
-            </DropdownTrigger>
-          </>
-        ) : (
-          <>
-            <DropdownTrigger>
-              <Avatar
-                as="button"
-                className="transition-transform"
-                src={user?.photoURL}
-              />
-            </DropdownTrigger>
-          </>
-        )}
-        <DropdownMenu aria-label="User Actions" variant="flat">
-          <DropdownSection>
-            <DropdownItem
-              key="profile"
-              className="h-14 gap-2"
-              textValue="profile"
-            >
-              <p className="font-bold">Signed in as</p>
-              <p className="font-bold">{`${user?.email}`}</p>
-            </DropdownItem>
-          </DropdownSection>
-
-          <DropdownSection showDivider>
-            {links.map((link) => {
-              const Icon = link.icon;
-              return (
-                <DropdownItem
-                  key={link.key}
-                  textValue={link.textvalue}
-                  startContent={<Icon classname="h-4" />}
-                  onPress={() => router.push(link.url)}
-                >
-                  {link.name}
-                </DropdownItem>
-              );
-            })}
-          </DropdownSection>
-
-          <DropdownSection>
-            <DropdownItem
-              key="logout"
-              color="danger"
-              textValue="logout"
-              startContent={<LogoutIcon classname="h-4" />}
-              onPress={() => {
-                userSignOut();
-                router.push('/');
-              }}
-            >
-              Log Out
-            </DropdownItem>
-          </DropdownSection>
-        </DropdownMenu>
-      </Dropdown>
-    </>
-  );
+  return <></>;
 }

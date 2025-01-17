@@ -1,10 +1,10 @@
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import {
-  Button,
-  Input,
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '@nextui-org/react';
+} from '@/components/ui/popover';
 import MagnifyingIcon from './icons/magnifying';
 import {
   ReadonlyURLSearchParams,
@@ -54,21 +54,16 @@ export default function SearchNote() {
         <form className="w-[240px] lg:w-[480px]">
           <Input
             onChange={handleSearchChange}
-            label="Search"
             placeholder="Search note..."
             value={pathname !== '/notes/search' ? '' : searchValue}
-            size="sm"
-            variant="flat"
             className="text-xs"
-            startContent={<MagnifyingIcon classname="h-4" />}
           />
         </form>
       </div>
       <div className="block sm:hidden">
-        <Popover placement="bottom" showArrow offset={10}>
-          <PopoverTrigger>
+        <Popover>
+          <PopoverTrigger asChild>
             <Button
-              isIconOnly
               size="sm"
               className="min-w-unit-8 w-unit-8 h-8 bg-zinc-900/10 hover:bg-zinc-900/10 dark:bg-zinc-100/10"
             >
@@ -76,22 +71,16 @@ export default function SearchNote() {
             </Button>
           </PopoverTrigger>
           <PopoverContent className="w-[240px]">
-            {() => (
-              <div className="px-1 py-2 w-full">
-                <form className="w-full">
-                  <Input
-                    onChange={handleSearchChange}
-                    autoFocus
-                    label="Search"
-                    placeholder="Search note..."
-                    size="sm"
-                    variant="flat"
-                    className="text-xs"
-                    startContent={<MagnifyingIcon classname="h-4" />}
-                  />
-                </form>
-              </div>
-            )}
+            <div className="px-1 py-2 w-full">
+              <form className="w-full">
+                <Input
+                  onChange={handleSearchChange}
+                  autoFocus
+                  placeholder="Search note..."
+                  className="text-xs"
+                />
+              </form>
+            </div>
           </PopoverContent>
         </Popover>
       </div>

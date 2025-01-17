@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useContext, useState } from 'react';
 import LogoIcon from './icons/logo';
 import { AuthContext } from '@/app/auth-context';
-import { Button } from '@nextui-org/react';
+import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
 import SearchNote from './search-note';
 import useUserProfile from '@/lib/use-user-profile';
@@ -58,13 +58,8 @@ export default function Navbar() {
           {!user ? (
             <>
               <Button
-                color="default"
-                variant="flat"
-                radius="md"
-                size="sm"
                 className="font-medium"
-                startContent={<LoginIcon classname="h-4" />}
-                onPress={() => router.push('/login')}
+                onClick={() => router.push('/login')}
               >
                 Log In
               </Button>

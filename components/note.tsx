@@ -2,13 +2,14 @@
 
 import {
   Card,
-  CardHeader,
-  CardBody,
+  CardContent,
+  CardDescription,
   CardFooter,
-  Image,
-  Button,
-  Chip,
-} from '@nextui-org/react';
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import Image from 'next/image';
 import { useState } from 'react';
 import AddColor from './add-color';
 import {
@@ -85,26 +86,15 @@ export default function Note({ note }: { note: Note }) {
           </div>
         </CardHeader>
       ) : null}
-      <CardBody className="py-2 px-5 cursor-default">
+      <CardDescription className="py-2 px-5 cursor-default">
         <p className="whitespace-pre-wrap text-base">{noteData?.content}</p>
-      </CardBody>
+      </CardDescription>
 
       {noteData?.reminder && (
         <div className="flex items-center px-3">
-          <Chip
-            size="sm"
-            radius="full"
-            className="cursor-pointer group/chip bg-zinc-900/10 hover:bg-zinc-900/15 dark:bg-zinc-100/10 dark:hover:bg-zinc-100/15"
-            startContent={<ClockIcon classname="h-4" />}
-            onClose={() => handleReminderClick('')}
-            endContent={<CloseIcon classname="h-4" />}
-            classNames={{
-              closeButton:
-                'absolute right-0 rounded-full p-1 backdrop-blur-lg text-zinc-900/60 bg-gray-900/10 hover:bg-zinc-900/15 dark:text-white dark:bg-zinc-100/10 dark:hover:bg-zinc-100/20 opacity-0 group-hover/chip:opacity-100 transition-opacity ease-in-out',
-            }}
-          >
+          <Badge className="cursor-pointer group/chip bg-zinc-900/10 hover:bg-zinc-900/15 dark:bg-zinc-100/10 dark:hover:bg-zinc-100/15">
             {noteData?.reminder}
-          </Chip>
+          </Badge>
         </div>
       )}
 

@@ -1,5 +1,6 @@
 import Image from 'next/image';
-import { Link, Button } from '@nextui-org/react';
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 
 export default function HomePage() {
   return (
@@ -20,16 +21,8 @@ export default function HomePage() {
                 A simple note-taking app to help you keep track of your ideas,
                 thoughts, and tasks.
               </p>
-              <Button
-                showAnchorIcon
-                as={Link}
-                color="primary"
-                variant="flat"
-                radius="md"
-                size="md"
-                href="/login"
-              >
-                Get Started
+              <Button asChild>
+                <Link href="/login">Get Started</Link>
               </Button>
             </div>
 

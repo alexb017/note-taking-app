@@ -1,11 +1,3 @@
-import {
-  Button,
-  Divider,
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-  Tooltip,
-} from '@nextui-org/react';
 import PaletteIcon from './icons/palette';
 import { BgColor } from '@/lib/types';
 
@@ -31,69 +23,5 @@ export default function AddColor({
     { light: 'bg-zinc-200', dark: 'dark:bg-zinc-800', tooltip: 'Gray' },
   ];
 
-  return (
-    <Popover placement="bottom" offset={0}>
-      <Tooltip
-        placement="bottom"
-        radius="sm"
-        size="sm"
-        offset={0}
-        delay={350}
-        closeDelay={0}
-        content="Background options"
-      >
-        <div>
-          <PopoverTrigger>
-            <Button
-              isIconOnly
-              aria-label="color"
-              radius="full"
-              className="min-w-unit-8 w-unit-8 h-8 bg-transparent hover:bg-zinc-900/10 dark:hover:bg-zinc-100/10"
-            >
-              <PaletteIcon classname="h-4" />
-            </Button>
-          </PopoverTrigger>
-        </div>
-      </Tooltip>
-      <PopoverContent className="w-[224px] md:w-[424px] p-0 items-start justify-start">
-        <div className="flex flex-col w-full">
-          <div className="p-3">
-            <p>Choose background color:</p>
-          </div>
-          <Divider />
-          <div className="flex items-center flex-wrap md:flex-nowrap gap-[2px] p-2 px-[10px]">
-            {bgColors.map((bgColor, index) => (
-              <Tooltip
-                key={index}
-                placement="bottom"
-                radius="sm"
-                size="sm"
-                offset={0}
-                delay={350}
-                closeDelay={0}
-                content={bgColor.tooltip}
-              >
-                <div>
-                  <Button
-                    isIconOnly
-                    radius="full"
-                    className={`${bgColor.light} ${bgColor.dark} border-2 ${
-                      bgColor.light === 'bg-white'
-                        ? 'border-zinc-200 dark:border-zinc-600'
-                        : 'border-white dark:border-zinc-900'
-                    } hover:border-zinc-500 min-w-unit-8 w-unit-8 h-8 ${
-                      bgColor.light === colors.light
-                        ? 'border-zinc-500 dark:border-zinc-300'
-                        : ''
-                    }`}
-                    onPress={() => onColorChange(bgColor)}
-                  ></Button>
-                </div>
-              </Tooltip>
-            ))}
-          </div>
-        </div>
-      </PopoverContent>
-    </Popover>
-  );
+  return <></>;
 }

@@ -5,7 +5,8 @@ import GoogleIcon from '../../components/icons/google';
 import { useContext, useState } from 'react';
 import { AuthContext } from '../auth-context';
 import { useRouter } from 'next/navigation';
-import { Input, Button } from '@nextui-org/react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
 import { createUserProfile } from '@/lib/actions';
@@ -85,11 +86,7 @@ export default function Login() {
               </Button>
             </form>*/}
             <Button
-              variant="bordered"
-              radius="md"
-              size="lg"
               className="font-medium text-sm"
-              startContent={<GoogleIcon classname="h-5" />}
               onClick={async () => {
                 try {
                   const res = await googleSignIn();
@@ -110,11 +107,7 @@ export default function Login() {
               Continue with Google
             </Button>
             <Button
-              variant="bordered"
-              radius="md"
-              size="lg"
               className="font-medium text-sm"
-              startContent={<GithubIcon classname="h-5" />}
               onClick={async () => {
                 try {
                   const res = await githubSignIn();
