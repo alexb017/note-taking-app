@@ -35,7 +35,7 @@ export default function Navbar() {
           {!user ? (
             <>
               <Button asChild className="rounded-full">
-                <Link href="/login">Sign in</Link>
+                <Link href="/auth">Sign In</Link>
               </Button>
             </>
           ) : (
