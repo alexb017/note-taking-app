@@ -22,12 +22,17 @@ export default async function RootLayout({
       <body
         className={`${inter.className} dark:bg-zinc-900 min-h-[calc(100vh-65px)]`}
       >
-        <AuthProvider>
-          <ThemeProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <AuthProvider>
             <Navbar />
             <main className="main mt-[65px] h-full ">{children}</main>
-          </ThemeProvider>
-        </AuthProvider>
+          </AuthProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

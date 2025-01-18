@@ -32,7 +32,7 @@ import AddToPinButton from './add-to-pin-button';
 
 export default function Note({ note }: { note: Note }) {
   const [noteData, setNoteData] = useState(note);
-  // console.log(noteData);
+  //console.log(noteData);
 
   async function handleContentChange(text: string) {
     setNoteData({ ...noteData, content: text });
@@ -77,6 +77,8 @@ export default function Note({ note }: { note: Note }) {
             alt={noteData?.image.altName}
             src={noteData?.image.src}
             className="w-full h-auto rounded-b-none"
+            width={240}
+            height={160}
           />
           <div className="absolute right-1 bottom-1 z-10 opacity-0 group-hover:opacity-100 transition-opacity ease-in-out">
             <DeleteImageFromStorage

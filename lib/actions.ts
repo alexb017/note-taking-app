@@ -13,7 +13,7 @@ import {
 } from 'firebase/firestore';
 import { db } from './firebase';
 import { Note, CreateNote, ImageData, BgColor, UserProfile } from './types';
-import { deleteUser } from 'firebase/auth';
+import { deleteUser, User } from 'firebase/auth';
 
 export async function createNote(note: CreateNote, uid: string) {
   try {
@@ -139,7 +139,7 @@ export async function updateIsPinned(uid: string, noteId: string) {
   }
 }
 
-export async function createUserProfile(user: UserProfile, data: object) {
+export async function createUserProfile(user: User, data: object) {
   if (!user) {
     return;
   }

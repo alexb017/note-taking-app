@@ -7,9 +7,13 @@ import { useRouter } from 'next/navigation';
 import { createUserProfile } from '@/lib/actions';
 import GoogleIcon from '@/components/icons/google';
 import GithubIcon from '@/components/icons/github';
+import { User } from 'firebase/auth';
 
 export default function LoginForm() {
-  const { googleSignIn, githubSignIn } = useContext(AuthContext);
+  const { googleSignIn, githubSignIn } = useContext(AuthContext) as {
+    googleSignIn: () => Promise<User | null>;
+    githubSignIn: () => Promise<User | null>;
+  };
   const router = useRouter();
 
   return (
@@ -20,9 +24,8 @@ export default function LoginForm() {
           try {
             const res = await githubSignIn();
 
-            await createUserProfile(res.user, {});
-
             if (res) {
+              await createUserProfile(res, {});
               router.push('/notes');
             }
           } catch (error: any) {
@@ -43,9 +46,8 @@ export default function LoginForm() {
           try {
             const res = await googleSignIn();
 
-            await createUserProfile(res.user, {});
-
             if (res) {
+              await createUserProfile(res, {});
               router.push('/notes');
             }
           } catch (error: any) {

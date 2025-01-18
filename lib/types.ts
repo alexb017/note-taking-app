@@ -46,6 +46,6 @@ export type BgColor = {
 export type UserProfile = {
   displayName: string;
   email: string;
-  uid: string;
+  userId: string;
   photoURL: string;
 };

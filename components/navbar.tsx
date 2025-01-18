@@ -8,14 +8,19 @@ import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
 import SearchNote from './search-note';
 import useUserProfile from '@/lib/use-user-profile';
-import { UserProfile } from '@/lib/types';
+import { type UserProfile } from '@/lib/types';
 import DropdownUser from './dropdown-user';
 import { ThemeSwitcher } from './theme-switcher';
+import { User } from 'firebase/auth';
 
 export default function Navbar() {
-  const { user } = useContext(AuthContext);
-  const userProfile = useUserProfile(user?.uid) as UserProfile;
+  const { user, userSignOut } = useContext(AuthContext) as {
+    user: User;
+    userSignOut: () => Promise<void>;
+  };
   const router = useRouter();
+
+  console.log('user uid', user?.uid);
 
   return (
     <nav className="fixed top-0 left-0 z-50 shadow-sm bg-white border-b border-zinc-200 w-full dark:bg-zinc-900 dark:border-zinc-800">
@@ -31,7 +36,6 @@ export default function Navbar() {
           {user && <SearchNote />}
         </div>
         <div className="flex items-center gap-2">
-          <ThemeSwitcher />
           {!user ? (
             <>
               <Button asChild className="rounded-full">
@@ -40,12 +44,8 @@ export default function Navbar() {
             </>
           ) : (
             <>
-              <div className="hidden md:flex">
-                <DropdownUser user={userProfile} screen="desktop" />
-              </div>
-              <div className="flex md:hidden">
-                <DropdownUser user={userProfile} screen="mobile" />
-              </div>
+              <ThemeSwitcher />
+              <DropdownUser uid={user?.uid} onUserSignOut={userSignOut} />
             </>
           )}
         </div>

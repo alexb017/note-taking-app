@@ -8,25 +8,58 @@ import {
   signOut,
   GoogleAuthProvider,
   GithubAuthProvider,
+  User,
 } from 'firebase/auth';
 
-const AuthContext = createContext<any>(null);
+interface AuthContextType {
+  user: User | null;
+  googleSignIn: () => Promise<User | null>;
+  githubSignIn: () => Promise<User | null>;
+  userSignOut: () => Promise<void>;
+}
+
+const AuthContext = createContext<AuthContextType | null>(null);
 
 function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<User | null>(null);
   const googleProvider = new GoogleAuthProvider();
   const githubProvider = new GithubAuthProvider();
-  const googleSignIn = () => signInWithPopup(auth, googleProvider);
-  const githubSignIn = () => signInWithPopup(auth, githubProvider);
-  const userSignOut = () => signOut(auth);
+
+  // Define asynchronous functions for better type safety
+  const googleSignIn = async () => {
+    try {
+      const result = await signInWithPopup(auth, googleProvider);
+      setUser(result.user);
+      return result.user;
+    } catch (error) {
+      console.error('Error during Google Sign-In:', error);
+      return null;
+    }
+  };
+
+  const githubSignIn = async () => {
+    try {
+      const result = await signInWithPopup(auth, githubProvider);
+      setUser(result.user);
+      return result.user;
+    } catch (error) {
+      console.error('Error during GitHub Sign-In:', error);
+      return null;
+    }
+  };
+
+  const userSignOut = async () => {
+    try {
+      await signOut(auth);
+      setUser(null);
+    } catch (error) {
+      console.error('Error during Sign-Out:', error);
+    }
+  };
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user: any) => {
-      if (user) {
-        setUser(user);
-      } else {
-        setUser(null);
-      }
+    const unsubscribe = onAuthStateChanged(auth, (user: User | null) => {
+      setUser(user);
     });
     return () => unsubscribe();
   }, []);

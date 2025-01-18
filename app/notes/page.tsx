@@ -6,9 +6,10 @@ import { AuthContext } from '../auth-context';
 import Note from '@/components/note';
 import useNotes from '@/lib/use-notes';
 import MasonryGrid from '@/components/masonry-grid';
+import { User } from 'firebase/auth';
 
 export default function Notes() {
-  const { user } = useContext(AuthContext);
+  const { user } = useContext(AuthContext) as { user: User };
   const [notes] = useNotes(user?.uid);
 
   const allNotes = notes.filter(
@@ -32,11 +33,11 @@ export default function Notes() {
                 pinned
               </h3>
               <div className="w-full sm:w-[512px] lg:w-[768px] xl:w-[1024px] 3xl:w-[1280px] 4xl:w-[1536px] 5xl:w-[1792px] 6xl:w-[2048px]">
-                <MasonryGrid>
+                {/* <MasonryGrid>
                   {pinNotes.map((note: any) => {
                     return <Note key={note.id} note={note} />;
                   })}
-                </MasonryGrid>
+                </MasonryGrid> */}
               </div>
             </div>
           </div>
@@ -52,8 +53,8 @@ export default function Notes() {
               )}
               <div className="w-full sm:w-[512px] lg:w-[768px] xl:w-[1024px] 3xl:w-[1280px] 4xl:w-[1536px] 5xl:w-[1792px] 6xl:w-[2048px]">
                 <MasonryGrid>
-                  {allNotes.map((note: any) => {
-                    return <Note key={note.id} note={note} />;
+                  {notes.map((note: any) => {
+                    return <Note key={note.noteId} note={note} />;
                   })}
                 </MasonryGrid>
               </div>

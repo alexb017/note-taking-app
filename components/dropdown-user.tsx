@@ -1,22 +1,34 @@
-import UserIcon from './icons/user';
-import NotesIcon from './icons/notes';
-import BellIcon from './icons/bell';
-import ArchiveIcon from './icons/archive';
-import TrashIcon from './icons/trash';
-import LogoutIcon from './icons/logout';
 import { useRouter } from 'next/navigation';
 import { UserProfile } from '@/lib/types';
-import { useContext } from 'react';
-import { AuthContext } from '@/app/auth-context';
+import { Button } from '@/components/ui/button';
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuTrigger,
+  DropdownMenuSeparator,
+  DropdownMenuGroup,
+} from '@/components/ui/dropdown-menu';
+import {
+  UserIcon,
+  ArrowLeftEndOnRectangleIcon,
+  DocumentTextIcon,
+  BellIcon,
+  ArchiveBoxIcon,
+  TrashIcon,
+} from '@heroicons/react/24/outline';
+import useUserProfile from '@/lib/use-user-profile';
 
 export default function DropdownUser({
-  user,
-  screen,
+  uid,
+  onUserSignOut,
 }: {
-  user: UserProfile;
-  screen: 'desktop' | 'mobile';
+  uid: string;
+  onUserSignOut: () => void;
 }) {
-  const { userSignOut } = useContext(AuthContext);
+  const [userProfile] = useUserProfile(uid) as [UserProfile];
   const router = useRouter();
 
   const links = [
@@ -24,38 +36,77 @@ export default function DropdownUser({
       name: 'My Profile',
       url: '/profile',
       icon: UserIcon,
-      key: 'my_profile',
-      textvalue: 'my_profile',
     },
     {
       name: 'Notes',
       url: '/notes',
-      icon: NotesIcon,
-      key: 'my_notes',
-      textvalue: 'my_notes',
+      icon: DocumentTextIcon,
     },
     {
       name: 'Reminders',
       url: '/notes/reminders',
       icon: BellIcon,
-      key: 'my_reminders',
-      textvalue: 'my_reminders',
     },
     {
       name: 'Archive',
       url: '/notes/archive',
-      icon: ArchiveIcon,
-      key: 'my_archive',
-      textvalue: 'my_archive',
+      icon: ArchiveBoxIcon,
     },
     {
       name: 'Trash',
       url: '/notes/trash',
       icon: TrashIcon,
-      key: 'my_trash',
-      textvalue: 'my_trash',
     },
   ];
 
-  return <></>;
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button className="flex items-center gap-2 p-0 h-9 bg-transparent shadow-none hover:bg-transparent hover:opacity-80 focus-visible:ring-0">
+          <Avatar className="w-9 h-9">
+            <AvatarImage
+              src={userProfile?.photoURL}
+              alt={userProfile?.displayName}
+            />
+            <AvatarFallback>{userProfile?.displayName}</AvatarFallback>
+          </Avatar>
+          <div className="hidden sm:flex flex-col items-start">
+            <span className="text-black dark:text-white">
+              {userProfile?.displayName}
+            </span>
+            <span className="text-xs text-zinc-400">{userProfile?.email}</span>
+          </div>
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="w-56 rounded-xl shadow-2xl" align="end">
+        <DropdownMenuLabel>Account</DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuGroup>
+          {links.map((link) => (
+            <DropdownMenuItem
+              className="rounded-lg"
+              key={link.name}
+              onClick={() => router.push(link.url)}
+            >
+              <link.icon className="w-5 h-5 text-gray-500" />
+              <span className="ml-2">{link.name}</span>
+            </DropdownMenuItem>
+          ))}
+        </DropdownMenuGroup>
+        <DropdownMenuSeparator />
+        <DropdownMenuGroup>
+          <DropdownMenuItem
+            className="rounded-lg"
+            onClick={async () => {
+              await onUserSignOut();
+              router.push('/');
+            }}
+          >
+            <ArrowLeftEndOnRectangleIcon className="w-5 h-5 text-gray-500" />
+            <span className="ml-2">Sign out</span>
+          </DropdownMenuItem>
+        </DropdownMenuGroup>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
 }
