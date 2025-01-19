@@ -21,7 +21,7 @@ export default function UploadImageToStorage({
       <Tooltip>
         <TooltipTrigger
           asChild
-          className="w-8 h-8 rounded-full bg-transparent shadow-none hover:bg-zinc-900/10"
+          className="p-0 w-8 h-8 rounded-full bg-transparent shadow-none hover:bg-zinc-900/10 dark:hover:bg-zinc-100/10"
         >
           <Button
             onClick={() => {
@@ -58,7 +58,7 @@ export default function UploadImageToStorage({
               // input.click();
             }}
           >
-            <PhotoIcon className="w-4 h-4 text-gray-500" />
+            <PhotoIcon className="w-4 h-4 text-black dark:text-white" />
           </Button>
         </TooltipTrigger>
         <TooltipContent>Add image</TooltipContent>

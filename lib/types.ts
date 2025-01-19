@@ -8,7 +8,7 @@ export type CreateNote = {
     src: string;
     altName: string;
   };
-  reminder: string;
+  reminder: Date;
   isArchived: boolean;
   isPinned: boolean;
   isDeleted: boolean;
@@ -31,7 +31,7 @@ export type Note = {
     src: string;
     altName: string;
   };
-  reminder: string;
+  reminder: Date;
   isArchived: boolean;
   isPinned: boolean;
   isDeleted: boolean;

@@ -1,6 +1,6 @@
 import { AuthContext } from '@/app/auth-context';
 import MasonryGrid from '@/components/masonry-grid';
-import Note from '@/components/note';
+import Note from '@/app/notes/note';
 import useNotes from '@/lib/use-notes';
 import { useContext } from 'react';
 

@@ -15,7 +15,7 @@ import {
 import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
 import { Tooltip } from '@/components/ui/tooltip';
-import EditIcon from './icons/edit';
+import EditIcon from '../../components/icons/edit';
 import {
   ReadonlyURLSearchParams,
   usePathname,
@@ -24,15 +24,15 @@ import {
 } from 'next/navigation';
 import DeleteImageFromStorage from './detele-image';
 import { updateBgColor, updateContent, updateReminder } from '@/lib/actions';
-import ClockIcon from './icons/clock';
+import ClockIcon from '../../components/icons/clock';
 import AddReminder from './add-reminder';
 import AddColor from './add-color';
-import AddToArchiveButton from './add-to-archive-button';
-import DeleteUndoNoteButton from './delete-undo-note-button';
-import CloseIcon from './icons/close';
+import AddToArchiveButton from './add-to-archive';
+import DeleteUndoNoteButton from './delete-undo-note';
+import CloseIcon from '../../components/icons/close';
 import UploadImageToStorage from './upload-image';
 import { Note, ImageData, BgColor } from '@/lib/types';
-import AddToPinButton from './add-to-pin-button';
+import AddToPinButton from './add-to-pin';
 
 export default function EditNote({
   note,
@@ -42,7 +42,7 @@ export default function EditNote({
   onContentChange,
 }: {
   note: Note;
-  onReminderClick: (date: string) => void;
+  onReminderClick: (date: Date) => void;
   onColorClick: (colors: BgColor) => void;
   onUploadImage: (img: ImageData) => void;
   onContentChange: (text: string) => void;

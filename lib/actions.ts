@@ -77,7 +77,7 @@ export async function updateContent(uid: string, noteId: string, text: string) {
 export async function updateReminder(
   uid: string,
   noteId: string,
-  reminder: string
+  reminder: Date
 ) {
   try {
     const reminderRef = doc(db, 'users', uid, 'notes', noteId);

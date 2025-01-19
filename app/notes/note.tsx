@@ -18,17 +18,18 @@ import {
   updateImage,
   updateReminder,
 } from '@/lib/actions';
-import AddToArchiveButton from './add-to-archive-button';
-import DeleteUndoNoteButton from './delete-undo-note-button';
-import DeleteNoteButton from './delete-note-button';
-import ClockIcon from './icons/clock';
+import AddToArchiveButton from './add-to-archive';
+import DeleteUndoNoteButton from './delete-undo-note';
+import DeleteNoteButton from './delete-note';
+import { ClockIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import AddReminder from './add-reminder';
 import EditNote from './edit-note';
-import CloseIcon from './icons/close';
 import UploadImageToStorage from './upload-image';
 import DeleteImageFromStorage from './detele-image';
 import type { Note, ImageData, BgColor } from '@/lib/types';
-import AddToPinButton from './add-to-pin-button';
+import AddToPinButton from './add-to-pin';
+import { format } from 'date-fns';
+import { Button } from '@/components/ui/button';
 
 export default function Note({ note }: { note: Note }) {
   const [noteData, setNoteData] = useState(note);
@@ -39,7 +40,7 @@ export default function Note({ note }: { note: Note }) {
     await updateContent(note?.userId, note?.noteId, text);
   }
 
-  async function handleReminderClick(date: string) {
+  async function handleReminderClick(date: Date) {
     setNoteData({ ...noteData, reminder: date });
     await updateReminder(noteData?.userId, noteData?.noteId, date);
   }
@@ -94,8 +95,22 @@ export default function Note({ note }: { note: Note }) {
 
       {noteData?.reminder && (
         <div className="flex items-center px-3">
-          <Badge className="cursor-pointer group/chip bg-zinc-900/10 hover:bg-zinc-900/15 dark:bg-zinc-100/10 dark:hover:bg-zinc-100/15">
-            {noteData?.reminder}
+          <Badge
+            variant="secondary"
+            className="relative ml-3 px-1 pr-[6px] text-zinc-400 gap-1 rounded-full dark:bg-zinc-700 group cursor-pointer"
+          >
+            <ClockIcon className="w-4 h-4" />
+            {noteData?.reminder
+              ? format(noteData?.reminder, 'PPP')
+              : 'No date selected'}
+            <Button
+              variant="secondary"
+              size="icon"
+              className="opacity-0 group-hover:opacity-100 absolute top-0 right-0 p-0 w-[22px] h-[22px] rounded-full transition-opacity duration-200 ease-in"
+              onClick={() => handleReminderClick(new Date())}
+            >
+              <XMarkIcon className="w-4 h-4" />
+            </Button>
           </Badge>
         </div>
       )}
@@ -113,11 +128,11 @@ export default function Note({ note }: { note: Note }) {
               />
               <AddReminder
                 reminder={noteData?.reminder}
-                onReminderClick={handleReminderClick}
+                setReminder={handleReminderClick}
               />
               <AddColor
-                colors={noteData?.bgColor}
-                onColorChange={handleColorClick}
+                bg={noteData?.bgColor}
+                onColorsChange={handleColorClick}
               />
               <UploadImageToStorage
                 uid={noteData?.userId}

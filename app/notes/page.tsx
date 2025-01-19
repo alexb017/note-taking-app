@@ -1,9 +1,9 @@
 'use client';
 
 import { useContext } from 'react';
-import CreateNote from '@/components/create-note';
+import CreateNote from '@/app/notes/create-note';
 import { AuthContext } from '../auth-context';
-import Note from '@/components/note';
+import Note from './note';
 import useNotes from '@/lib/use-notes';
 import MasonryGrid from '@/components/masonry-grid';
 import { User } from 'firebase/auth';
