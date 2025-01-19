@@ -84,7 +84,7 @@ export default function Note({ note }: { note: Note }) {
           <div className="absolute right-1 bottom-1 z-10 opacity-0 group-hover:opacity-100 transition-opacity ease-in-out">
             <DeleteImageFromStorage
               imageUrl={noteData?.image.src}
-              onHandleImageUpload={handleImageUpload}
+              onSetImageUpload={handleImageUpload}
             />
           </div>
         </CardHeader>
@@ -136,7 +136,7 @@ export default function Note({ note }: { note: Note }) {
               />
               <UploadImageToStorage
                 uid={noteData?.userId}
-                onHandleImageUpload={handleImageUpload}
+                onSetImageUpload={handleImageUpload}
               />
               <AddToArchiveButton
                 uid={noteData?.userId}

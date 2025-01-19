@@ -23,7 +23,7 @@ export default function AddReminder({
 }) {
   return (
     <Popover>
-      <TooltipProvider>
+      <TooltipProvider delayDuration={0}>
         <Tooltip>
           <TooltipTrigger asChild className="p-0">
             <PopoverTrigger asChild>

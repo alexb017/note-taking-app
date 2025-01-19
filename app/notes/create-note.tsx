@@ -57,8 +57,24 @@ export default function CreateNote() {
 
   return (
     <Card
-      className={`w-full max-w-[512px] rounded-xl ${backgroundColors.light} ${backgroundColors.dark}`}
+      className={`relative w-full max-w-[512px] rounded-xl ${backgroundColors.light} ${backgroundColors.dark}`}
     >
+      {imageURL?.src && (
+        <CardHeader className="relative w-full max-h-max overflow-hidden p-0 rounded-t-xl rounded-b-none">
+          <img
+            src={imageURL?.src}
+            alt={imageURL?.altName}
+            className="w-full h-auto rounded-b-none"
+          />
+          <div className="absolute right-2 bottom-2 z-10">
+            <DeleteImageFromStorage
+              imageUrl={imageURL?.src}
+              onSetImageUpload={setImageURL}
+            />
+          </div>
+        </CardHeader>
+      )}
+
       <CardContent className="p-0 py-2">
         <Label
           htmlFor="message"
@@ -101,7 +117,7 @@ export default function CreateNote() {
             onColorsChange={setBackgroundColors}
           />
           <UploadImageToStorage
-            onHandleImageUpload={handleImageUpload}
+            onSetImageUpload={setImageURL}
             uid={user?.uid}
           />
         </div>

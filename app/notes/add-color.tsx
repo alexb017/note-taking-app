@@ -39,7 +39,7 @@ export default function AddColor({
 
   return (
     <Popover>
-      <TooltipProvider>
+      <TooltipProvider delayDuration={0}>
         <Tooltip>
           <TooltipTrigger asChild className="p-0">
             <PopoverTrigger asChild>
@@ -59,7 +59,7 @@ export default function AddColor({
           <Separator />
           <div className="flex items-center flex-wrap gap-[2px] p-2 px-[10px]">
             {bgColors.map((color, index) => (
-              <TooltipProvider key={index}>
+              <TooltipProvider key={index} delayDuration={0}>
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <Button
