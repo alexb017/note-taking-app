@@ -28,19 +28,21 @@ import UploadImageToStorage from './upload-image';
 import DeleteImageFromStorage from './detele-image';
 import type { Note, ImageData, BgColor } from '@/lib/types';
 import AddToPinButton from './add-to-pin';
-import { format } from 'date-fns';
+import { format, fromUnixTime } from 'date-fns';
 import { Button } from '@/components/ui/button';
+import EditReminder from './edit-reminder';
+import { Timestamp } from 'firebase/firestore';
 
 export default function Note({ note }: { note: Note }) {
   const [noteData, setNoteData] = useState(note);
-  //console.log(noteData);
+  console.log(noteData);
 
   async function handleContentChange(text: string) {
     setNoteData({ ...noteData, content: text });
     await updateContent(note?.userId, note?.noteId, text);
   }
 
-  async function handleReminderClick(date: Date) {
+  async function handleReminderClick(date?: Timestamp) {
     setNoteData({ ...noteData, reminder: date });
     await updateReminder(noteData?.userId, noteData?.noteId, date);
   }
@@ -59,7 +61,7 @@ export default function Note({ note }: { note: Note }) {
     <Card
       className={`relative w-full md:w-[240px] mb-4 shadow group ${noteData?.bgColor.light} ${noteData?.bgColor.dark}`}
     >
-      {!noteData?.isDeleted ? (
+      {!noteData?.isDeleted && (
         <>
           <div className="absolute right-2 top-2 z-20 opacity-0 group-hover:opacity-100 transition-opacity ease-in-out">
             <AddToPinButton
@@ -70,14 +72,14 @@ export default function Note({ note }: { note: Note }) {
             />
           </div>
         </>
-      ) : null}
+      )}
 
-      {noteData?.image.src ? (
-        <CardHeader className="relative w-full md:w-[240px] p-0 rounded-b-none">
+      {noteData?.image.src && (
+        <CardHeader className="relative w-full md:w-[240px] p-0 overflow-hidden rounded-t-xl rounded-b-none">
           <Image
             alt={noteData?.image.altName}
             src={noteData?.image.src}
-            className="w-full h-auto rounded-b-none"
+            className="w-full h-auto"
             width={240}
             height={160}
           />
@@ -88,31 +90,16 @@ export default function Note({ note }: { note: Note }) {
             />
           </div>
         </CardHeader>
-      ) : null}
+      )}
       <CardDescription className="py-2 px-5 cursor-default">
         <p className="whitespace-pre-wrap text-base">{noteData?.content}</p>
       </CardDescription>
 
       {noteData?.reminder && (
-        <div className="flex items-center px-3">
-          <Badge
-            variant="secondary"
-            className="relative ml-3 px-1 pr-[6px] text-zinc-400 gap-1 rounded-full dark:bg-zinc-700 group cursor-pointer"
-          >
-            <ClockIcon className="w-4 h-4" />
-            {noteData?.reminder
-              ? format(noteData?.reminder, 'PPP')
-              : 'No date selected'}
-            <Button
-              variant="secondary"
-              size="icon"
-              className="opacity-0 group-hover:opacity-100 absolute top-0 right-0 p-0 w-[22px] h-[22px] rounded-full transition-opacity duration-200 ease-in"
-              onClick={() => handleReminderClick(new Date())}
-            >
-              <XMarkIcon className="w-4 h-4" />
-            </Button>
-          </Badge>
-        </div>
+        <EditReminder
+          reminder={noteData?.reminder}
+          setReminder={handleReminderClick}
+        />
       )}
 
       <CardFooter className="flex items-center justify-between pl-[4px] pb-[4px] opacity-0 group-hover:opacity-100 transition-opacity ease-in-out">

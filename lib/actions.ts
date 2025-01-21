@@ -10,6 +10,8 @@ import {
   addDoc,
   deleteDoc,
   updateDoc,
+  Timestamp,
+  deleteField,
 } from 'firebase/firestore';
 import { db } from './firebase';
 import { Note, CreateNote, ImageData, BgColor, UserProfile } from './types';
@@ -77,11 +79,13 @@ export async function updateContent(uid: string, noteId: string, text: string) {
 export async function updateReminder(
   uid: string,
   noteId: string,
-  reminder: Date
+  reminder: Timestamp | undefined
 ) {
   try {
     const reminderRef = doc(db, 'users', uid, 'notes', noteId);
-    await updateDoc(reminderRef, { reminder: reminder });
+
+    // If reminder is undefined, set the field to null
+    await updateDoc(reminderRef, { reminder: reminder ?? null });
   } catch (error) {
     console.error('Error to update reminder: ', error);
   }

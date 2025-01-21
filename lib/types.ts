@@ -1,46 +1,37 @@
-export type CreateNote = {
-  content: string;
-  bgColor: {
-    light: string;
-    dark: string;
-  };
-  image: {
-    src: string;
-    altName: string;
-  };
-  reminder: Date;
-  isArchived: boolean;
-  isPinned: boolean;
-  isDeleted: boolean;
-  userId: string;
-};
+import { Timestamp } from 'firebase/firestore';
 
 export type ImageData = {
   src: string;
   altName: string;
 };
 
+export type BgColor = {
+  light: string;
+  dark: string;
+  tooltip: string;
+};
+
+export type CreateNote = {
+  content: string;
+  bgColor?: BgColor;
+  image?: ImageData;
+  reminder?: Timestamp | undefined;
+  isArchived?: boolean;
+  isPinned?: boolean;
+  isDeleted?: boolean;
+  userId: string;
+};
+
 export type Note = {
   noteId: string;
   content: string;
-  bgColor: {
-    light: string;
-    dark: string;
-  };
-  image: {
-    src: string;
-    altName: string;
-  };
-  reminder: Date;
+  bgColor: BgColor;
+  image: ImageData;
+  reminder: Timestamp | undefined;
   isArchived: boolean;
   isPinned: boolean;
   isDeleted: boolean;
   userId: string;
-};
-
-export type BgColor = {
-  light: string;
-  dark: string;
 };
 
 export type UserProfile = {

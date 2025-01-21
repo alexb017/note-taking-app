@@ -33,6 +33,7 @@ import CloseIcon from '../../components/icons/close';
 import UploadImageToStorage from './upload-image';
 import { Note, ImageData, BgColor } from '@/lib/types';
 import AddToPinButton from './add-to-pin';
+import { Timestamp } from 'firebase/firestore';
 
 export default function EditNote({
   note,
@@ -42,7 +43,7 @@ export default function EditNote({
   onContentChange,
 }: {
   note: Note;
-  onReminderClick: (date: Date) => void;
+  onReminderClick: (date: Timestamp | undefined) => void;
   onColorClick: (colors: BgColor) => void;
   onUploadImage: (img: ImageData) => void;
   onContentChange: (text: string) => void;

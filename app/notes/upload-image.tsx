@@ -59,7 +59,9 @@ export default function UploadImageToStorage({
             <PhotoIcon className="w-4 h-4 text-black dark:text-white" />
           </Button>
         </TooltipTrigger>
-        <TooltipContent>Add image</TooltipContent>
+        <TooltipContent side="bottom" className="bg-zinc-600 dark:text-white">
+          Add image
+        </TooltipContent>
       </Tooltip>
     </TooltipProvider>
   );

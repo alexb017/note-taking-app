@@ -15,10 +15,12 @@ import { Badge } from '@/components/ui/badge';
 import { useContext, useState } from 'react';
 import AddColor from './add-color';
 import AddReminder from './add-reminder';
+import EditReminder from './edit-reminder';
+import AddToArchive from './add-to-archive';
 import UploadImageToStorage from './upload-image';
 import {
   ClockIcon,
-  ArchiveBoxIcon,
+  ArchiveBoxArrowDownIcon,
   XMarkIcon,
   StarIcon,
   SwatchIcon,
@@ -30,29 +32,62 @@ import UpdateDatePickerButton from '../../components/update-date-picker-button';
 import { ImageData, BgColor } from '@/lib/types';
 import { User } from 'firebase/auth';
 import { format } from 'date-fns';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
+import Image from 'next/image';
+import { Timestamp } from 'firebase/firestore';
 
 export default function CreateNote() {
   const { user } = useContext(AuthContext) as { user: User };
   const [content, setContent] = useState('');
-  const [reminder, setReminder] = useState<Date>();
+  const [reminder, setReminder] = useState<Timestamp>();
   const [backgroundColors, setBackgroundColors] = useState<BgColor>({
     light: 'bg-white',
     dark: 'dark:bg-zinc-900',
+    tooltip: 'Default',
   });
   const [imageURL, setImageURL] = useState<ImageData>({ src: '', altName: '' });
-  const [isArchived, setIsArchived] = useState(false);
-  const [isPinned, setIsPinned] = useState(false);
 
-  function handleReminderClick(date: Date) {
-    setReminder(date);
-  }
+  async function handleCreateNote(archive: boolean, pinned: boolean) {
+    console.log('Create note', {
+      userId: user?.uid,
+      content: content || 'Empty note',
+      reminder,
+      bgColor: backgroundColors,
+      image: imageURL,
+      isArchived: archive,
+      isPinned: pinned,
+      isDeleted: false,
+    });
 
-  function handleColorClick(colors: BgColor) {
-    setBackgroundColors(colors);
-  }
+    console.log('typeof reminder', typeof reminder);
 
-  function handleImageUpload(data: ImageData) {
-    setImageURL(data);
+    await createNote(
+      {
+        userId: user?.uid,
+        content: content || 'Empty note',
+        bgColor: backgroundColors,
+        reminder,
+        image: imageURL,
+        isArchived: archive,
+        isPinned: pinned,
+        isDeleted: false,
+      },
+      user?.uid
+    );
+
+    setContent('');
+    setReminder(undefined);
+    setBackgroundColors({
+      light: 'bg-white',
+      dark: 'dark:bg-zinc-900',
+      tooltip: 'Default',
+    });
+    setImageURL({ src: '', altName: '' });
   }
 
   return (
@@ -61,9 +96,11 @@ export default function CreateNote() {
     >
       {imageURL?.src && (
         <CardHeader className="relative w-full max-h-max overflow-hidden p-0 rounded-t-xl rounded-b-none">
-          <img
+          <Image
             src={imageURL?.src}
             alt={imageURL?.altName}
+            width={512}
+            height={256}
             className="w-full h-auto rounded-b-none"
           />
           <div className="absolute right-2 bottom-2 z-10">
@@ -92,6 +129,10 @@ export default function CreateNote() {
       </CardContent>
 
       {reminder && (
+        <EditReminder reminder={reminder} setReminder={setReminder} />
+      )}
+
+      {/* {reminder && (
         <Badge
           variant="secondary"
           className="relative ml-3 px-1 pr-[6px] text-zinc-400 gap-1 rounded-full dark:bg-zinc-700 group cursor-pointer"
@@ -107,9 +148,9 @@ export default function CreateNote() {
             <XMarkIcon className="w-4 h-4" />
           </Button>
         </Badge>
-      )}
+      )} */}
 
-      <CardFooter className="p-0 px-[8px] pb-[2px]">
+      <CardFooter className="justify-between p-0 px-[4px] pb-[2px]">
         <div className="flex items-center gap-4">
           <AddReminder reminder={reminder} setReminder={setReminder} />
           <AddColor
@@ -120,7 +161,34 @@ export default function CreateNote() {
             onSetImageUpload={setImageURL}
             uid={user?.uid}
           />
+          <TooltipProvider delayDuration={0}>
+            <Tooltip>
+              <TooltipTrigger
+                asChild
+                className="p-0 w-8 h-8 rounded-full bg-transparent shadow-none hover:bg-zinc-900/10 dark:hover:bg-zinc-100/10"
+              >
+                <Button
+                  onClick={async () => await handleCreateNote(true, false)}
+                >
+                  <ArchiveBoxArrowDownIcon className="h-4 w-4 text-black dark:text-white" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent
+                side="bottom"
+                className="bg-zinc-600 dark:text-white"
+              >
+                Archive
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         </div>
+        <Button
+          variant="ghost"
+          className="rounded-xl"
+          onClick={() => handleCreateNote(false, false)}
+        >
+          Save note
+        </Button>
       </CardFooter>
     </Card>
   );

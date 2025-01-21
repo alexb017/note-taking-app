@@ -37,7 +37,9 @@ export default function DeleteImageFromStorage({
             <TrashIcon className="h-4 w-4 text-white" />
           </Button>
         </TooltipTrigger>
-        <TooltipContent>Remove</TooltipContent>
+        <TooltipContent side="bottom" className="bg-zinc-600 dark:text-white">
+          Remove
+        </TooltipContent>
       </Tooltip>
     </TooltipProvider>
   );

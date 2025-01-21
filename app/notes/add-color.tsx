@@ -48,7 +48,9 @@ export default function AddColor({
               </Button>
             </PopoverTrigger>
           </TooltipTrigger>
-          <TooltipContent>Background options</TooltipContent>
+          <TooltipContent side="bottom" className="bg-zinc-600 dark:text-white">
+            Background options
+          </TooltipContent>
         </Tooltip>
       </TooltipProvider>
       <PopoverContent className="w-max p-0 items-start justify-start rounded-xl shadow-2xl dark:bg-zinc-800">
@@ -81,7 +83,12 @@ export default function AddColor({
                       )}
                     ></Button>
                   </TooltipTrigger>
-                  <TooltipContent>{color.tooltip}</TooltipContent>
+                  <TooltipContent
+                    side="bottom"
+                    className="bg-zinc-600 dark:text-white"
+                  >
+                    {color.tooltip}
+                  </TooltipContent>
                 </Tooltip>
               </TooltipProvider>
             ))}
