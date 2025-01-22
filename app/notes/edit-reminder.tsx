@@ -7,7 +7,6 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover';
 import { format } from 'date-fns';
-import { cn } from '@/lib/utils';
 import { Timestamp } from 'firebase/firestore';
 
 export default function EditReminder({
@@ -30,7 +29,7 @@ export default function EditReminder({
 
   return (
     <div className="ml-3 w-max">
-      <div className="relative group">
+      <div className="relative group/rr">
         <Popover>
           <PopoverTrigger
             asChild
@@ -53,7 +52,7 @@ export default function EditReminder({
         <Button
           variant="secondary"
           size="icon"
-          className="absolute top-0 right-0 z-20 p-0 w-[22px] h-[22px] opacity-0 group-hover:opacity-100 rounded-full transition-opacity duration-200 ease-in"
+          className="absolute top-0 right-0 z-20 p-0 w-5 h-5 opacity-0 group-hover/rr:opacity-100 backdrop-blur rounded-full transition-opacity duration-200 ease-in"
           onClick={() => setReminder(undefined)}
         >
           <XMarkIcon className="w-4 h-4" />
