@@ -40,6 +40,8 @@ import {
 } from '@/components/ui/tooltip';
 import Image from 'next/image';
 import { Timestamp } from 'firebase/firestore';
+import PinIcon from '@/components/icons/pin';
+import { cn } from '@/lib/utils';
 
 export default function CreateNote() {
   const { user } = useContext(AuthContext) as { user: User };
@@ -56,7 +58,7 @@ export default function CreateNote() {
     console.log('Create note', {
       userId: user?.uid,
       content: content || 'Empty note',
-      reminder,
+      reminder: reminder || null,
       bgColor: backgroundColors,
       image: imageURL,
       isArchived: archive,
@@ -71,7 +73,7 @@ export default function CreateNote() {
         userId: user?.uid,
         content: content || 'Empty note',
         bgColor: backgroundColors,
-        reminder,
+        reminder: reminder || null,
         image: imageURL,
         isArchived: archive,
         isPinned: pinned,
@@ -94,6 +96,31 @@ export default function CreateNote() {
     <Card
       className={`relative w-full max-w-[512px] rounded-xl ${backgroundColors.light} ${backgroundColors.dark}`}
     >
+      <div className="absolute top-2 right-2 z-50">
+        <TooltipProvider delayDuration={0}>
+          <Tooltip>
+            <TooltipTrigger
+              asChild
+              className={cn(
+                'p-0 w-8 h-8 rounded-full bg-transparent shadow-none text-black dark:text-white hover:bg-zinc-900/10 dark:hover:bg-zinc-100/10',
+                imageURL.src &&
+                  'backdrop-blur-lg text-white bg-zinc-900/50 hover:bg-zinc-900/60 dark:hover:bg-zinc-900/60'
+              )}
+            >
+              <Button onClick={async () => await handleCreateNote(false, true)}>
+                <PinIcon classname="w-4 h-4 -rotate-45" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent
+              side="bottom"
+              className="bg-zinc-600 dark:text-white"
+            >
+              Pinned
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      </div>
+
       {imageURL?.src && (
         <CardHeader className="relative w-full max-h-max overflow-hidden p-0 rounded-t-xl rounded-b-none">
           <Image
@@ -132,24 +159,6 @@ export default function CreateNote() {
         <EditReminder reminder={reminder} setReminder={setReminder} />
       )}
 
-      {/* {reminder && (
-        <Badge
-          variant="secondary"
-          className="relative ml-3 px-1 pr-[6px] text-zinc-400 gap-1 rounded-full dark:bg-zinc-700 group cursor-pointer"
-        >
-          <ClockIcon className="w-4 h-4" />
-          {reminder ? format(reminder, 'PPP') : 'No date selected'}
-          <Button
-            variant="secondary"
-            size="icon"
-            className="opacity-0 group-hover:opacity-100 absolute top-0 right-0 p-0 w-[22px] h-[22px] rounded-full transition-opacity duration-200 ease-in"
-            onClick={() => setReminder(undefined)}
-          >
-            <XMarkIcon className="w-4 h-4" />
-          </Button>
-        </Badge>
-      )} */}
-
       <CardFooter className="justify-between p-0 px-[4px] pb-[2px]">
         <div className="flex items-center gap-4">
           <AddReminder reminder={reminder} setReminder={setReminder} />
@@ -184,7 +193,7 @@ export default function CreateNote() {
         </div>
         <Button
           variant="ghost"
-          className="rounded-xl"
+          className="rounded-xl hover:bg-zinc-900/10 hover:dark:bg-zinc-100/10"
           onClick={() => handleCreateNote(false, false)}
         >
           Save note

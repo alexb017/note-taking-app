@@ -15,7 +15,7 @@ export type CreateNote = {
   content: string;
   bgColor?: BgColor;
   image?: ImageData;
-  reminder?: Timestamp | undefined;
+  reminder?: Timestamp | null;
   isArchived?: boolean;
   isPinned?: boolean;
   isDeleted?: boolean;
@@ -27,7 +27,7 @@ export type Note = {
   content: string;
   bgColor: BgColor;
   image: ImageData;
-  reminder: Timestamp | undefined;
+  reminder: Timestamp | null;
   isArchived: boolean;
   isPinned: boolean;
   isDeleted: boolean;

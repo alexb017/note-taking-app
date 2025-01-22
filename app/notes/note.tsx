@@ -8,7 +8,6 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import Image from 'next/image';
 import { useState } from 'react';
 import AddColor from './add-color';
@@ -21,15 +20,12 @@ import {
 import AddToArchiveButton from './add-to-archive';
 import DeleteUndoNoteButton from './delete-undo-note';
 import DeleteNoteButton from './delete-note';
-import { ClockIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import AddReminder from './add-reminder';
 import EditNote from './edit-note';
 import UploadImageToStorage from './upload-image';
 import DeleteImageFromStorage from './detele-image';
 import type { Note, ImageData, BgColor } from '@/lib/types';
 import AddToPinButton from './add-to-pin';
-import { format, fromUnixTime } from 'date-fns';
-import { Button } from '@/components/ui/button';
 import EditReminder from './edit-reminder';
 import { Timestamp } from 'firebase/firestore';
 
@@ -43,8 +39,8 @@ export default function Note({ note }: { note: Note }) {
   }
 
   async function handleReminderClick(date?: Timestamp) {
-    setNoteData({ ...noteData, reminder: date });
-    await updateReminder(noteData?.userId, noteData?.noteId, date);
+    setNoteData({ ...noteData, reminder: date ?? null });
+    await updateReminder(noteData?.userId, noteData?.noteId, date ?? null);
   }
 
   async function handleColorClick(colors: BgColor) {
@@ -59,7 +55,7 @@ export default function Note({ note }: { note: Note }) {
 
   return (
     <Card
-      className={`relative w-full md:w-[240px] mb-4 shadow group ${noteData?.bgColor.light} ${noteData?.bgColor.dark}`}
+      className={`relative w-full md:w-[240px] mb-4 shadow group overflow-hidden ${noteData?.bgColor.light} ${noteData?.bgColor.dark}`}
     >
       {!noteData?.isDeleted && (
         <>
@@ -82,6 +78,7 @@ export default function Note({ note }: { note: Note }) {
             className="w-full h-auto"
             width={240}
             height={160}
+            style={{ width: 'auto', height: 'auto' }}
           />
           <div className="absolute right-1 bottom-1 z-10 opacity-0 group-hover:opacity-100 transition-opacity ease-in-out">
             <DeleteImageFromStorage
@@ -114,7 +111,7 @@ export default function Note({ note }: { note: Note }) {
                 onContentChange={handleContentChange}
               />
               <AddReminder
-                reminder={noteData?.reminder}
+                reminder={noteData?.reminder ?? undefined}
                 setReminder={handleReminderClick}
               />
               <AddColor
