@@ -16,6 +16,7 @@ import {
 import { db } from './firebase';
 import { Note, CreateNote, ImageData, BgColor, UserProfile } from './types';
 import { deleteUser, User } from 'firebase/auth';
+import { getStorage, ref, deleteObject } from 'firebase/storage';
 
 export async function createNote(note: CreateNote, uid: string) {
   try {
@@ -101,6 +102,19 @@ export async function updateBgColor(
     await updateDoc(colorRef, { bgColor: colors });
   } catch (error) {
     console.error('Error to update bg color: ', error);
+  }
+}
+
+export async function deleteImageFromStorage(imageURL: string) {
+  try {
+    // Delete the image from the storage
+    const storage = getStorage();
+    const storageRef = ref(storage, imageURL);
+
+    // Delete the file
+    await deleteObject(storageRef);
+  } catch (error) {
+    console.error('Error to delete image: ', error);
   }
 }
 

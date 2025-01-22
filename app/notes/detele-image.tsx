@@ -7,7 +7,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
-import { getStorage, ref, deleteObject } from 'firebase/storage';
+import { deleteImageFromStorage } from '@/lib/actions';
 
 export default function DeleteImageFromStorage({
   imageUrl,
@@ -22,14 +22,10 @@ export default function DeleteImageFromStorage({
         <TooltipTrigger asChild className="p-0">
           <Button
             onClick={async () => {
-              // Get a reference to the file
-              const storage = getStorage();
-              const storageRef = ref(storage, imageUrl);
+              // Delete image from storage
+              await deleteImageFromStorage(imageUrl);
 
-              // Delete the file
-              await deleteObject(storageRef);
-
-              // Handle image upload
+              // Reset image data
               onSetImageUpload({ src: '', altName: '' });
             }}
             className="w-8 h-8 bg-zinc-900/50 backdrop-blur-lg hover:bg-zinc-900/60"
