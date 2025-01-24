@@ -27,16 +27,16 @@ export default function AddToPinButton({
         <TooltipTrigger
           asChild
           className={cn(
-            'p-0 w-8 h-8 rounded-full bg-transparent shadow-none text-black dark:text-white hover:bg-zinc-900/10 dark:hover:bg-zinc-100/10',
+            'p-0 w-10 h-10 [&_svg]:size-6 rounded-full bg-transparent shadow-none text-black dark:text-white hover:bg-zinc-900/10 dark:hover:bg-zinc-100/10',
             hasImage &&
               'backdrop-blur-lg text-white bg-zinc-900/50 hover:bg-zinc-900/60 dark:hover:bg-zinc-900/60'
           )}
         >
           <Button onClick={async () => await updateIsPinned(uid, noteId)}>
             {!isPinned ? (
-              <PinIcon classname="w-4 h-4 -rotate-45" />
+              <PinIcon classname="w-6 h-6 -rotate-45" />
             ) : (
-              <PinBoldIcon classname="w-4 h-4 -rotate-45" />
+              <PinBoldIcon classname="w-6 h-6 -rotate-45" />
             )}
           </Button>
         </TooltipTrigger>

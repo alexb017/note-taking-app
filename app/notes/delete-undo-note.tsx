@@ -22,13 +22,13 @@ export default function DeleteUndoNoteButton({
       <Tooltip>
         <TooltipTrigger
           asChild
-          className="p-0 w-8 h-8 rounded-full bg-transparent shadow-none hover:bg-zinc-900/10 dark:hover:bg-zinc-100/10"
+          className="p-0 w-9 h-9 [&_svg]:size-5 rounded-full bg-transparent shadow-none hover:bg-zinc-900/10 dark:hover:bg-zinc-100/10"
         >
           <Button onClick={async () => await addNoteToTrash(uid, noteId)}>
             {!isDeleted ? (
-              <TrashIcon className="h-4 w-4 text-black dark:text-white" />
+              <TrashIcon className="h-5 w-5 text-black dark:text-white" />
             ) : (
-              <ArrowUturnLeftIcon className="h-4 w-4 text-black dark:text-white" />
+              <ArrowUturnLeftIcon className="h-5 w-5 text-black dark:text-white" />
             )}
           </Button>
         </TooltipTrigger>

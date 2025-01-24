@@ -2,10 +2,12 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import NotesIcon from './icons/notes';
-import ArchiveIcon from './icons/archive';
-import BellIcon from './icons/bell';
-import TrashIcon from './icons/trash';
+import {
+  DocumentTextIcon,
+  TrashIcon,
+  BellIcon,
+  ArchiveBoxArrowDownIcon,
+} from '@heroicons/react/24/outline';
 
 export default function Sidebar() {
   const pathname = usePathname();
@@ -22,7 +24,7 @@ export default function Sidebar() {
                 : 'hover:bg-zinc-100 dark:hover:bg-zinc-800'
             }`}
           >
-            <NotesIcon classname="h-5" />
+            <DocumentTextIcon className="w-5 h-5" />
             <div className="hidden xl:block">Notes</div>
           </Link>
         </li>
@@ -35,7 +37,7 @@ export default function Sidebar() {
                 : 'hover:bg-zinc-100 dark:hover:bg-zinc-800'
             }`}
           >
-            <BellIcon classname="h-5" />
+            <BellIcon className="w-5 h-5" />
             <div className="hidden xl:block">Reminders</div>
           </Link>
         </li>
@@ -48,7 +50,7 @@ export default function Sidebar() {
                 : 'hover:bg-zinc-100 dark:hover:bg-zinc-800'
             }`}
           >
-            <ArchiveIcon classname="h-5" />
+            <ArchiveBoxArrowDownIcon className="w-5 h-5" />
             <div className="hidden xl:block">Archive</div>
           </Link>
         </li>
@@ -61,13 +63,13 @@ export default function Sidebar() {
                 : 'hover:bg-zinc-100 dark:hover:bg-zinc-800'
             }`}
           >
-            <TrashIcon classname="h-5" />
+            <TrashIcon className="w-5 h-5" />
             <div className="hidden xl:block">Trash</div>
           </Link>
         </li>
       </ul>
       <div className="p-4 pb-0 hidden xl:block">
-        <p className="text-sm text-zinc-500">&copy; 2024 NoteTaking ✌️</p>
+        <p className="text-sm text-zinc-500">&copy; 2025 NoteTaking</p>
       </div>
     </nav>
   );

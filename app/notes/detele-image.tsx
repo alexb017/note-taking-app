@@ -28,9 +28,9 @@ export default function DeleteImageFromStorage({
               // Reset image data
               onSetImageUpload({ src: '', altName: '' });
             }}
-            className="w-8 h-8 bg-zinc-900/50 backdrop-blur-lg hover:bg-zinc-900/60"
+            className="w-9 h-9 [&_svg]:size-5 bg-zinc-900/50 backdrop-blur-lg hover:bg-zinc-900/60"
           >
-            <TrashIcon className="h-4 w-4 text-white" />
+            <TrashIcon className="h-5 w-5 text-white" />
           </Button>
         </TooltipTrigger>
         <TooltipContent side="bottom" className="bg-zinc-600 dark:text-white">

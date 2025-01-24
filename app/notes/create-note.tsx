@@ -83,13 +83,13 @@ export default function CreateNote() {
             <TooltipTrigger
               asChild
               className={cn(
-                'p-0 w-8 h-8 rounded-full bg-transparent shadow-none text-black dark:text-white hover:bg-zinc-900/10 dark:hover:bg-zinc-100/10',
+                'p-0 w-10 h-10 [&_svg]:size-6 rounded-full bg-transparent shadow-none text-black dark:text-white hover:bg-zinc-900/10 dark:hover:bg-zinc-100/10',
                 imageURL.src &&
                   'backdrop-blur-lg text-white bg-zinc-900/50 hover:bg-zinc-900/60 dark:hover:bg-zinc-900/60'
               )}
             >
               <Button onClick={async () => await handleCreateNote(false, true)}>
-                <PinIcon classname="w-4 h-4 -rotate-45" />
+                <PinIcon classname="w-6 h-6 -rotate-45" />
               </Button>
             </TooltipTrigger>
             <TooltipContent
@@ -155,12 +155,12 @@ export default function CreateNote() {
             <Tooltip>
               <TooltipTrigger
                 asChild
-                className="p-0 w-8 h-8 rounded-full bg-transparent shadow-none hover:bg-zinc-900/10 dark:hover:bg-zinc-100/10"
+                className="p-0 w-9 h-9 [&_svg]:size-5 rounded-full bg-transparent shadow-none hover:bg-zinc-900/10 dark:hover:bg-zinc-100/10"
               >
                 <Button
                   onClick={async () => await handleCreateNote(true, false)}
                 >
-                  <ArchiveBoxArrowDownIcon className="h-4 w-4 text-black dark:text-white" />
+                  <ArchiveBoxArrowDownIcon className="h-5 w-5 text-black dark:text-white" />
                 </Button>
               </TooltipTrigger>
               <TooltipContent
