@@ -36,9 +36,11 @@ export default function ViewNotes({
         return notes.filter((note) => note?.isArchived && !note?.isDeleted);
       case 'trash':
         return notes.filter((note) => note?.isDeleted);
-      case 'q':
-        return notes.filter((note) =>
-          note?.content.toLowerCase().includes(param.toLowerCase())
+      case 'search':
+        return notes.filter(
+          (note) =>
+            note?.title.toLowerCase().includes(param.toLowerCase()) ||
+            note?.content.toLowerCase().includes(param.toLowerCase())
         );
       default:
         return [];

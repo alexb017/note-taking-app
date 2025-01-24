@@ -5,7 +5,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
-import MagnifyingIcon from './icons/magnifying';
+import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import {
   ReadonlyURLSearchParams,
   usePathname,
@@ -13,39 +13,28 @@ import {
   useSearchParams,
 } from 'next/navigation';
 import { useState } from 'react';
+import { createUrl } from '@/lib/utils';
 
 export default function SearchNote() {
-  const [searchValue, setSearchValue] = useState('');
   const router = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname();
 
-  function createURL(
-    pathname: string,
-    params: URLSearchParams | ReadonlyURLSearchParams
-  ) {
-    const paramsString = params.toString();
-    const queryString = `${paramsString.length ? '?' : ''}${paramsString}`;
-
-    return `${pathname}${queryString}`;
-  }
-
   function handleSearchChange(event: React.ChangeEvent<HTMLInputElement>) {
     const searchValueInput = event.target.value;
-    setSearchValue(searchValueInput);
 
     const newParams = new URLSearchParams(searchParams.toString());
     let path;
 
     if (searchValueInput) {
       newParams.set('q', searchValueInput);
-      path = pathname === '/notes' ? `${pathname}/search` : pathname;
+      path = '/notes/search';
     } else {
       newParams.delete('q');
       path = '/notes';
     }
 
-    router.replace(createURL(`${path}`, newParams));
+    router.replace(createUrl(`${path}`, newParams));
   }
 
   return (
@@ -54,9 +43,9 @@ export default function SearchNote() {
         <form className="w-[240px] lg:w-[480px]">
           <Input
             onChange={handleSearchChange}
+            defaultValue={searchParams.get('q')?.toString()}
             placeholder="Search note..."
-            value={pathname !== '/notes/search' ? '' : searchValue}
-            className="text-xs"
+            className="h-11 rounded-xl border-0 shadow-none bg-neutral-100 dark:bg-neutral-800 focus-visible:ring-0 focus-visible:bg-neutral-200 dark:focus-visible:bg-neutral-700"
           />
         </form>
       </div>
@@ -64,23 +53,23 @@ export default function SearchNote() {
         <Popover>
           <PopoverTrigger asChild>
             <Button
-              size="sm"
-              className="min-w-unit-8 w-unit-8 h-8 bg-zinc-900/10 hover:bg-zinc-900/10 dark:bg-zinc-100/10"
+              size="icon"
+              variant="secondary"
+              className="rounded-full text-neutral-500 dark:text-neutral-200"
             >
-              <MagnifyingIcon classname="h-4" />
+              <MagnifyingGlassIcon className="w-5 h-5" />
             </Button>
           </PopoverTrigger>
-          <PopoverContent className="w-[240px]">
-            <div className="px-1 py-2 w-full">
-              <form className="w-full">
-                <Input
-                  onChange={handleSearchChange}
-                  autoFocus
-                  placeholder="Search note..."
-                  className="text-xs"
-                />
-              </form>
-            </div>
+          <PopoverContent className="w-full mx-5 p-0 border-0 shadow-2xl">
+            <form className="w-full">
+              <Input
+                onChange={handleSearchChange}
+                defaultValue={searchParams.get('q')?.toString()}
+                autoFocus
+                placeholder="Search note..."
+                className="h-11 rounded-xl border-0 shadow-none bg-neutral-100 dark:bg-neutral-800 focus-visible:ring-0 focus-visible:bg-neutral-200 dark:focus-visible:bg-neutral-700"
+              />
+            </form>
           </PopoverContent>
         </Popover>
       </div>
