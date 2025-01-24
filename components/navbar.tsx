@@ -20,8 +20,6 @@ export default function Navbar() {
   };
   const router = useRouter();
 
-  console.log('user uid', user?.uid);
-
   return (
     <nav className="fixed top-0 left-0 z-50 shadow-sm bg-white border-b border-zinc-200 w-full dark:bg-zinc-900 dark:border-zinc-800">
       <div className="flex items-center justify-between h-16 px-4 pl-3 w-full">

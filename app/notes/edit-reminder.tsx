@@ -25,8 +25,6 @@ export default function EditReminder({
 
   const reminderDate = reminder ? convertToDate(reminder) : undefined;
 
-  console.log('reminderDate', reminderDate);
-
   return (
     <div className="ml-3 w-max">
       <div className="relative group/rr">

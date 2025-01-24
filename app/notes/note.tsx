@@ -16,6 +16,7 @@ import {
   updateContent,
   updateImage,
   updateReminder,
+  updateTitle,
 } from '@/lib/actions';
 import AddToArchiveButton from './add-to-archive';
 import DeleteUndoNoteButton from './delete-undo-note';
@@ -31,7 +32,11 @@ import { Timestamp } from 'firebase/firestore';
 
 export default function Note({ note }: { note: Note }) {
   const [noteData, setNoteData] = useState(note);
-  console.log(noteData);
+
+  async function handleTitleChange(text: string) {
+    setNoteData({ ...noteData, title: text });
+    await updateTitle(note?.userId, note?.noteId, text);
+  }
 
   async function handleContentChange(text: string) {
     setNoteData({ ...noteData, content: text });
@@ -80,7 +85,7 @@ export default function Note({ note }: { note: Note }) {
             height={160}
             style={{ width: 'auto', height: 'auto' }}
           />
-          <div className="absolute right-1 bottom-1 z-10 opacity-0 group-hover:opacity-100 transition-opacity ease-in-out">
+          <div className="absolute right-2 bottom-2 z-10 opacity-0 group-hover:opacity-100 transition-opacity ease-in-out">
             <DeleteImageFromStorage
               imageUrl={noteData?.image.src}
               onSetImageUpload={handleImageUpload}
@@ -88,8 +93,17 @@ export default function Note({ note }: { note: Note }) {
           </div>
         </CardHeader>
       )}
-      <CardDescription className="py-2 px-5 cursor-default">
-        <p className="whitespace-pre-wrap text-base">{noteData?.content}</p>
+      <CardDescription className="py-2 px-5 pb-8 cursor-default">
+        {noteData?.title && (
+          <p className="whitespace-pre-wrap pb-2">{noteData?.title}</p>
+        )}
+        {noteData?.content && (
+          <p className="whitespace-pre-wrap text-base">{noteData?.content}</p>
+        )}
+        {!noteData?.title &&
+          !noteData?.content &&
+          !noteData?.reminder &&
+          !noteData?.image.src && <p className="text-xl">Empty note</p>}
       </CardDescription>
 
       {noteData?.reminder && (
@@ -99,16 +113,17 @@ export default function Note({ note }: { note: Note }) {
         />
       )}
 
-      <CardFooter className="flex items-center justify-between pl-[4px] pb-[4px] opacity-0 group-hover:opacity-100 transition-opacity ease-in-out">
+      <CardFooter className="flex items-center justify-between p-0 pb-[2px] px-[4px] opacity-0 group-hover:opacity-100 transition-opacity ease-in-out">
         {!noteData?.isDeleted ? (
           <>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center justify-between w-full">
               <EditNote
                 note={noteData}
                 onReminderClick={handleReminderClick}
                 onColorClick={handleColorClick}
                 onUploadImage={handleImageUpload}
                 onContentChange={handleContentChange}
+                onTitleChange={handleTitleChange}
               />
               <AddReminder
                 reminder={noteData?.reminder ?? undefined}

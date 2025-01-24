@@ -13,6 +13,7 @@ export type BgColor = {
 
 export type CreateNote = {
   content: string;
+  title: string;
   bgColor?: BgColor;
   image?: ImageData;
   reminder?: Timestamp | null;
@@ -25,6 +26,7 @@ export type CreateNote = {
 export type Note = {
   noteId: string;
   content: string;
+  title: string;
   bgColor: BgColor;
   image: ImageData;
   reminder: Timestamp | null;

@@ -11,27 +11,18 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
+import { Input } from '@/components/ui/input';
 import { useContext, useState } from 'react';
 import AddColor from './add-color';
 import AddReminder from './add-reminder';
 import EditReminder from './edit-reminder';
-import AddToArchive from './add-to-archive';
 import UploadImageToStorage from './upload-image';
-import {
-  ClockIcon,
-  ArchiveBoxArrowDownIcon,
-  XMarkIcon,
-  StarIcon,
-  SwatchIcon,
-} from '@heroicons/react/24/outline';
+import { ArchiveBoxArrowDownIcon } from '@heroicons/react/24/outline';
 import { createNote } from '@/lib/actions';
 import { AuthContext } from '@/app/auth-context';
 import DeleteImageFromStorage from './detele-image';
-import UpdateDatePickerButton from '../../components/update-date-picker-button';
 import { ImageData, BgColor } from '@/lib/types';
 import { User } from 'firebase/auth';
-import { format } from 'date-fns';
 import {
   Tooltip,
   TooltipContent,
@@ -45,6 +36,7 @@ import { cn } from '@/lib/utils';
 
 export default function CreateNote() {
   const { user } = useContext(AuthContext) as { user: User };
+  const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [reminder, setReminder] = useState<Timestamp>();
   const [backgroundColors, setBackgroundColors] = useState<BgColor>({
@@ -55,23 +47,11 @@ export default function CreateNote() {
   const [imageURL, setImageURL] = useState<ImageData>({ src: '', altName: '' });
 
   async function handleCreateNote(archive: boolean, pinned: boolean) {
-    console.log('Create note', {
-      userId: user?.uid,
-      content: content || 'Empty note',
-      reminder: reminder || null,
-      bgColor: backgroundColors,
-      image: imageURL,
-      isArchived: archive,
-      isPinned: pinned,
-      isDeleted: false,
-    });
-
-    console.log('typeof reminder', typeof reminder);
-
     await createNote(
       {
         userId: user?.uid,
-        content: content || 'Empty note',
+        title,
+        content,
         bgColor: backgroundColors,
         reminder: reminder || null,
         image: imageURL,
@@ -82,6 +62,7 @@ export default function CreateNote() {
       user?.uid
     );
 
+    setTitle('');
     setContent('');
     setReminder(undefined);
     setBackgroundColors({
@@ -140,16 +121,16 @@ export default function CreateNote() {
       )}
 
       <CardContent className="p-0 py-2">
-        <Label
-          htmlFor="message"
-          className="px-3 text-xs text-black/30 dark:text-white/30"
-        >
-          What would you like to do?
-        </Label>
+        <Input
+          placeholder="Title"
+          className="px-3 font-semibold text-black/30 dark:text-white/30 shadow-none border-0 rounded-none focus-visible:ring-0"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+        />
         <Textarea
-          placeholder="Description"
+          placeholder="Take a note..."
           id="message"
-          className="p-0 px-3 min-h-[80px] shadow-none border-0 rounded-none resize-none focus-visible:ring-0"
+          className="md:text-base font-semibold p-0 px-3 min-h-[80px] shadow-none border-0 rounded-none resize-none focus-visible:ring-0"
           value={content}
           onChange={(e) => setContent(e.target.value)}
         />

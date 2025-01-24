@@ -49,7 +49,7 @@ export default function ViewNotes({
 
   return (
     <>
-      {filteredNotes?.length === 0 ? null : (
+      {filteredNotes?.length > 0 && (
         <div className="sm:my-0 sm:mx-auto">
           <div className="flex flex-col gap-4">
             <p className="text-xs uppercase font-medium text-zinc-500">
