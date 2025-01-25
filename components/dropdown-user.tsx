@@ -26,7 +26,7 @@ export default function DropdownUser({
   onUserSignOut,
 }: {
   uid: string;
-  onUserSignOut: () => void;
+  onUserSignOut: () => Promise<void>;
 }) {
   const [userProfile] = useUserProfile(uid) as [UserProfile];
   const router = useRouter();
@@ -100,8 +100,8 @@ export default function DropdownUser({
         <DropdownMenuGroup>
           <DropdownMenuItem
             className="rounded-lg dark:hover:bg-zinc-700"
-            onClick={() => {
-              onUserSignOut();
+            onClick={async () => {
+              await onUserSignOut();
               router.push('/');
             }}
           >

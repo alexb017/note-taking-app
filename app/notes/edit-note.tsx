@@ -76,7 +76,7 @@ export default function EditNote({
       </TooltipProvider>
       <DialogContent
         aria-describedby={undefined}
-        className={`max-w-[512px] p-0 border-0 sm:rounded-xl shadow-lg dark:bg-zinc-800 ${note?.bgColor.light} ${note?.bgColor.dark}`}
+        className={`max-w-[512px] p-0 border-0 sm:rounded-xl shadow-lg ${note?.bgColor.light} ${note?.bgColor.dark}`}
       >
         <div className="absolute top-2 right-2 z-50">
           <AddToPinButton

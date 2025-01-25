@@ -41,7 +41,7 @@ export default function UploadImageToStorage({
                 const storage = getStorage();
                 const storageRef = ref(
                   storage,
-                  `notes/${uid}/${Date.now()}.${extension}`
+                  `users/${uid}/${Date.now()}.${extension}`
                 );
 
                 // Upload file

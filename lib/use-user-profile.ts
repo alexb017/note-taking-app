@@ -15,9 +15,11 @@ export default function useUserProfile(uid: string) {
 
     const userRef = doc(db, 'users', uid);
     unsubscribe = onSnapshot(userRef, (doc) => {
-      const data = doc.data() as UserProfile;
-      const { displayName, email, photoURL, userId } = data;
-      setUserProfile({ displayName, email, photoURL, userId });
+      if (doc.exists()) {
+        const data = doc.data() as UserProfile;
+        const { displayName, email, photoURL, userId } = data;
+        setUserProfile({ displayName, email, photoURL, userId });
+      }
     });
 
     return () => {
