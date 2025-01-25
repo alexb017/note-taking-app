@@ -75,7 +75,7 @@ export default function CreateNote() {
 
   return (
     <Card
-      className={`relative w-full max-w-[512px] rounded-xl ${backgroundColors.light} ${backgroundColors.dark}`}
+      className={`relative w-full max-w-[512px] rounded-xl shadow-lg ${backgroundColors.light} ${backgroundColors.dark}`}
     >
       <div className="absolute top-2 right-2 z-50">
         <TooltipProvider delayDuration={0}>

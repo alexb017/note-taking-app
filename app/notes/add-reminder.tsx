@@ -46,7 +46,7 @@ export default function AddReminder({
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>
-      <PopoverContent className="w-auto p-0 rounded-xl shadow-2xl dark:bg-zinc-800">
+      <PopoverContent className="w-auto p-0 rounded-xl shadow-lg dark:bg-zinc-800">
         <Calendar
           mode="single"
           selected={reminderDate}

@@ -76,7 +76,7 @@ export default function EditNote({
       </TooltipProvider>
       <DialogContent
         aria-describedby={undefined}
-        className={`max-w-[512px] p-0 border-0 sm:rounded-xl shadow-2xl dark:bg-zinc-800 ${note?.bgColor.light} ${note?.bgColor.dark}`}
+        className={`max-w-[512px] p-0 border-0 sm:rounded-xl shadow-lg dark:bg-zinc-800 ${note?.bgColor.light} ${note?.bgColor.dark}`}
       >
         <div className="absolute top-2 right-2 z-50">
           <AddToPinButton
@@ -129,8 +129,8 @@ export default function EditNote({
           />
         )}
 
-        <DialogFooter className="sm:justify-between p-0 px-[4px] pb-[2px]">
-          <div className="flex items-center gap-2">
+        <DialogFooter className="flex-row justify-between sm:justify-between p-0 px-[4px] pb-[2px]">
+          <div className="flex items-center gap-4">
             <AddReminder
               reminder={note?.reminder ?? undefined}
               setReminder={onReminderClick}

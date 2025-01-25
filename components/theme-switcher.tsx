@@ -17,7 +17,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 
 export function ThemeSwitcher() {
-  const { setTheme } = useTheme();
+  const { theme, setTheme } = useTheme();
 
   return (
     <DropdownMenu>
@@ -32,23 +32,32 @@ export function ThemeSwitcher() {
           <span className="sr-only">Toggle theme</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="rounded-xl shadow-2xl" align="end">
+      <DropdownMenuContent
+        className="rounded-xl shadow-lg dark:bg-zinc-800"
+        align="end"
+      >
         <DropdownMenuItem
-          className="rounded-lg"
+          className={`rounded-lg dark:hover:bg-zinc-700 ${
+            theme === 'light' ? 'bg-zinc-100 dark:bg-zinc-700' : ''
+          }`}
           onClick={() => setTheme('light')}
         >
           <SunIcon className="h-5 w-5 mr-2" />
           Light
         </DropdownMenuItem>
         <DropdownMenuItem
-          className="rounded-lg"
+          className={`rounded-lg dark:hover:bg-zinc-700 ${
+            theme === 'dark' ? 'bg-zinc-100 dark:bg-zinc-700' : ''
+          }`}
           onClick={() => setTheme('dark')}
         >
           <MoonIcon className="h-5 w-5 mr-2" />
           Dark
         </DropdownMenuItem>
         <DropdownMenuItem
-          className="rounded-lg"
+          className={`rounded-lg dark:hover:bg-zinc-700 ${
+            theme === 'system' ? 'bg-zinc-100 dark:bg-zinc-700' : ''
+          }`}
           onClick={() => setTheme('system')}
         >
           <ComputerDesktopIcon className="h-5 w-5 mr-2" />

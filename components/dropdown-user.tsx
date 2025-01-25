@@ -78,31 +78,34 @@ export default function DropdownUser({
           </div>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56 rounded-xl shadow-2xl" align="end">
+      <DropdownMenuContent
+        className="w-56 rounded-xl shadow-lg dark:bg-zinc-800"
+        align="end"
+      >
         <DropdownMenuLabel>Account</DropdownMenuLabel>
-        <DropdownMenuSeparator />
+        <DropdownMenuSeparator className="dark:bg-zinc-700" />
         <DropdownMenuGroup>
           {links.map((link) => (
             <DropdownMenuItem
-              className="rounded-lg"
+              className="rounded-lg dark:hover:bg-zinc-700"
               key={link.name}
               onClick={() => router.push(link.url)}
             >
-              <link.icon className="w-5 h-5 text-gray-500" />
+              <link.icon className="w-5 h-5" />
               <span className="ml-2">{link.name}</span>
             </DropdownMenuItem>
           ))}
         </DropdownMenuGroup>
-        <DropdownMenuSeparator />
+        <DropdownMenuSeparator className="dark:bg-zinc-700" />
         <DropdownMenuGroup>
           <DropdownMenuItem
-            className="rounded-lg"
-            onClick={async () => {
-              await onUserSignOut();
+            className="rounded-lg dark:hover:bg-zinc-700"
+            onClick={() => {
+              onUserSignOut();
               router.push('/');
             }}
           >
-            <ArrowLeftEndOnRectangleIcon className="w-5 h-5 text-gray-500" />
+            <ArrowLeftEndOnRectangleIcon className="w-5 h-5" />
             <span className="ml-2">Sign out</span>
           </DropdownMenuItem>
         </DropdownMenuGroup>

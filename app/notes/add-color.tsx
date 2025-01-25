@@ -53,13 +53,13 @@ export default function AddColor({
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>
-      <PopoverContent className="w-max p-0 items-start justify-start rounded-xl shadow-2xl dark:bg-zinc-800">
-        <div className="flex flex-col w-full">
+      <PopoverContent className="md:w-max p-0 items-start justify-start rounded-xl shadow-lg dark:bg-zinc-800">
+        <div className="flex flex-col">
           <div className="p-3">
             <p className="text-sm">Choose background color:</p>
           </div>
-          <Separator />
-          <div className="flex items-center flex-wrap gap-[2px] p-2 px-[10px]">
+          <Separator className="dark:bg-zinc-700" />
+          <div className="flex flex-wrap gap-[2px] p-2 px-[10px]">
             {bgColors.map((color, index) => (
               <TooltipProvider key={index} delayDuration={0}>
                 <Tooltip>
