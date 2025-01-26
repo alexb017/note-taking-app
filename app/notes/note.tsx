@@ -29,18 +29,33 @@ import type { Note, ImageData, BgColor } from '@/lib/types';
 import AddToPinButton from './add-to-pin';
 import EditReminder from './edit-reminder';
 import { Timestamp } from 'firebase/firestore';
+import { useDebouncedCallback } from 'use-debounce';
 
 export default function Note({ note }: { note: Note }) {
   const [noteData, setNoteData] = useState(note);
 
-  async function handleTitleChange(text: string) {
-    setNoteData({ ...noteData, title: text });
+  // Debounce title to prevent too many requests
+  const updateTitleDebounced = useDebouncedCallback(async (text: string) => {
+    // console.log('title debounce', text);
     await updateTitle(note?.userId, note?.noteId, text);
+  }, 500);
+
+  function handleTitleChange(text: string) {
+    // console.log('title', text);
+    setNoteData({ ...noteData, title: text });
+    updateTitleDebounced(text);
   }
 
-  async function handleContentChange(text: string) {
-    setNoteData({ ...noteData, content: text });
+  // Debounce content to prevent too many requests
+  const updateContentDebounced = useDebouncedCallback(async (text: string) => {
+    // console.log('content debounce', text);
     await updateContent(note?.userId, note?.noteId, text);
+  }, 500);
+
+  async function handleContentChange(text: string) {
+    // console.log('content', text);
+    setNoteData({ ...noteData, content: text });
+    updateContentDebounced(text);
   }
 
   async function handleReminderClick(date?: Timestamp) {
