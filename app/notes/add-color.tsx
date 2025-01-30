@@ -6,14 +6,15 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover';
 import {
-  Tooltip,
   TooltipProvider,
-  TooltipContent,
+  Tooltip,
   TooltipTrigger,
+  TooltipContent,
 } from '@/components/ui/tooltip';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
-import clsx from 'clsx';
+import { cn } from '@/lib/utils';
+import TooltipWrap from '@/components/tooltip-wrap';
 
 export default function AddColor({
   onColorsChange,
@@ -41,56 +42,51 @@ export default function AddColor({
     <Popover>
       <TooltipProvider delayDuration={0}>
         <Tooltip>
-          <TooltipTrigger asChild className="p-0">
-            <PopoverTrigger asChild>
-              <Button className="w-9 h-9 [&_svg]:size-5 rounded-full bg-transparent shadow-none hover:bg-zinc-900/10 dark:hover:bg-zinc-100/10">
-                <SwatchIcon className="h-5 w-5 text-black dark:text-white" />
+          <PopoverTrigger asChild>
+            <TooltipTrigger asChild>
+              <Button
+                size="icon"
+                className="p-0 w-[34px] h-[34px] [&_svg]:size-[18px] rounded-full bg-transparent shadow-none text-black dark:text-white hover:bg-zinc-900/10 dark:hover:bg-zinc-100/10"
+              >
+                <SwatchIcon className="w-5 h-5" />
               </Button>
-            </PopoverTrigger>
-          </TooltipTrigger>
+            </TooltipTrigger>
+          </PopoverTrigger>
           <TooltipContent side="bottom" className="bg-zinc-600 dark:text-white">
             Background options
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>
       <PopoverContent className="md:w-max p-0 items-start justify-start rounded-xl shadow-lg dark:bg-zinc-800">
-        <div className="flex flex-col">
+        <div
+          className="flex flex-col"
+          onFocusCapture={(event) => event.stopPropagation()}
+          onBlurCapture={(event) => event.stopPropagation()}
+        >
           <div className="p-3">
             <p className="text-sm">Choose background color:</p>
           </div>
           <Separator className="dark:bg-zinc-700" />
           <div className="flex flex-wrap gap-[2px] p-2 px-[10px]">
             {bgColors.map((color, index) => (
-              <TooltipProvider key={index} delayDuration={0}>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button
-                      onClick={() => onColorsChange(color)}
-                      className={clsx(
-                        color.light,
-                        color.dark,
-                        'w-8 h-8 p-0 border-2 rounded-full shadow-none focus-visible:ring-0',
-                        'hover:border-zinc-500 dark:hover:border-zinc-400',
-                        {
-                          'border-zinc-500 dark:border-zinc-200':
-                            color.light === bg.light,
-                          'border-zinc-200 dark:border-zinc-600':
-                            color.light !== bg.light,
-                          [color.light.replace('bg-', 'hover:bg-')]: true,
-                          [color.dark.replace('dark:bg-', 'dark:hover:bg-')]:
-                            true,
-                        }
-                      )}
-                    ></Button>
-                  </TooltipTrigger>
-                  <TooltipContent
-                    side="bottom"
-                    className="bg-zinc-600 dark:text-white"
-                  >
-                    {color.tooltip}
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
+              <TooltipWrap
+                key={index}
+                content={color.tooltip}
+                classnames={cn(
+                  'w-8 h-8 border-2 hover:border-zinc-500 dark:hover:border-zinc-400',
+                  color.light,
+                  color.dark,
+                  {
+                    'border-zinc-500 dark:border-zinc-200':
+                      color.light === bg.light,
+                    'border-zinc-200 dark:border-zinc-600':
+                      color.light !== bg.light,
+                    [color.light.replace('bg-', 'hover:bg-')]: true,
+                    [color.dark.replace('dark:bg-', 'dark:hover:bg-')]: true,
+                  }
+                )}
+                events={{ onClick: () => onColorsChange(color) }}
+              />
             ))}
           </div>
         </div>

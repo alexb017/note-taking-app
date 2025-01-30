@@ -2,7 +2,6 @@
 
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import { Label } from '@/components/ui/label';
 import {
   Card,
   CardContent,
@@ -23,16 +22,11 @@ import { AuthContext } from '@/app/auth-context';
 import DeleteImageFromStorage from './detele-image';
 import { ImageData, BgColor } from '@/lib/types';
 import { User } from 'firebase/auth';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/components/ui/tooltip';
 import Image from 'next/image';
 import { Timestamp } from 'firebase/firestore';
 import PinIcon from '@/components/icons/pin';
 import { cn } from '@/lib/utils';
+import TooltipWrap from '@/components/tooltip-wrap';
 
 export default function CreateNote() {
   const { user } = useContext(AuthContext) as { user: User };
@@ -78,28 +72,16 @@ export default function CreateNote() {
       className={`relative w-full max-w-[512px] rounded-xl shadow-lg ${backgroundColors.light} ${backgroundColors.dark}`}
     >
       <div className="absolute top-2 right-2 z-50">
-        <TooltipProvider delayDuration={0}>
-          <Tooltip>
-            <TooltipTrigger
-              asChild
-              className={cn(
-                'p-0 w-10 h-10 [&_svg]:size-6 rounded-full bg-transparent shadow-none text-black dark:text-white hover:bg-zinc-900/10 dark:hover:bg-zinc-100/10',
-                imageURL.src &&
-                  'backdrop-blur-lg text-white bg-zinc-900/50 hover:bg-zinc-900/60 dark:hover:bg-zinc-900/60'
-              )}
-            >
-              <Button onClick={async () => await handleCreateNote(false, true)}>
-                <PinIcon classname="w-6 h-6 -rotate-45" />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent
-              side="bottom"
-              className="bg-zinc-600 dark:text-white"
-            >
-              Pinned
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
+        <TooltipWrap
+          content="Pinned"
+          events={{ onClick: async () => await handleCreateNote(false, true) }}
+          classnames={cn(
+            imageURL.src &&
+              'backdrop-blur text-white bg-zinc-900/50 hover:bg-zinc-900/60 dark:hover:bg-zinc-900/60'
+          )}
+        >
+          <PinIcon classname="w-6 -rotate-45" />
+        </TooltipWrap>
       </div>
 
       {imageURL?.src && (
@@ -151,26 +133,14 @@ export default function CreateNote() {
             onSetImageUpload={setImageURL}
             uid={user?.uid}
           />
-          <TooltipProvider delayDuration={0}>
-            <Tooltip>
-              <TooltipTrigger
-                asChild
-                className="p-0 w-9 h-9 [&_svg]:size-5 rounded-full bg-transparent shadow-none hover:bg-zinc-900/10 dark:hover:bg-zinc-100/10"
-              >
-                <Button
-                  onClick={async () => await handleCreateNote(true, false)}
-                >
-                  <ArchiveBoxArrowDownIcon className="h-5 w-5 text-black dark:text-white" />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent
-                side="bottom"
-                className="bg-zinc-600 dark:text-white"
-              >
-                Archive
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
+          <TooltipWrap
+            content="Archive"
+            events={{
+              onClick: async () => await handleCreateNote(true, false),
+            }}
+          >
+            <ArchiveBoxArrowDownIcon className="w-5" />
+          </TooltipWrap>
         </div>
         <Button
           variant="ghost"

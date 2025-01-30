@@ -8,6 +8,7 @@ import {
 } from '@/components/ui/popover';
 import { format } from 'date-fns';
 import { Timestamp } from 'firebase/firestore';
+import { convertTimestampToDate } from '@/lib/utils';
 
 export default function EditReminder({
   reminder,
@@ -16,14 +17,8 @@ export default function EditReminder({
   reminder?: Timestamp;
   setReminder: (date: Timestamp | undefined) => void;
 }) {
-  const convertToDate = (timestamp: {
-    seconds: number;
-    nanoseconds: number;
-  }) => {
-    return new Date(timestamp.seconds * 1000 + timestamp.nanoseconds / 1000000);
-  };
-
-  const reminderDate = reminder ? convertToDate(reminder) : undefined;
+  // Check if reminder exists and convert it to Date
+  const reminderDate = reminder ? convertTimestampToDate(reminder) : undefined;
 
   return (
     <div className="ml-3 w-max">

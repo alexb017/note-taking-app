@@ -1,12 +1,6 @@
 import { TrashIcon } from '@heroicons/react/24/outline';
 import { deleteNote, deleteImageFromStorage } from '@/lib/actions';
-import { Button } from '@/components/ui/button';
-import {
-  Tooltip,
-  TooltipProvider,
-  TooltipContent,
-  TooltipTrigger,
-} from '@/components/ui/tooltip';
+import TooltipWrap from '@/components/tooltip-wrap';
 
 export default function DeleteNoteButton({
   uid,
@@ -18,28 +12,19 @@ export default function DeleteNoteButton({
   imageURL?: string;
 }) {
   return (
-    <TooltipProvider delayDuration={0}>
-      <Tooltip>
-        <TooltipTrigger
-          asChild
-          className="p-0 w-9 h-9 [&_svg]:size-5 rounded-full bg-transparent shadow-none hover:bg-zinc-900/10 dark:hover:bg-zinc-100/10"
-        >
-          <Button
-            onClick={async () => {
-              await deleteNote(uid, noteId);
+    <TooltipWrap
+      content="Delete forever"
+      events={{
+        onClick: async () => {
+          await deleteNote(uid, noteId);
 
-              if (imageURL) {
-                await deleteImageFromStorage(imageURL);
-              }
-            }}
-          >
-            <TrashIcon className="h-5 w-5 text-black dark:text-white" />
-          </Button>
-        </TooltipTrigger>
-        <TooltipContent side="bottom" className="bg-zinc-600 dark:text-white">
-          Delete forever
-        </TooltipContent>
-      </Tooltip>
-    </TooltipProvider>
+          if (imageURL) {
+            await deleteImageFromStorage(imageURL);
+          }
+        },
+      }}
+    >
+      <TrashIcon className="w-5" />
+    </TooltipWrap>
   );
 }

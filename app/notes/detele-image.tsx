@@ -1,13 +1,7 @@
 import { TrashIcon } from '@heroicons/react/24/outline';
 import { ImageData } from '@/lib/types';
-import { Button } from '@/components/ui/button';
-import {
-  Tooltip,
-  TooltipProvider,
-  TooltipContent,
-  TooltipTrigger,
-} from '@/components/ui/tooltip';
 import { deleteImageFromStorage } from '@/lib/actions';
+import TooltipWrap from '@/components/tooltip-wrap';
 
 export default function DeleteImageFromStorage({
   imageUrl,
@@ -17,26 +11,20 @@ export default function DeleteImageFromStorage({
   onSetImageUpload: (data: ImageData) => void;
 }) {
   return (
-    <TooltipProvider delayDuration={0}>
-      <Tooltip>
-        <TooltipTrigger asChild className="p-0">
-          <Button
-            onClick={async () => {
-              // Delete image from storage
-              await deleteImageFromStorage(imageUrl);
+    <TooltipWrap
+      content="Remove"
+      events={{
+        onClick: async () => {
+          // Delete image from storage
+          await deleteImageFromStorage(imageUrl);
 
-              // Reset image data
-              onSetImageUpload({ src: '', altName: '' });
-            }}
-            className="w-9 h-9 [&_svg]:size-5 bg-zinc-900/50 backdrop-blur-lg hover:bg-zinc-900/60"
-          >
-            <TrashIcon className="h-5 w-5 text-white" />
-          </Button>
-        </TooltipTrigger>
-        <TooltipContent side="bottom" className="bg-zinc-600 dark:text-white">
-          Remove
-        </TooltipContent>
-      </Tooltip>
-    </TooltipProvider>
+          // Reset image data
+          onSetImageUpload({ src: '', altName: '' });
+        },
+      }}
+      classnames="text-white backdrop-blur bg-zinc-900/50 hover:bg-zinc-900/60 dark:hover:bg-zinc-900/60"
+    >
+      <TrashIcon className="w-5" />
+    </TooltipWrap>
   );
 }

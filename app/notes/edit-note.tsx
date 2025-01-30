@@ -12,7 +12,6 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { Textarea } from '@/components/ui/textarea';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import DeleteImageFromStorage from './detele-image';
 import AddReminder from './add-reminder';
 import AddColor from './add-color';
@@ -23,17 +22,16 @@ import UploadImageToStorage from './upload-image';
 import type { Note, ImageData, BgColor } from '@/lib/types';
 import AddToPinButton from './add-to-pin';
 import { Timestamp } from 'firebase/firestore';
-import { createUrl } from '@/lib/utils';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/components/ui/tooltip';
 import Image from 'next/image';
 import { Input } from '@/components/ui/input';
 import EditReminder from './edit-reminder';
 import { useState } from 'react';
+import {
+  TooltipProvider,
+  Tooltip,
+  TooltipTrigger,
+  TooltipContent,
+} from '@/components/ui/tooltip';
 
 export default function EditNote({
   note,
@@ -51,24 +49,21 @@ export default function EditNote({
   onTitleChange: (text: string) => void;
 }) {
   const [open, setOpen] = useState(false);
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const pathname = usePathname();
-
-  // console.log(searchParams.get('q'));
-  // console.log(pathname);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <TooltipProvider delayDuration={0}>
         <Tooltip>
-          <TooltipTrigger asChild className="p-0">
-            <DialogTrigger asChild>
-              <Button className="w-9 h-9 [&_svg]:size-5 rounded-full bg-transparent shadow-none hover:bg-zinc-900/10 dark:hover:bg-zinc-100/10">
-                <PencilSquareIcon className="h-5 w-5 text-black dark:text-white" />
+          <DialogTrigger asChild>
+            <TooltipTrigger asChild>
+              <Button
+                size="icon"
+                className="p-0 w-[34px] h-[34px] [&_svg]:size-[18px] rounded-full bg-transparent shadow-none text-black dark:text-white hover:bg-zinc-900/10 dark:hover:bg-zinc-100/10"
+              >
+                <PencilSquareIcon className="w-5" />
               </Button>
-            </DialogTrigger>
-          </TooltipTrigger>
+            </TooltipTrigger>
+          </DialogTrigger>
           <TooltipContent side="bottom" className="bg-zinc-600 dark:text-white">
             Edit note
           </TooltipContent>
@@ -77,6 +72,8 @@ export default function EditNote({
       <DialogContent
         aria-describedby={undefined}
         className={`max-w-[512px] p-0 border-0 sm:rounded-xl shadow-lg ${note?.bgColor.light} ${note?.bgColor.dark}`}
+        onFocusCapture={(event) => event.stopPropagation()}
+        onBlurCapture={(event) => event.stopPropagation()}
       >
         <div className="absolute top-2 right-2 z-50">
           <AddToPinButton

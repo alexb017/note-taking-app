@@ -76,6 +76,8 @@ export default function Note({ note }: { note: Note }) {
   return (
     <Card
       className={`relative w-full md:w-[240px] mb-4 shadow group overflow-hidden ${noteData?.bgColor.light} ${noteData?.bgColor.dark}`}
+      onFocusCapture={(event) => event.stopPropagation()}
+      onBlurCapture={(event) => event.stopPropagation()}
     >
       {!noteData?.isDeleted && (
         <>
