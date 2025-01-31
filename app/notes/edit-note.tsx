@@ -25,13 +25,20 @@ import { Timestamp } from 'firebase/firestore';
 import Image from 'next/image';
 import { Input } from '@/components/ui/input';
 import EditReminder from './edit-reminder';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   TooltipProvider,
   Tooltip,
   TooltipTrigger,
   TooltipContent,
 } from '@/components/ui/tooltip';
+import {
+  useRouter,
+  usePathname,
+  useSearchParams,
+  ReadonlyURLSearchParams,
+} from 'next/navigation';
+import { createUrl } from '@/lib/utils';
 
 export default function EditNote({
   note,
@@ -48,15 +55,37 @@ export default function EditNote({
   onContentChange: (text: string) => void;
   onTitleChange: (text: string) => void;
 }) {
-  const [open, setOpen] = useState(false);
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  const isOpen = searchParams.get('id') === note.noteId;
+
+  // Set and id in the URL when the dialog is open
+  const openDialog = () => {
+    const newParams = new URLSearchParams(searchParams.toString());
+    newParams.set('id', note.noteId);
+    router.push(createUrl(pathname, newParams), { scroll: false });
+  };
+
+  // Remove the id from the URL when the dialog is closed
+  const closeDialog = () => {
+    const newParams = new URLSearchParams(searchParams.toString());
+    newParams.delete('id');
+    router.push(createUrl(pathname, newParams), { scroll: false });
+  };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog
+      open={isOpen}
+      onOpenChange={(open) => (open ? openDialog() : closeDialog())}
+    >
       <TooltipProvider delayDuration={0}>
         <Tooltip>
           <DialogTrigger asChild>
             <TooltipTrigger asChild>
               <Button
+                onClick={openDialog}
                 size="icon"
                 className="p-0 w-[34px] h-[34px] [&_svg]:size-[18px] rounded-full bg-transparent shadow-none text-black dark:text-white hover:bg-zinc-900/10 dark:hover:bg-zinc-100/10"
               >
@@ -72,8 +101,6 @@ export default function EditNote({
       <DialogContent
         aria-describedby={undefined}
         className={`max-w-[512px] p-0 border-0 sm:rounded-xl shadow-lg ${note?.bgColor.light} ${note?.bgColor.dark}`}
-        onFocusCapture={(event) => event.stopPropagation()}
-        onBlurCapture={(event) => event.stopPropagation()}
       >
         <div className="absolute top-2 right-2 z-50">
           <AddToPinButton
@@ -152,7 +179,7 @@ export default function EditNote({
           <Button
             variant="ghost"
             className="rounded-xl hover:bg-zinc-900/10 hover:dark:bg-zinc-100/10"
-            onClick={() => setOpen(false)}
+            onClick={closeDialog}
           >
             Close
           </Button>
