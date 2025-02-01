@@ -79,6 +79,7 @@ export default function EditNote({
     <Dialog
       open={isOpen}
       onOpenChange={(open) => (open ? openDialog() : closeDialog())}
+      modal={false}
     >
       <TooltipProvider delayDuration={0}>
         <Tooltip>
@@ -98,6 +99,9 @@ export default function EditNote({
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>
+      <DialogPortal>
+        <div className="fixed inset-0 z-50 bg-black/30 backdrop-blur data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0"></div>
+      </DialogPortal>
       <DialogContent
         aria-describedby={undefined}
         className={`max-w-[512px] p-0 border-0 sm:rounded-xl shadow-lg ${note?.bgColor.light} ${note?.bgColor.dark}`}

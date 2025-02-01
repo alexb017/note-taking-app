@@ -59,6 +59,17 @@ export default function DropdownUser({
     },
   ];
 
+  // Split the user's full name into first and last names
+  // and take only the first letter of each name
+  const firstName = userProfile?.displayName
+    ?.split(' ')[0]
+    .charAt(0)
+    .toUpperCase();
+  const lastName = userProfile?.displayName
+    ?.split(' ')[1]
+    .charAt(0)
+    .toUpperCase();
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -68,7 +79,10 @@ export default function DropdownUser({
               src={userProfile?.photoURL}
               alt={userProfile?.displayName}
             />
-            <AvatarFallback>{userProfile?.displayName}</AvatarFallback>
+            <AvatarFallback className="text-black dark:text-white">
+              {firstName}
+              {lastName}
+            </AvatarFallback>
           </Avatar>
           <div className="hidden sm:flex flex-col items-start">
             <span className="text-black dark:text-white">
