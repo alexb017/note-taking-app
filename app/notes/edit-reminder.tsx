@@ -8,7 +8,7 @@ import {
 } from '@/components/ui/popover';
 import { format } from 'date-fns';
 import { Timestamp } from 'firebase/firestore';
-import { convertTimestampToDate } from '@/lib/utils';
+import { convertTimestampToDate, dateToString } from '@/lib/utils';
 
 export default function EditReminder({
   reminder,
@@ -30,7 +30,7 @@ export default function EditReminder({
           >
             <Button variant="secondary">
               <ClockIcon className="h-4 w-4" />
-              {reminderDate ? format(reminderDate, 'PPP') : ''}
+              {reminderDate ? dateToString(reminderDate) : ''}
             </Button>
           </PopoverTrigger>
           <PopoverContent className="w-auto p-0 rounded-xl shadow-2xl dark:bg-zinc-800">
@@ -38,7 +38,6 @@ export default function EditReminder({
               mode="single"
               selected={reminderDate}
               onSelect={(date) => date && setReminder(Timestamp.fromDate(date))}
-              initialFocus
             />
           </PopoverContent>
         </Popover>

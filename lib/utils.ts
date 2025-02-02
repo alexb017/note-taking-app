@@ -25,3 +25,12 @@ export function convertTimestampToDate(timestamp: {
 }) {
   return new Date(timestamp.seconds * 1000 + timestamp.nanoseconds / 1000000);
 }
+
+// Convert date to a string
+export function dateToString(date: Date) {
+  return date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+}
