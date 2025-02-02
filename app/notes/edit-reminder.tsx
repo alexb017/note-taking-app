@@ -6,7 +6,6 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
-import { format } from 'date-fns';
 import { Timestamp } from 'firebase/firestore';
 import { convertTimestampToDate, dateToString } from '@/lib/utils';
 
