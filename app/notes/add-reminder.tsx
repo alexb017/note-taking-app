@@ -49,7 +49,6 @@ export default function AddReminder({
           mode="single"
           selected={reminderDate}
           onSelect={(date) => date && setReminder(Timestamp.fromDate(date))}
-          initialFocus
         />
       </PopoverContent>
     </Popover>
