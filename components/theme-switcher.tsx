@@ -42,7 +42,7 @@ export function ThemeSwitcher() {
           }`}
           onClick={() => setTheme('light')}
         >
-          <SunIcon className="h-5 w-5 mr-2" />
+          <SunIcon className="h-5 w-5 mr-2 text-zinc-500 dark:text-zinc-400" />
           Light
         </DropdownMenuItem>
         <DropdownMenuItem
@@ -51,7 +51,7 @@ export function ThemeSwitcher() {
           }`}
           onClick={() => setTheme('dark')}
         >
-          <MoonIcon className="h-5 w-5 mr-2" />
+          <MoonIcon className="h-5 w-5 mr-2 text-zinc-500 dark:text-zinc-400" />
           Dark
         </DropdownMenuItem>
         <DropdownMenuItem
@@ -60,7 +60,7 @@ export function ThemeSwitcher() {
           }`}
           onClick={() => setTheme('system')}
         >
-          <ComputerDesktopIcon className="h-5 w-5 mr-2" />
+          <ComputerDesktopIcon className="h-5 w-5 mr-2 text-zinc-500 dark:text-zinc-400" />
           System
         </DropdownMenuItem>
       </DropdownMenuContent>

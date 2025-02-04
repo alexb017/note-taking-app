@@ -30,6 +30,7 @@ import AddToPinButton from './add-to-pin';
 import EditReminder from './edit-reminder';
 import { Timestamp } from 'firebase/firestore';
 import { useDebouncedCallback } from 'use-debounce';
+import { cn } from '@/lib/utils';
 
 export default function Note({ note }: { note: Note }) {
   const [noteData, setNoteData] = useState(note);
@@ -75,7 +76,14 @@ export default function Note({ note }: { note: Note }) {
 
   return (
     <Card
-      className={`relative w-full md:w-[240px] mb-4 shadow group overflow-hidden ${noteData?.bgColor.light} ${noteData?.bgColor.dark}`}
+      className={cn(
+        'relative w-full md:w-[240px] mb-4 shadow-none border-0 group overflow-hidden hover:shadow transition-shadow ease',
+        noteData?.bgColor.light,
+        noteData?.bgColor.dark,
+        {
+          border: noteData?.bgColor.tooltip === 'Default',
+        }
+      )}
       onFocusCapture={(event) => event.stopPropagation()}
       onBlurCapture={(event) => event.stopPropagation()}
     >
@@ -110,7 +118,7 @@ export default function Note({ note }: { note: Note }) {
           </div>
         </CardHeader>
       )}
-      <CardDescription className="py-2 px-5 pb-8 cursor-default">
+      <CardDescription className="py-2 px-5 pb-8 cursor-default text-black/90 dark:text-white/90">
         {noteData?.title && (
           <p className="whitespace-pre-wrap pb-2">{noteData?.title}</p>
         )}
@@ -120,7 +128,9 @@ export default function Note({ note }: { note: Note }) {
         {!noteData?.title &&
           !noteData?.content &&
           !noteData?.reminder &&
-          !noteData?.image.src && <p className="text-xl">Empty note</p>}
+          !noteData?.image.src && (
+            <p className="text-xl text-zinc-400">Empty note</p>
+          )}
       </CardDescription>
 
       {noteData?.reminder && (

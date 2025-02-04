@@ -54,14 +54,28 @@ export default function Profile() {
     }
   }
 
+  // Split the user's full name into first and last names
+  // and take only the first letter of each name
+  const firstName = userProfile?.displayName
+    ?.split(' ')[0]
+    .charAt(0)
+    .toUpperCase();
+  const lastName = userProfile?.displayName
+    ?.split(' ')[1]
+    .charAt(0)
+    .toUpperCase();
+
   return (
     <div className="flex flex-col items-center gap-2">
-      <Avatar>
+      <Avatar className="w-12 h-12">
         <AvatarImage
           src={userProfile?.photoURL}
           alt={userProfile?.displayName}
         />
-        <AvatarFallback>{userProfile?.displayName}</AvatarFallback>
+        <AvatarFallback>
+          {firstName}
+          {lastName}
+        </AvatarFallback>
       </Avatar>
       <div className="flex flex-col items-center">
         <h2 className="text-3xl font-semibold tracking-tighter">

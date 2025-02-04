@@ -105,7 +105,7 @@ export default function DropdownUser({
               key={link.name}
               onClick={() => router.push(link.url)}
             >
-              <link.icon className="w-5 h-5" />
+              <link.icon className="w-5 h-5 text-zinc-500 dark:text-zinc-400" />
               <span className="ml-2">{link.name}</span>
             </DropdownMenuItem>
           ))}
@@ -119,7 +119,7 @@ export default function DropdownUser({
               router.push('/');
             }}
           >
-            <ArrowLeftEndOnRectangleIcon className="w-5 h-5" />
+            <ArrowLeftEndOnRectangleIcon className="w-5 h-5 text-zinc-500 dark:text-zinc-400" />
             <span className="ml-2">Sign out</span>
           </DropdownMenuItem>
         </DropdownMenuGroup>

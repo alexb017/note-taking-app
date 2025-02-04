@@ -46,7 +46,7 @@ export default function AddColor({
             <TooltipTrigger asChild>
               <Button
                 size="icon"
-                className="p-0 w-[34px] h-[34px] [&_svg]:size-[18px] rounded-full bg-transparent shadow-none text-black dark:text-white hover:bg-zinc-900/10 dark:hover:bg-zinc-100/10"
+                className="p-0 w-[34px] h-[34px] [&_svg]:size-[18px] rounded-full bg-transparent shadow-none text-black/80 dark:text-white/80 hover:bg-zinc-900/10 dark:hover:bg-zinc-100/10"
               >
                 <SwatchIcon className="w-5 h-5" />
               </Button>

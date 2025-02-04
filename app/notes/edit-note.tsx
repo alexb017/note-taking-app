@@ -88,7 +88,7 @@ export default function EditNote({
               <Button
                 onClick={openDialog}
                 size="icon"
-                className="p-0 w-[34px] h-[34px] [&_svg]:size-[18px] rounded-full bg-transparent shadow-none text-black dark:text-white hover:bg-zinc-900/10 dark:hover:bg-zinc-100/10"
+                className="p-0 w-[34px] h-[34px] [&_svg]:size-[18px] rounded-full bg-transparent shadow-none text-black/80 dark:text-white/80 hover:bg-zinc-900/10 dark:hover:bg-zinc-100/10"
               >
                 <PencilSquareIcon className="w-5" />
               </Button>
@@ -138,13 +138,13 @@ export default function EditNote({
         <div className="flex flex-col">
           <Input
             placeholder="Title"
-            className="px-3 font-semibold text-black/30 dark:text-white/30 shadow-none border-0 rounded-none focus-visible:ring-0"
+            className="px-3 font-semibold text-black/70 dark:text-white/70 shadow-none border-0 rounded-none focus-visible:ring-0"
             value={note?.title}
             onChange={(e) => onTitleChange(e.target.value)}
           />
           <Textarea
             placeholder="Take a note..."
-            className="md:text-base font-semibold p-0 px-3 min-h-[80px] shadow-none border-0 rounded-none resize-none focus-visible:ring-0"
+            className="md:text-base text-black/90 dark:text-white/90 font-semibold p-0 px-3 min-h-[80px] shadow-none border-0 rounded-none resize-none focus-visible:ring-0"
             value={note?.content}
             onChange={(e) => onContentChange(e.target.value)}
           />

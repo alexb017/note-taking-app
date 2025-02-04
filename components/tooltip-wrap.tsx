@@ -23,7 +23,7 @@ export default function TooltipWrap({
   props?: any;
 }) {
   const classname =
-    'p-0 w-[34px] h-[34px] [&_svg]:size-[18px] rounded-full bg-transparent shadow-none text-black dark:text-white hover:bg-zinc-900/10 dark:hover:bg-zinc-100/10';
+    'p-0 w-[34px] h-[34px] [&_svg]:size-[18px] rounded-full bg-transparent shadow-none text-black/80 dark:text-white/80 hover:bg-zinc-900/10 dark:hover:bg-zinc-100/10';
 
   return (
     <TooltipProvider {...props} delayDuration={0}>

@@ -46,12 +46,12 @@ function Calendar({
         ),
         day_button: cn(
           buttonVariants({ variant: 'ghost' }),
-          'h-8 w-8 p-0 font-normal aria-selected:opacity-100'
+          'h-8 w-8 p-0 font-normal aria-selected:opacity-100 dark:hover:bg-zinc-700'
         ),
         range_start: 'day-range-start',
         range_end: 'day-range-end',
-        selected: 'bg-zinc-200 rounded-md',
-        today: 'bg-accent text-accent-foreground rounded-md',
+        selected: 'bg-zinc-200 rounded-md dark:bg-zinc-600',
+        today: 'bg-accent text-accent-foreground rounded-md dark:bg-zinc-700',
         outside:
           'day-outside text-muted-foreground aria-selected:bg-accent/50 aria-selected:text-muted-foreground',
         disabled: 'text-muted-foreground opacity-50',

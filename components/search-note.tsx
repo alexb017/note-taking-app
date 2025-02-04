@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import {
   Popover,
   PopoverContent,
@@ -33,14 +34,17 @@ export default function SearchNote() {
   return (
     <>
       <div className="hidden sm:block">
-        <form className="w-[240px] lg:w-[480px]">
+        <Label htmlFor="search" className="relative w-full rounded-xl">
+          <MagnifyingGlassIcon className="absolute left-3 top-3 w-5 h-5 text-neutral-500 dark:text-neutral-200" />
           <Input
+            name="search-note"
+            id="search"
             onChange={(e) => handleSearchChange(e.target.value)}
             defaultValue={searchParams.get('q')?.toString()}
             placeholder="Search note..."
-            className="h-11 rounded-xl border-0 shadow-none bg-neutral-100 dark:bg-neutral-800 focus-visible:ring-0 focus-visible:bg-neutral-200 dark:focus-visible:bg-neutral-700"
+            className="w-[240px] lg:w-[480px] pl-11 h-11 rounded-xl border-0 shadow-none bg-neutral-100 dark:bg-neutral-800 focus-visible:ring-0 focus-visible:bg-neutral-200 dark:focus-visible:bg-neutral-700"
           />
-        </form>
+        </Label>
       </div>
       <div className="block sm:hidden">
         <Popover>
@@ -53,16 +57,18 @@ export default function SearchNote() {
               <MagnifyingGlassIcon className="w-5 h-5" />
             </Button>
           </PopoverTrigger>
-          <PopoverContent className="w-full mx-5 p-0 border-0 shadow-2xl">
-            <form className="w-full">
+          <PopoverContent className="p-0 border-0 shadow-2xl rounded-xl">
+            <Label htmlFor="search-mobile" className="relative w-full">
+              <MagnifyingGlassIcon className="absolute left-3 top-3 w-5 h-5 text-neutral-500 dark:text-neutral-200" />
               <Input
+                name="search-note-mobile"
+                id="search-mobile"
                 onChange={(e) => handleSearchChange(e.target.value)}
                 defaultValue={searchParams.get('q')?.toString()}
-                autoFocus
                 placeholder="Search note..."
-                className="h-11 rounded-xl border-0 shadow-none bg-neutral-100 dark:bg-neutral-800 focus-visible:ring-0 focus-visible:bg-neutral-200 dark:focus-visible:bg-neutral-700"
+                className="w-full pl-11 h-11 rounded-xl border border-black/10 shadow-none bg-white dark:bg-neutral-800 dark:border-white/10 focus-visible:ring-0 focus-visible:bg-white dark:focus-visible:bg-neutral-800"
               />
-            </form>
+            </Label>
           </PopoverContent>
         </Popover>
       </div>

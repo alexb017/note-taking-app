@@ -25,7 +25,7 @@ export default function EditReminder({
         <Popover>
           <PopoverTrigger
             asChild
-            className="relative h-full p-0 px-1 pr-[8px] py-[2px] text-xs gap-1 rounded-full bg-zinc-900/10 dark:bg-zinc-100/10 hover:bg-zinc-900/10 dark:hover:bg-zinc-100/10"
+            className="relative h-full p-0 px-1 pr-[8px] py-[2px] text-xs gap-1 shadow-none rounded-full text-black/80 dark:text-white/80 bg-zinc-900/10 dark:bg-zinc-100/10 hover:bg-zinc-900/10 dark:hover:bg-zinc-100/10"
           >
             <Button variant="secondary">
               <ClockIcon className="h-4 w-4" />
@@ -42,7 +42,7 @@ export default function EditReminder({
         </Popover>
         <Button
           size="icon"
-          className="absolute top-0 right-0 z-20 p-0 w-5 h-5 opacity-0 group-hover/rr:opacity-100 dark:text-white bg-zinc-900/10 dark:bg-zinc-100/10 hover:bg-zinc-900/20 dark:hover:bg-zinc-100/20 backdrop-blur rounded-full transition-opacity duration-200 ease-in"
+          className="absolute top-0 right-0 z-20 p-0 w-5 h-5 shadow-none opacity-0 group-hover/rr:opacity-100 dark:text-white/80 bg-zinc-900/10 dark:bg-zinc-100/10 hover:bg-zinc-900/20 dark:hover:bg-zinc-100/20 backdrop-blur rounded-full transition-opacity duration-200 ease-in"
           onClick={() => setReminder(undefined)}
         >
           <XMarkIcon className="w-4 h-4" />
