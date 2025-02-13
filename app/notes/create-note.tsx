@@ -122,7 +122,7 @@ export default function CreateNote() {
         <EditReminder reminder={reminder} setReminder={setReminder} />
       )}
 
-      <CardFooter className="justify-between p-0 px-[4px] pb-[2px]">
+      <CardFooter className="justify-between p-0 px-[4px] pb-[2px] pr-4">
         <div className="flex items-center gap-4">
           <AddReminder reminder={reminder} setReminder={setReminder} />
           <AddColor
@@ -144,7 +144,7 @@ export default function CreateNote() {
         </div>
         <Button
           variant="ghost"
-          className="rounded-xl hover:bg-zinc-900/10 hover:dark:bg-zinc-100/10"
+          className="hover:bg-zinc-900/5 dark:hover:bg-zinc-100/5"
           onClick={() => handleCreateNote(false, false)}
         >
           Save note

@@ -110,12 +110,12 @@ export default function Note({ note }: { note: Note }) {
             height={160}
             style={{ width: 'auto', height: 'auto' }}
           />
-          <div className="absolute right-2 bottom-2 z-10 opacity-0 group-hover:opacity-100 transition-opacity ease-in-out">
+          {/* <div className="absolute right-2 bottom-2 z-10 opacity-0 group-hover:opacity-100 transition-opacity ease-in-out">
             <DeleteImageFromStorage
               imageUrl={noteData?.image.src}
               onSetImageUpload={handleImageUpload}
             />
-          </div>
+          </div> */}
         </CardHeader>
       )}
       <CardDescription className="py-2 px-5 pb-8 cursor-default text-black/90 dark:text-white/90">

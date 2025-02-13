@@ -97,11 +97,11 @@ export default function Profile() {
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel className="rounded-full dark:bg-zinc-700 dark:hover:bg-zinc-600">
+            <AlertDialogCancel className="text-zinc-500 dark:text-zinc-400 hover:text-zinc-500 hover:bg-zinc-900/5 dark:hover:bg-zinc-100/5">
               Cancel
             </AlertDialogCancel>
             <AlertDialogAction
-              className="rounded-full"
+              className="text-blue-500 hover:text-blue-500 hover:bg-zinc-900/5 dark:hover:bg-zinc-100/5"
               onClick={async () => {
                 try {
                   await handleDeleteAccount(user?.uid);

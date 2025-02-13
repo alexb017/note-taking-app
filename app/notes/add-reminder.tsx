@@ -14,6 +14,8 @@ import {
 } from '@/components/ui/tooltip';
 import { Timestamp } from 'firebase/firestore';
 import { convertTimestampToDate } from '@/lib/utils';
+import { useToast } from '@/hooks/use-toast';
+import { useState } from 'react';
 
 export default function AddReminder({
   reminder,
@@ -22,11 +24,14 @@ export default function AddReminder({
   reminder?: Timestamp;
   setReminder: (date: Timestamp) => void;
 }) {
+  const [open, setOpen] = useState(false);
+  const { toast } = useToast();
+
   // Check if reminder exists and convert it to Date
   const reminderDate = reminder ? convertTimestampToDate(reminder) : undefined;
 
   return (
-    <Popover>
+    <Popover open={open} onOpenChange={setOpen}>
       <TooltipProvider delayDuration={0}>
         <Tooltip>
           <PopoverTrigger asChild>
@@ -48,7 +53,15 @@ export default function AddReminder({
         <Calendar
           mode="single"
           selected={reminderDate}
-          onSelect={(date) => date && setReminder(Timestamp.fromDate(date))}
+          onSelect={(date) => {
+            if (date) {
+              setReminder(Timestamp.fromDate(date));
+              toast({
+                description: 'Reminder added',
+              });
+              setOpen(false);
+            }
+          }}
         />
       </PopoverContent>
     </Popover>

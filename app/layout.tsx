@@ -4,6 +4,7 @@ import './globals.css';
 import Navbar from '../components/navbar';
 import { AuthProvider } from './auth-context';
 import { ThemeProvider } from './theme-provider';
+import { Toaster } from '@/components/ui/toaster';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -31,6 +32,7 @@ export default async function RootLayout({
           <AuthProvider>
             <Navbar />
             <main className="main mt-[65px] h-full ">{children}</main>
+            <Toaster />
           </AuthProvider>
         </ThemeProvider>
       </body>
