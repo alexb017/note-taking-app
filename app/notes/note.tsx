@@ -43,7 +43,7 @@ export default function Note({ note }: { note: Note }) {
 
   function handleTitleChange(text: string) {
     // console.log('title', text);
-    setNoteData({ ...noteData, title: text });
+    setNoteData({ ...noteData, title: text, lastEdited: Timestamp.now() });
     updateTitleDebounced(text);
   }
 
@@ -55,7 +55,7 @@ export default function Note({ note }: { note: Note }) {
 
   async function handleContentChange(text: string) {
     // console.log('content', text);
-    setNoteData({ ...noteData, content: text });
+    setNoteData({ ...noteData, content: text, lastEdited: Timestamp.now() });
     updateContentDebounced(text);
   }
 

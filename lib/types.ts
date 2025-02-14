@@ -21,6 +21,7 @@ export type CreateNote = {
   isPinned?: boolean;
   isDeleted?: boolean;
   userId: string;
+  lastEdited: Timestamp;
 };
 
 export type Note = {
@@ -34,6 +35,7 @@ export type Note = {
   isPinned: boolean;
   isDeleted: boolean;
   userId: string;
+  lastEdited: Timestamp;
 };
 
 export type UserProfile = {

@@ -38,7 +38,12 @@ import {
   useSearchParams,
   ReadonlyURLSearchParams,
 } from 'next/navigation';
-import { createUrl } from '@/lib/utils';
+import {
+  createUrl,
+  convertTimestampToDate,
+  dateToString,
+  displayLastEdited,
+} from '@/lib/utils';
 
 export default function EditNote({
   note,
@@ -60,6 +65,10 @@ export default function EditNote({
   const searchParams = useSearchParams();
 
   const isOpen = searchParams.get('id') === note.noteId;
+
+  const lastEdit = note.lastEdited
+    ? displayLastEdited(note.lastEdited)
+    : undefined;
 
   // Set and id in the URL when the dialog is open
   const openDialog = () => {
@@ -137,12 +146,14 @@ export default function EditNote({
 
         <div className="flex flex-col">
           <Input
+            id="edit-title"
             placeholder="Title"
             className="px-3 font-semibold text-black/70 dark:text-white/70 shadow-none border-0 rounded-none focus-visible:ring-0"
             value={note?.title}
             onChange={(e) => onTitleChange(e.target.value)}
           />
           <Textarea
+            id="edit-message"
             placeholder="Take a note..."
             className="md:text-base text-black/90 dark:text-white/90 font-semibold p-0 px-3 min-h-[80px] shadow-none border-0 rounded-none resize-none focus-visible:ring-0"
             value={note?.content}
@@ -150,13 +161,20 @@ export default function EditNote({
           />
         </div>
 
-        {note?.reminder && (
-          <EditReminder
-            reminder={note?.reminder}
-            setReminder={onReminderClick}
-          />
-        )}
+        <div className="flex justify-between items-center w-full p-0 px-[4px] pb-[2px] pr-4">
+          <div>
+            {note?.reminder && (
+              <EditReminder
+                reminder={note?.reminder}
+                setReminder={onReminderClick}
+              />
+            )}
+          </div>
 
+          <p className="text-xs text-zinc-500 dark:text-zinc-400">
+            Edited {lastEdit}
+          </p>
+        </div>
         <DialogFooter className="flex-row justify-between sm:justify-between p-0 px-[4px] pb-[2px] pr-4">
           <div className="flex items-center gap-4">
             <AddReminder

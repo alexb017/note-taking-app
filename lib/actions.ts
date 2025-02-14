@@ -71,7 +71,7 @@ export async function addNoteToTrash(uid: string, noteId: string) {
 export async function updateTitle(uid: string, noteId: string, text: string) {
   try {
     const contentRef = doc(db, 'users', uid, 'notes', noteId);
-    await updateDoc(contentRef, { title: text });
+    await updateDoc(contentRef, { title: text, lastEdited: Timestamp.now() });
   } catch (error) {
     console.error('Error to update title: ', error);
   }
@@ -80,7 +80,7 @@ export async function updateTitle(uid: string, noteId: string, text: string) {
 export async function updateContent(uid: string, noteId: string, text: string) {
   try {
     const contentRef = doc(db, 'users', uid, 'notes', noteId);
-    await updateDoc(contentRef, { content: text });
+    await updateDoc(contentRef, { content: text, lastEdited: Timestamp.now() });
   } catch (error) {
     console.error('Error to update content: ', error);
   }

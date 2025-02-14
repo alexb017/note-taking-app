@@ -52,6 +52,7 @@ export default function CreateNote() {
         isArchived: archive,
         isPinned: pinned,
         isDeleted: false,
+        lastEdited: Timestamp.now(),
       },
       user?.uid
     );
@@ -104,6 +105,7 @@ export default function CreateNote() {
 
       <CardContent className="p-0 py-2">
         <Input
+          id="create-title"
           placeholder="Title"
           className="px-3 font-semibold text-black/30 dark:text-white/30 shadow-none border-0 rounded-none focus-visible:ring-0"
           value={title}
@@ -111,7 +113,7 @@ export default function CreateNote() {
         />
         <Textarea
           placeholder="Take a note..."
-          id="message"
+          id="create-message"
           className="md:text-base font-semibold p-0 px-3 min-h-[80px] shadow-none border-0 rounded-none resize-none focus-visible:ring-0"
           value={content}
           onChange={(e) => setContent(e.target.value)}
