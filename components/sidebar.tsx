@@ -69,7 +69,7 @@ export default function Sidebar() {
         </li>
       </ul>
       <div className="p-4 pb-0 hidden xl:block">
-        <p className="text-sm text-zinc-500">&copy; 2025 NoteTaking</p>
+        <p className="text-sm text-zinc-500">&copy; 2025 NoteTaking.</p>
       </div>
     </nav>
   );

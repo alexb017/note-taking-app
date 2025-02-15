@@ -74,14 +74,14 @@ export default function EditNote({
   const openDialog = () => {
     const newParams = new URLSearchParams(searchParams.toString());
     newParams.set('id', note.noteId);
-    router.push(createUrl(pathname, newParams), { scroll: false });
+    router.replace(createUrl(pathname, newParams), { scroll: false });
   };
 
   // Remove the id from the URL when the dialog is closed
   const closeDialog = () => {
     const newParams = new URLSearchParams(searchParams.toString());
     newParams.delete('id');
-    router.push(createUrl(pathname, newParams), { scroll: false });
+    router.replace(createUrl(pathname, newParams), { scroll: false });
   };
 
   return (

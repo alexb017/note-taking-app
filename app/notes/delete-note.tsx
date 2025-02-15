@@ -18,6 +18,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
+import { useToast } from '@/hooks/use-toast';
 
 export default function DeleteNoteButton({
   uid,
@@ -28,6 +29,8 @@ export default function DeleteNoteButton({
   noteId: string;
   imageURL?: string;
 }) {
+  const { toast } = useToast();
+
   return (
     <AlertDialog>
       <TooltipProvider delayDuration={0}>
@@ -64,6 +67,10 @@ export default function DeleteNoteButton({
               if (imageURL) {
                 await deleteImageFromStorage(imageURL);
               }
+
+              toast({
+                description: 'Note deleted',
+              });
             }}
           >
             Delete

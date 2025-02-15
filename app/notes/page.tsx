@@ -1,5 +1,3 @@
-'use client';
-
 import CreateNote from '@/app/notes/create-note';
 import ViewNotes from './view-notes';
 
