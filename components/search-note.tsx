@@ -42,7 +42,7 @@ export default function SearchNote() {
             onChange={(e) => handleSearchChange(e.target.value)}
             defaultValue={searchParams.get('q')?.toString()}
             placeholder="Search note..."
-            className="w-[240px] lg:w-[480px] pl-11 h-11 rounded-xl border-0 shadow-none bg-neutral-100 dark:bg-neutral-800 focus-visible:ring-0 focus-visible:bg-neutral-200 dark:focus-visible:bg-neutral-700"
+            className="w-[340px] lg:w-[480px] pl-11 h-11 rounded-xl border-0 shadow-none bg-neutral-100 dark:bg-neutral-800 focus-visible:ring-0 focus-visible:bg-neutral-200 dark:focus-visible:bg-neutral-700"
           />
         </Label>
       </div>
@@ -52,12 +52,12 @@ export default function SearchNote() {
             <Button
               size="icon"
               variant="secondary"
-              className="rounded-full text-neutral-500 dark:text-neutral-200"
+              className="rounded-full bg-transparent [&_svg]:size-5"
             >
               <MagnifyingGlassIcon className="w-5 h-5" />
             </Button>
           </PopoverTrigger>
-          <PopoverContent className="p-0 border-0 shadow-2xl rounded-xl">
+          <PopoverContent className="p-0 border-0 shadow-2xl rounded-xl right-4 -translate-x-4">
             <Label htmlFor="search-mobile" className="relative w-full">
               <MagnifyingGlassIcon className="absolute left-3 top-3 w-5 h-5 text-neutral-500 dark:text-neutral-200" />
               <Input

@@ -76,19 +76,19 @@ export default function DropdownUser({
               {firstName}
             </AvatarFallback>
           </Avatar>
-          <div className="hidden sm:flex flex-col items-start">
+          {/* <div className="hidden sm:flex flex-col items-start">
             <span className="text-black dark:text-white">
               {userProfile?.displayName}
             </span>
             <span className="text-xs text-zinc-400">{userProfile?.email}</span>
-          </div>
+          </div> */}
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
         className="w-56 rounded-xl shadow-lg dark:bg-zinc-800"
         align="end"
       >
-        <DropdownMenuLabel>Account</DropdownMenuLabel>
+        <DropdownMenuLabel>Hi, {userProfile?.displayName}!</DropdownMenuLabel>
         <DropdownMenuSeparator className="dark:bg-zinc-700" />
         <DropdownMenuGroup>
           {links.map((link) => (

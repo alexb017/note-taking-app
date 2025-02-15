@@ -69,7 +69,7 @@ export default function Profile() {
       </Avatar>
       <div className="flex flex-col items-center">
         <h2 className="text-3xl font-semibold tracking-tighter">
-          {userProfile?.displayName}
+          Hi, {userProfile?.displayName}!
         </h2>
         <p className="text-zinc-400">{userProfile?.email}</p>
       </div>
@@ -81,7 +81,7 @@ export default function Profile() {
         </AlertDialogTrigger>
         <AlertDialogContent className="border-0 shadow-lg sm:rounded-xl dark:bg-zinc-800">
           <AlertDialogHeader>
-            <AlertDialogTitle>Delete Account</AlertDialogTitle>
+            <AlertDialogTitle></AlertDialogTitle>
             <AlertDialogDescription>
               Are you sure you want to delete your account?
             </AlertDialogDescription>
@@ -103,7 +103,7 @@ export default function Profile() {
                 }
               }}
             >
-              Delete Account
+              Delete
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

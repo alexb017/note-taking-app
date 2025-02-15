@@ -28,9 +28,7 @@ export default function HomePage() {
               </Button>
             </div>
           </div>
-          <p className="text-sm text-zinc-400">
-            &copy; 2025 NoteTakingApp. A Google Keep Clone. ✌️
-          </p>
+          <p className="text-sm text-zinc-400">&copy; 2025 NoteTaking.</p>
         </div>
       </div>
     </>
