@@ -1,7 +1,6 @@
-# Build a Fullstack Keep Clone: React, Next.js, Firebase, Tailwind, NextUI.
+# Build a full-stack Google Keep Clone with: React, Next.js, Firebase, and Tailwind.
 
-![Alt text](/public/NoteTaking-Notes.jpg)
-![Alt text](/public/NoteTaking-Notes-Dark.jpg)
+![Alt text](/public/note.jpg)
 
 #### Features
 
@@ -10,8 +9,14 @@
 - Light and Dark mode with next-themes
 - Authentication with Google
 - Authentication with GitHub
+- Build with TypeScript
+- Set remainders
+- Add note to archive
+- Change background color
+- Pin note
+- View last edited (time) based on title or content
 - Image upload
 - Search notes
-- Build with TypeScript
+- Delete user profile
 - Responsive UI design
-- Designed with NextUI
+- Designed with shadcn/ui
