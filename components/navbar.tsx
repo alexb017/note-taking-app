@@ -31,7 +31,7 @@ export default function Navbar() {
             <DocumentTextIcon className="h-8 text-yellow-500" />
             NoteTaking
           </Link>
-          <div className="hidden sm:block">{user && <SearchNote />}</div>
+          {user && <SearchNote position="left" />}
         </div>
         <div className="flex items-center gap-2">
           {!user ? (
@@ -42,9 +42,7 @@ export default function Navbar() {
             </>
           ) : (
             <>
-              <div className="sm:hidden">
-                <SearchNote />
-              </div>
+              <SearchNote position="right" />
               <ThemeSwitcher />
               <DropdownUser uid={user?.uid} onUserSignOut={userSignOut} />
             </>
